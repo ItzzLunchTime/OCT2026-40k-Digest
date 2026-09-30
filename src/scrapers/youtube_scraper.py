@@ -42,7 +42,7 @@ def scrape_youtube() -> list[dict]:
                     part="snippet",
                     type="video",
                     order="viewCount",          # trending by views
-                    publishedAfter="2026-09-01T00:00:00Z",
+                    publishedAfter=(datetime.datetime.utcnow() - datetime.timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%SZ"),
                     maxResults=10,
                     relevanceLanguage="en",
                     videoDuration="medium",     # 4–20 min = real content
