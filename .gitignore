@@ -1,0 +1,42 @@
+# ── Secrets ──────────────────────────────────────────────────────
+.env
+
+# ── Personal data (never commit) ─────────────────────────────────
+instagram_data/
+# Exception: the generated taste profile cache is safe to commit
+# if you want it to persist between runs, but the raw export is not.
+# !instagram_data/taste_profile.txt
+
+# ── Python ────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ── Virtual environments ──────────────────────────────────────────
+venv/
+.venv/
+env/
+.env/
+
+# ── IDE ───────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Logs ─────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── The docs/data/ JSON files ARE committed (GitHub Pages needs them)
+# docs/data/ is NOT in gitignore

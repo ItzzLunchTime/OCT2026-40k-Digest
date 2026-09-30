@@ -1,0 +1,67 @@
+name: Daily 40K Digest
+
+on:
+  schedule:
+    # Run every day at 07:00 UTC (adjust to your timezone)
+    # 07:00 UTC = 23:00 PT / 02:00 ET (previous day)
+    - cron: "0 7 * * *"
+
+  # Allow manual runs from the GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to commit docs/ back to the repo
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Full history so we can diff docs/ and push changes
+          fetch-depth: 0
+
+      # ── 2. Python setup ──────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── 3. Run the pipeline ──────────────────────────────────────
+      - name: Run digest pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          DIGEST_RECIPIENT: ${{ secrets.DIGEST_RECIPIENT }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          ALERT_THRESHOLD: ${{ secrets.ALERT_THRESHOLD }}
+        run: python main.py
+
+      # ── 4. Commit updated dashboard back to the repo ─────────────
+      - name: Commit dashboard update
+        run: |
+          git config user.name  "40K Digest Bot"
+          git config user.email "actions@github.com"
+
+          # Stage everything under docs/ (index.html + new JSON data file)
+          git add docs/
+
+          # Only commit if something changed
+          if git diff --cached --quiet; then
+            echo "Nothing changed in docs/ — skipping commit"
+          else
+            git commit -m "chore: digest update $(date -u '+%Y-%m-%d')"
+            git push
+          fi
