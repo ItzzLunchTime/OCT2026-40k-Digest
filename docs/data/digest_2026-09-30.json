@@ -4032,5 +4032,105 @@
       "tiktok_link": ""
     }
   ],
-  "topics": []
+  "topics": [
+    {
+      "title": "New Custodes Rules & Statline Changes - Meta Shift Analysis",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "GW just revealed new Custodes statlines with significant rule updates and unit removals creating immediate competitive intrigue",
+      "relevance_note": "High-velocity rules discussion with tournament implications; multiple creators covering (Auspex Tactics). Audience wants to understand competitive viability.",
+      "is_content_gap": false,
+      "gap_note": "",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=43wKKqRveew"
+    },
+    {
+      "title": "Dark Angels & Lion Return: Divergent Chapter Rules Deep Dive",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "The Lion's return with new rules and divergent chapter mechanics is generating significant excitement and competitive speculation",
+      "relevance_note": "Major primarch return narrative moment with rule implications. Content gap exists for cinematic lore explainers on why this matters to the 40K story.",
+      "is_content_gap": true,
+      "gap_note": "Lots of rule discussion but minimal narrative/cinematics content on Lion's return story significance. Opportunity to own the 'why this lore moment matters' angle.",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=65KVNedwM5o"
+    },
+    {
+      "title": "Space Marines Big Release Week: Everything You Need to Know",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Major Space Marine release week with new models, rules, and pricing sparking immediate community buying/collecting decisions",
+      "relevance_note": "Time-sensitive content. Community actively asking about value, build options, and release logistics right now.",
+      "is_content_gap": true,
+      "gap_note": "High discussion volume but opportunity for cinematic 'unboxing reveal' content and rules breakdown tailored to Instagram's visual format.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=uQTHR8mnT2E"
+    },
+    {
+      "title": "Best Metallic Paint Showdown 2026: Ionic vs Vallejo vs Traditional",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "Stahly's metallic paint comparison (Ionic Real Heavy Metal vs Vallejo True Metallic) is driving gear discussion among hobbyists",
+      "relevance_note": "Recurring question from painters choosing products. High-value tutorial content opportunity.",
+      "is_content_gap": true,
+      "gap_note": "Lots of Reddit/forum questions about 'which metallic paint should I buy' but little high-production video content. Instagram can own this with side-by-side technique reels.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=_uqUWkH3yHw"
+    },
+    {
+      "title": "Kill Team: Armageddon - New Faction Breakdown & Competitive Viability",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Kill Team's Armageddon expansion introducing new teams/factions with immediate tournament interest and comparison to Necromunda",
+      "relevance_note": "Underserved skirmish game with growing community. Multiple creator breakdowns (Glass Half Dead, CritsNCoffee) indicate audience hunger for accessible tactical guides.",
+      "is_content_gap": true,
+      "gap_note": "Kill Team has loyal but smaller audience than 40K. Content gap: cinematic faction guides and beginner starter guides. Instagram can reach Kill Team players with short tactical breakdowns.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=-6wdeSC91_0"
+    },
+    {
+      "title": "Cel Shading Miniatures: New Painting Technique Tutorial",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "Resourceful Miniatures' cel shading technique is introducing novel painting style that bridges tabletop and digital aesthetics",
+      "relevance_note": "Niche but growing interest in non-traditional painting styles. High-engagement reel potential for technique-focused content.",
+      "is_content_gap": true,
+      "gap_note": "No established tutorial series for cel shading minis. Opportunity to own 'experimental painting techniques' content niche with step-by-step Instagram reels.",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=xqCc6wc8uUE"
+    },
+    {
+      "title": "Which Airbrush Should I Buy? Complete Buyer's Guide for Beginners",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "Squidly Bits' airbrush buying guide addressing recurring community purchasing confusion and decision paralysis",
+      "relevance_note": "Evergreen question with high search volume. Beginners repeatedly ask this across Reddit/Discord.",
+      "is_content_gap": true,
+      "gap_note": "Lots of individual airbrush reviews but no authoritative 'which to buy as a beginner' guide on Instagram. Can adapt Squidly's content into simplified decision-tree reels.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=v72YhNrVCjY"
+    },
+    {
+      "title": "Golden Demon Winners Interview Series: Kentaro Ikeda & Katarzyna Górska Paint Breakdowns",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "Official GW interviews with Golden Demon winners discussing Warhammer Tone Pro and advanced techniques inspiring aspirational content",
+      "relevance_note": "Authoritative hobby voice. High engagement potential with aspirational audience. Warhammer Community + Warhammer TV pushing this content.",
+      "is_content_gap": true,
+      "gap_note": "Interviews exist but minimal short-form technique clips extracted. Opportunity to create 15-30sec reels of specific techniques from interviews (wet blending, layering, etc.)",
+      "is_question": false,
+      "source": "warhammer_community",
+      "url": "https://www.warhammer-community.com/en-gb/articles/waxcyb2g/golden-demon-winner-kentaro-ikeda-on-warhammer-tone-pro/"
+    },
+    {
+      "title": "Flying Babies of 40K Lore Explained: The Cherubim Deep Dive",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "Arbitor Ian's unique lore explainer on 40K's weirdest units (cherubim) generating curiosity and discussion",
+      "relevance_note": "Niche but highly engaging lore topic. Evergreen interest in 'weird 40K things explained' content.",
+      "is_content_gap": true,
+      "gap_note": "Specific lore mysteries have high engagement but few cinematic explainers. Instagram can own short 'did you know' lore fact reels with dramatic imagery.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=1tMw7TocT0c"
+    }
+  ]
 }
