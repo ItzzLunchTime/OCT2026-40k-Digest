@@ -6,6 +6,7 @@ Returns topic signals (video titles + descriptions) and
 any audio/music references found in descriptions or titles.
 """
 
+import datetime
 from googleapiclient.discovery import build
 from src.config import YOUTUBE_API_KEY, YOUTUBE_QUERIES
 
