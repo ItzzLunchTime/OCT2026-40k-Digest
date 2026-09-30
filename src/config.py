@@ -12,11 +12,11 @@ load_dotenv()
 # ── API Keys ──────────────────────────────────────────────────────
 ANTHROPIC_API_KEY: str = os.environ["ANTHROPIC_API_KEY"]
 
-REDDIT_CLIENT_ID: str = os.environ["REDDIT_CLIENT_ID"]
-REDDIT_CLIENT_SECRET: str = os.environ["REDDIT_CLIENT_SECRET"]
-REDDIT_USER_AGENT: str = os.getenv("REDDIT_USER_AGENT", "40kDigest/1.0")
+REDDIT_CLIENT_ID: str = os.getenv("REDDIT_CLIENT_ID","")
+REDDIT_CLIENT_SECRET: str = os.getenv("REDDIT_CLIENT_SECRET","")
+REDDIT_USER_AGENT: str = os.getenv(("REDDIT_USER_AGENT", "40kDigest/1.0")
 
-YOUTUBE_API_KEY: str = os.environ["YOUTUBE_API_KEY"]
+YOUTUBE_API_KEY: str = os.getenv("YOUTUBE_API_KEY","")
 
 # ── Email ─────────────────────────────────────────────────────────
 GMAIL_ADDRESS: str = os.environ["GMAIL_ADDRESS"]
