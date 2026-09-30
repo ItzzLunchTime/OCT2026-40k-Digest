@@ -67,4 +67,4 @@ COMMUNITY_URLS = [
 TIKTOK_TREND_URL = "https://ads.tiktok.com/business/creativecenter/inspiration/popular/music/pc/en"
 
 # ── Claude model ─────────────────────────────────────────────────
-CLAUDE_MODEL = "claude-sonnet-4-6"
+CLAUDE_MODEL = "claude-haiku-4-5-20251001"
