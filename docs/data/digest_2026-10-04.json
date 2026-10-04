@@ -1,0 +1,516 @@
+{
+  "date": "2026-10-04",
+  "audio": [
+    {
+      "name": "The Process",
+      "artist": "its_drfarah (Original audio)",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "Gaming/Hobby"
+      ],
+      "potency_score": 8,
+      "sync_note": "Likely motivational dialogue over beats; syncs naturally to craft or assembly sequences",
+      "register_note": "Inspirational, focused, determined",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Works in direct alignment—celebrates the craft work the account features",
+      "cinematic_angle": "Perfect for close-ups of assembly, painting, or basing; voice-over celebrates deliberation and skill",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Patient Zero",
+      "artist": "Taylor Swift",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 7,
+      "sync_note": "Introspective vocal delivery with sparse instrumental; syncs well with character establishment or psychological reveals",
+      "register_note": "Introspection, vulnerability, conspiracy—creates dread through quiet paranoia rather than bombast",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Using a Taylor Swift track against grimdark Warhammer visuals creates productive tension; intimate vocals undercut by apocalyptic imagery",
+      "cinematic_angle": "Character study of a Warhammer protagonist at the moment of corruption or realization—juxtapose delicate vocal with brutal craft shots",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Autumn Colors",
+      "artist": "LuLuMusic",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 6,
+      "sync_note": "Cinematic ambient; likely swell points and tonal shifts; good for slow-motion or detail shots",
+      "register_note": "Melancholy, decay, transition—aesthetic alignment with grimdark themes",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Works in harmony rather than tension",
+      "cinematic_angle": "Process footage of weathering, rust, or painting dark miniatures; autumn palette mirrors 40K's bleakness",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Nicole Kidman",
+      "artist": "ADÉLA",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 5,
+      "sync_note": "Unknown rhythmic structure; would require audition to assess beat sync",
+      "register_note": "Likely dramatic or cinematic—title suggests sophistication and tension",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Without hearing the track, counterpoint potential is unclear",
+      "cinematic_angle": "If the audio carries dramatic weight, could work as a bridge between character moments—test with footage first",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Pure",
+      "artist": "Sienna Spiro",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 5,
+      "sync_note": "Likely minimalist or ethereal; unclear without audition",
+      "register_note": "Possibly serene, clean, or contrasting",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Title suggests purity could create contrast against grimdark visuals",
+      "cinematic_angle": "Test for use as a transition beat or moment of false hope before narrative turn",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Less than a lover",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 5,
+      "sync_note": "Melancholic vocal; unknown production; potential for introspective syncing",
+      "register_note": "Resignation, heartbreak, deflation",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Emotional defeat could undercut triumphant craft moments—use inversely for character tragedy arcs",
+      "cinematic_angle": "Consider for failed experiments or abandoned projects—show the work that didn't survive",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "1. original audio",
+      "artist": "caitbcontent",
+      "audio_type": "soundbite",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Unknown creator audio; rhythm and tone unclear",
+      "register_note": "Undefined without audition",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Cannot assess without hearing",
+      "cinematic_angle": "Requires audition before consideration",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Mix",
+      "artist": "lisahoogendoorn",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Creator original; unknown structure",
+      "register_note": "Unclear without audition",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Requires hearing",
+      "cinematic_angle": "Needs audition",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Mix",
+      "artist": "alchemysticwellness",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Creator original; possibly ambient or ethereal given artist name",
+      "register_note": "Possibly meditative or mystical",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Wellness audio could create ironic counterpoint to grimdark violence",
+      "cinematic_angle": "Test for use against extreme close-ups—peace vs. brutality",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Original audio",
+      "artist": "thefoundryavondale",
+      "audio_type": "soundbite",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Unknown creator audio; artist name suggests crafting/industrial focus",
+      "register_note": "Possibly related to making or building",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Would need audition",
+      "cinematic_angle": "Foundry name suggests potential craft alignment—audition priority",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "petal",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Minimalist title; possibly delicate or soft",
+      "register_note": "Possibly ethereal or fragile",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Delicacy could contrast powerfully with industrial grimdark",
+      "cinematic_angle": "Test for moments of vulnerability or detail—a single petal against rusted metal",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Timber",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 4,
+      "sync_note": "Industrial/natural material reference; unclear without audition",
+      "register_note": "Possibly percussive or grounded",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Requires audition",
+      "cinematic_angle": "Title suggests crafting material alignment—audition for wood-based work",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "La La La",
+      "artist": "Gilmore Girls",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Whimsical, light melody; difficult to sync with grimdark content without heavy irony",
+      "register_note": "Playful, nostalgic, warm—antithetical to 40K aesthetic",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Could work as extreme counterpoint only if used ironically to highlight brutality",
+      "cinematic_angle": "Not recommended for this account's core aesthetic",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Upside Down",
+      "artist": "Diana Ross",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Smooth soul; syncs to rhythm but not to grimdark mood",
+      "register_note": "Romantic, buoyant, nostalgic warmth",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Too warm for productive tension with dark content",
+      "cinematic_angle": "Not aligned with account aesthetic",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Ring My Bell",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Likely upbeat, playful; difficult to sync with grimdark tone",
+      "register_note": "Whimsy, energy, retro pop",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Too light for this account",
+      "cinematic_angle": "Not recommended",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Original audio",
+      "artist": "bananalace",
+      "audio_type": "soundbite",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Unknown creator audio",
+      "register_note": "Cannot assess",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Requires audition",
+      "cinematic_angle": "Needs audition",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Yummy Little Day",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Whimsical, light; poor sync potential for grimdark",
+      "register_note": "Playful warmth, contentment",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Too saccharine for productive tension",
+      "cinematic_angle": "Not recommended",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Original audio",
+      "artist": "olyabelakoneva",
+      "audio_type": "soundbite",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Unknown creator audio",
+      "register_note": "Cannot assess",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Requires audition",
+      "cinematic_angle": "Needs audition",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Cherry on the Edge",
+      "artist": "",
+      "audio_type": "music",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Whimsical title; likely upbeat",
+      "register_note": "Playful, light",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Not aligned with aesthetic",
+      "cinematic_angle": "Not recommended",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    },
+    {
+      "name": "Funkytown",
+      "artist": "Lipps Inc.",
+      "audio_type": "music",
+      "use_count": "200,000 Reels",
+      "trend_stage": "Rising",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Upbeat disco; strong beat but completely misaligned with grimdark tone",
+      "register_note": "Euphoria, energy, retro lightness",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Not suitable for this account",
+      "cinematic_angle": "Pass—too tonally divorced from the account's sensibility",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends"
+    },
+    {
+      "name": "Original audio",
+      "artist": "cosrx",
+      "audio_type": "soundbite",
+      "use_count": "221K reels",
+      "trend_stage": "Early",
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Brand audio likely commercial or lifestyle-focused",
+      "register_note": "Product-oriented; unlikely to align with 40K",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Not suitable",
+      "cinematic_angle": "Not recommended",
+      "ig_link": "",
+      "tiktok_link": "",
+      "source_url": "https://buffer.com/resources/trending-audio-instagram/"
+    }
+  ],
+  "topics": [
+    {
+      "title": "Custodes Rules Overhaul & New Statlines 2026",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Major Custodes codex refresh with new statlines and unit removals generating significant community discussion about competitive viability.",
+      "relevance_note": "High-velocity discussion across multiple creators (Auspex Tactics); players actively evaluating how this impacts army building and meta positioning right now.",
+      "is_content_gap": true,
+      "gap_note": "Strong discussion activity but few deep-dive breakdowns of which units changed and why. Opportunity for cinematic rules comparison video or 'Custodes Winners & Losers' breakdown.",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=43wKKqRveew"
+    },
+    {
+      "title": "Dark Angels Lion Return & Divergent Chapter Rules",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "Primarch Lion El'Jonson's return with new rules causing excitement and speculation about lore implications and competitive viability.",
+      "relevance_note": "Trending across community with 'monstrous' new statlines; combines lore interest (Primarch return) with competitive gameplay impact.",
+      "is_content_gap": true,
+      "gap_note": "High hype but limited deep lore context videos. Opportunity: cinematic narrative breakdown of Lion's return significance + comparison to other Primarch returns.",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=65KVNedwM5o"
+    },
+    {
+      "title": "Space Marines Big Release Week Analysis",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Major Space Marine codex/model release creating urgent need for players to understand new rules, box contents, and competitive positioning.",
+      "relevance_note": "Time-sensitive content opportunity; multiple creators covering but audience still asking 'what should I buy?' - tactical guide gap exists.",
+      "is_content_gap": true,
+      "gap_note": "Widespread discussion on what's new but limited 'buyer's guide' or 'competitive breakdown' content. Create: Space Marines 2026 Release Tier List / Best Purchases for Competitive Play.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=uQTHR8mnT2E"
+    },
+    {
+      "title": "Kill Team Legion of the Damned Return",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "Legion of the Damned faction reinvented in Kill Team generating fan excitement and rules discussion.",
+      "relevance_note": "Multiple Kill Team content creators covering this; combines faction interest with competitive skirmish gameplay.",
+      "is_content_gap": false,
+      "gap_note": "",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=9E9DkKxVLEE"
+    },
+    {
+      "title": "Kill Team Tournament Meta & Beginner Entry",
+      "category": "Community Questions",
+      "what_is_driving_it": "Multiple creators publishing Kill Team tournament participation and competitive guides, suggesting audience confusion about competitive barriers.",
+      "relevance_note": "Recurring theme: 'I want to try Kill Team competitively but how?' - signaling knowledge gap for new/returning players.",
+      "is_content_gap": true,
+      "gap_note": "Discussion exists but limited 'Kill Team Competitive 101' content. Create: Beginner's Kill Team Tournament Guide or 'Building Your First Tournament List' series.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=A2U25He_Gj4"
+    },
+    {
+      "title": "Necromunda vs Kill Team Comparison",
+      "category": "Community Questions",
+      "what_is_driving_it": "Players asking which GW skirmish game to pick; direct comparison content addressing confusion between Kill Team and Necromunda mechanics.",
+      "relevance_note": "Shows hesitation in community about game choice; content addressing this gap would capture significant audience.",
+      "is_content_gap": true,
+      "gap_note": "Exists as single video but no comprehensive series. Opportunity: Deep Comparison Series - Necromunda vs Kill Team (Cost, Learning Curve, Community, Career Progression).",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=r7X-BIoicdY"
+    },
+    {
+      "title": "Golden Demon Painting Reaction & Technique Breakdown",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "New creators approaching competitive painting standards; audience interest in how professional painters achieve Golden Demon quality.",
+      "relevance_note": "Trending interest in painting excellence; gap between 'I want to paint at that level' and practical how-to content.",
+      "is_content_gap": true,
+      "gap_note": "Reaction content exists but few step-by-step breakdowns. Create: Golden Demon Winning Techniques Series or 'How to Reach Golden Demon Standards' masterclass.",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=Q6pTZyRrpYw"
+    },
+    {
+      "title": "Julien Kirszenbaum Monster Painting Masterclass",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "Official Warhammer featuring pro painter discussing monster painting and Warhammer Tone Pro product.",
+      "relevance_note": "Official endorsement; audience interest in learning from named professional painters on specific techniques.",
+      "is_content_gap": false,
+      "gap_note": "",
+      "is_question": false,
+      "source": "warhammer_community",
+      "url": "https://www.warhammer-community.com/en-gb/articles/ar2fiibi/julien-kirszenbaum-on-painting-monsters-and-warhammer-tone-pro/"
+    },
+    {
+      "title": "Custodes Combat Patrol Box Value Assessment",
+      "category": "Hobby Craft",
+      "what_is_driving_it": "New product release with community debating whether Combat Patrol box offers good value given current Custodes meta.",
+      "relevance_note": "Purchase decision point for players; direct question about product value appearing in multiple threads.",
+      "is_content_gap": false,
+      "gap_note": "",
+      "is_question": true,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=oQQDRI76kNY"
+    },
+    {
+      "title": "Space Marine 2 Anniversary Update & Game Meta Shifts",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Major video game update bringing new content and balance changes; separate audience but cross-promotes tabletop interest.",
+      "relevance_note": "Drives awareness of 40K universe across gaming platforms; can bridge video game and tabletop audiences.",
+      "is_content_gap": false,
+      "gap_note": "",
+      "is_question": false,
+      "source": "warhammer_community",
+      "url": "https://www.warhammer-community.com/en-gb/articles/okd34wjw/space-marine-2-gets-a-massive-anniversary-update/"
+    }
+  ]
+}
