@@ -197,9 +197,15 @@ For each item, return a JSON object:
   "is_content_gap": true or false,
   "gap_note": "if true: why this is undercovered and what kind of content could own this space",
   "is_question": true or false,
-  "source": "reddit | youtube | warhammer_community | dakkadakka | other",
+  "source": "reddit | youtube | warhammer_community | other",
   "url": "link if available"
 }
+
+YouTube signals include "views_per_day" (momentum — weight this over raw views),
+"length" (short = YouTube Shorts, the closest proxy for Reels/TikTok formats) and
+"group": "core" is the 40K/minis/hobby niche itself; "crossover" is broader nerd
+culture. Only pick a crossover topic if it clearly connects to 40K, miniatures,
+hobby crafting or tabletop gaming — say how in relevance_note.
 
 Select only the 5-10 highest-value topics. Prioritise:
 1. Content gaps (high discussion, low quality video coverage)

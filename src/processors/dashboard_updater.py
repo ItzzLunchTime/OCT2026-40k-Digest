@@ -156,7 +156,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
     <option value="Fading">Fading</option>
   </select>
   <select id="minScore" onchange="applyFilters()">
-    <option value="0">Any score</option>
+    <option value="6">6+ (Recommended)</option>
     <option value="7">7+ (Good)</option>
     <option value="8">8+ (High)</option>
     <option value="9">9+ (Top)</option>
@@ -182,6 +182,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 let allDates = [];
 let currentData = { audio: [], topics: [] };
 let currentTab = 'audio';
+const MIN_SCORE = 6;   // sounds below this are never recommended
 
 // ── Score badge ──────────────────────────────────────────────────
 function scoreBadge(s) {
@@ -245,7 +246,7 @@ function applyFilters() {
   const type = document.getElementById('typeFilter').value.toLowerCase();
   const fmtSel = document.getElementById('formatFilter').value;
   const stage = document.getElementById('stageFilter').value;
-  const minS = parseInt(document.getElementById('minScore').value) || 0;
+  const minS = Math.max(MIN_SCORE, parseInt(document.getElementById('minScore').value) || 0);
 
   if (currentTab === 'audio') {
     const filtered = currentData.audio.filter(a => {
@@ -305,12 +306,12 @@ function renderScout() {
 
 function renderStats() {
   renderScout();
-  const audio = currentData.audio;
+  const audio = currentData.audio.filter(a => (a.potency_score||0) >= MIN_SCORE);
   const topics = currentData.topics;
   const highPotency = audio.filter(a => (a.potency_score||0) >= 8).length;
   const gaps = topics.filter(t => t.is_content_gap).length;
   document.getElementById('stats').innerHTML = `
-    <div class="stat"><div class="n">${audio.length}</div><div class="l">Audio items</div></div>
+    <div class="stat"><div class="n">${audio.length}</div><div class="l">Recommended (6+)</div></div>
     <div class="stat"><div class="n" style="color:#c0392b;">${highPotency}</div><div class="l">High potency (8+)</div></div>
     <div class="stat"><div class="n">${topics.length}</div><div class="l">Topics</div></div>
     <div class="stat"><div class="n" style="color:#2ecc71;">${gaps}</div><div class="l">Content gaps</div></div>

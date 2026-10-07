@@ -1,5 +1,5 @@
 """
-Scrapes Warhammer Community site and Dakka Dakka forum for
+Scrapes the Warhammer Community site for
 trending topics, new releases, and community discussions.
 """
 
@@ -63,43 +63,12 @@ def _scrape_warhammer_community() -> list[dict]:
     return results[:20]
 
 
-def _scrape_dakkadakka() -> list[dict]:
-    url = "https://www.dakkadakka.com/dakkaforum/forums/show/1.page"
-    results = []
-    try:
-        resp = requests.get(url, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-        soup = BeautifulSoup(resp.text, "lxml")
-
-        for el in soup.find_all(["h3", "h4", "td", "a"], class_=re.compile(r"topic|thread|subject", re.I) if False else True):
-            title = el.get_text(strip=True)
-            if len(title) < 10 or len(title) > 200:
-                continue
-            if _is_skippable(title):
-                continue
-
-            results.append({
-                "source": "dakkadakka",
-                "title": title,
-                "url": url,
-                "type": "topic",
-                "is_question": title.strip().endswith("?"),
-                "is_audio_mention": any(
-                    kw in title.lower()
-                    for kw in ["music", "song", "audio", "sound", "track"]
-                ),
-            })
-
-    except Exception as e:
-        print(f"    [community] Dakka Dakka error: {e}")
-
-    return results[:20]
+# DakkaDakka was removed (Oct 2026): every forum page now sits behind a
+# "prove you're human" check added specifically to stop scraping bots, and its
+# robots.txt disallows AI crawlers. We respect that rather than work around it.
 
 
 def scrape_community() -> list[dict]:
-    import re   # needed inside _scrape_dakkadakka but imported here to keep module clean
     wc = _scrape_warhammer_community()
-    dd = _scrape_dakkadakka()
-    total = wc + dd
-    print(f"    [community] {len(wc)} WarCom + {len(dd)} DakkaDakka = {len(total)} items")
-    return total
+    print(f"    [community] {len(wc)} Warhammer Community items")
+    return wc

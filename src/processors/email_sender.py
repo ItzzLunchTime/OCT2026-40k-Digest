@@ -19,7 +19,13 @@ from src.config import (
     DIGEST_RECIPIENT,
     ALERT_THRESHOLD,
     FORMAT_TYPES,
+    MIN_RECOMMEND_SCORE,
 )
+
+try:
+    from premailer import transform as _inline_css
+except ImportError:          # email still sends, just with <style> instead of inline styles
+    _inline_css = None
 
 # Max audio cards shown per format section in the digest
 PER_FORMAT_LIMIT = 4
@@ -42,6 +48,12 @@ def _send(subject: str, html_body: str, recipient: str = DIGEST_RECIPIENT) -> bo
     msg["Subject"] = subject
     msg["From"] = GMAIL_ADDRESS
     msg["To"] = recipient
+    if _inline_css:
+        try:
+            html_body = _inline_css(html_body, keep_style_tags=True, remove_classes=False,
+                                    disable_validation=True, cssutils_logging_level="CRITICAL")
+        except Exception as e:
+            print(f"    [email] CSS inlining skipped: {e}")
     msg.attach(MIMEText(html_body, "html", "utf-8"))
 
     try:
@@ -83,11 +95,11 @@ def _score_badge(score: int) -> str:
 
 ALERT_CSS = """
   body { font-family: 'Helvetica Neue', Arial, sans-serif; background:#0d0d0d; color:#e8e8e8; margin:0; padding:0; }
-  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; }
+  .wrap { max-width:600px; margin:0 auto; padding:24px 16px; background:#0d0d0d; color:#e8e8e8; }
   .header { border-left:4px solid #c0392b; padding:8px 16px; margin-bottom:24px; }
   .header h1 { margin:0; font-size:20px; color:#c0392b; letter-spacing:1px; }
   .header p { margin:4px 0 0; font-size:13px; color:#aaa; }
-  .card { background:#1a1a1a; border:1px solid #333; border-radius:6px; padding:20px; margin-bottom:16px; }
+  .card { background:#1a1a1a; border:1px solid #333; border-radius:6px; padding:20px; margin-bottom:16px; color:#e8e8e8; }
   .card h2 { margin:0 0 4px; font-size:18px; color:#fff; }
   .card .meta { font-size:12px; color:#888; margin-bottom:12px; }
   .card .field { margin:8px 0; font-size:14px; line-height:1.5; }
@@ -166,29 +178,42 @@ def send_alert(audio: dict) -> bool:
 
 DIGEST_CSS = """
   body { font-family: 'Helvetica Neue', Arial, sans-serif; background:#0d0d0d; color:#e8e8e8; margin:0; padding:0; }
-  .wrap { max-width:680px; margin:0 auto; padding:24px 16px; }
-  h1 { font-size:22px; color:#fff; margin:0 0 4px; }
+  .outer { background:#0d0d0d; width:100%; }
+  .wrap { max-width:680px; margin:0 auto; padding:24px 16px; background:#0d0d0d; color:#e8e8e8; }
+  h1 { font-size:22px; color:#ffffff; margin:0 0 4px; }
+  p, div, td, span { color:inherit; }
   .subtitle { font-size:13px; color:#888; margin-bottom:32px; }
   h2 { font-size:16px; color:#c0392b; text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid #333; padding-bottom:6px; margin:32px 0 16px; }
   h3 { font-size:17px; color:#fff; margin:0 0 4px; }
-  .card { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:16px 20px; margin-bottom:12px; }
-  .meta { font-size:12px; color:#777; margin-bottom:10px; }
-  .field { margin:6px 0; font-size:13px; line-height:1.55; }
-  .label { color:#888; font-size:11px; text-transform:uppercase; letter-spacing:.5px; display:block; margin-bottom:2px; }
-  .angle { background:#111; border-left:3px solid #c0392b; padding:10px 14px; margin-top:12px; font-style:italic; font-size:13px; color:#bbb; }
+  .card { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:16px 20px; margin-bottom:12px; color:#e8e8e8; }
+  .meta { font-size:12px; color:#9a9a9a; margin-bottom:10px; }
+  .field { margin:6px 0; font-size:13px; line-height:1.55; color:#e0e0e0; }
+  .label { color:#9a9a9a; font-size:11px; text-transform:uppercase; letter-spacing:.5px; display:block; margin-bottom:2px; }
+  .angle { background:#111111; border-left:3px solid #c0392b; padding:10px 14px; margin-top:12px; font-style:italic; font-size:13px; color:#d0d0d0; }
   .badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; margin-right:4px; }
   .gap-badge { background:#1a4a2e; color:#2ecc71; }
   .q-badge { background:#1a2a4a; color:#5dade2; }
-  .topic-card { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:14px 18px; margin-bottom:10px; }
-  .topic-title { font-size:15px; color:#fff; font-weight:600; margin:0 0 4px; }
-  .topic-meta { font-size:12px; color:#777; margin-bottom:8px; }
-  .topic-field { font-size:13px; color:#ccc; line-height:1.5; margin:4px 0; }
+  .topic-card { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:6px; padding:14px 18px; margin-bottom:10px; color:#e0e0e0; }
+  .topic-title { font-size:15px; color:#ffffff; font-weight:600; margin:0 0 4px; }
+  .topic-meta { font-size:12px; color:#9a9a9a; margin-bottom:8px; }
+  .topic-field { font-size:13px; color:#d6d6d6; line-height:1.5; margin:4px 0; }
   a { color:#e67e22; text-decoration:none; }
   a:hover { text-decoration:underline; }
-  .footer { font-size:11px; color:#444; text-align:center; margin-top:40px; padding-top:16px; border-top:1px solid #222; }
-  .summary-bar { background:#111; border:1px solid #222; border-radius:6px; padding:12px 16px; margin-bottom:28px; font-size:13px; color:#aaa; }
-  .summary-bar strong { color:#fff; }
+  .footer { font-size:11px; color:#777; text-align:center; margin-top:40px; padding-top:16px; border-top:1px solid #222; }
+  .summary-bar { background:#111111; border:1px solid #222; border-radius:6px; padding:12px 16px; margin-bottom:28px; font-size:13px; color:#bbbbbb; }
+  .summary-bar strong { color:#ffffff; }
 """
+
+
+def _title_row(title_html: str, right_html: str) -> str:
+    """Title on the left, badge on the right — a table, because most mail clients ignore flexbox."""
+    return (
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
+        'style="border-collapse:collapse;margin:0 0 4px;"><tr>'
+        f'<td style="vertical-align:top;padding:0 8px 0 0;">{title_html}</td>'
+        f'<td style="vertical-align:top;text-align:right;white-space:nowrap;width:1%;">{right_html}</td>'
+        '</tr></table>'
+    )
 
 
 def _audio_card(audio: dict, rank: int) -> str:
@@ -228,10 +253,7 @@ def _audio_card(audio: dict, rank: int) -> str:
     meta = " · ".join(meta_parts)
 
     return f"""<div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px;">
-    <h3>#{rank} {name}</h3>
-    {_score_badge(score)}
-  </div>
+  {_title_row(f'<h3>#{rank} {name}</h3>', _score_badge(score))}
   <div class="meta">{meta}</div>
   {'<div class="field"><span class="label">Trend</span>' + trend_note + '</div>' if trend_note else ''}
   {'<div class="field"><span class="label">Categories</span>' + categories + '</div>' if categories else ''}
@@ -313,10 +335,7 @@ def _trend_scout_html(ts: dict | None) -> str:
             examples.append(f'<div style="margin:6px 0;font-size:13px;">♪ {title} '
                             f'<span style="color:#777;">· {ex.get("potency_score", 0)}/10</span>{angle}</div>')
         cards.append(f"""<div class="card" style="border-left:3px solid #e67e22;">
-  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
-    <h3>#{rank} {_e(fmt)}</h3>
-    <span style="font-size:12px;font-weight:700;color:{colour};">{label}{delta_txt}</span>
-  </div>
+  {_title_row(f'<h3>#{rank} {_e(fmt)}</h3>', f'<span style="font-size:12px;font-weight:700;color:{colour};">{label}{delta_txt}</span>')}
   <div class="meta">{f['count']} trending sounds · {f['strong']} strong (6+) · avg {f['avg_score']}/10 · niche fit {round(f['avg_fit'] * 100)}% · {f['share']}% of this week's audio</div>
   {''.join(examples)}
 </div>""")
@@ -341,13 +360,15 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     scored_audio: sorted by potency_score descending (from claude_scorer)
     scored_topics: list of topic dicts (from claude_scorer)
     """
+    # Only sounds above the bar get recommended; the rest stay in the JSON for stats
+    scored_audio = [a for a in scored_audio if (a.get("potency_score") or 0) >= MIN_RECOMMEND_SCORE]
     audio_count = len(scored_audio)
     topic_count = len(scored_topics)
     alert_count = sum(1 for a in scored_audio if a.get("potency_score", 0) >= ALERT_THRESHOLD)
 
     # Summary bar
     summary_html = f"""<div class="summary-bar">
-  <strong>{audio_count}</strong> audio items scored &nbsp;·&nbsp;
+  <strong>{audio_count}</strong> sounds recommended ({MIN_RECOMMEND_SCORE}+/10) &nbsp;·&nbsp;
   <strong>{topic_count}</strong> topics identified &nbsp;·&nbsp;
   <strong style="color:#c0392b;">{alert_count}</strong> high-potency alerts (≥{ALERT_THRESHOLD})
 </div>"""
@@ -376,8 +397,11 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     topic_cards = "".join(_topic_card(t) for t in scored_topics)
 
     html = f"""<!DOCTYPE html>
-<html><head><meta charset="utf-8"><style>{DIGEST_CSS}</style></head>
-<body><div class="wrap">
+<html><head><meta charset="utf-8"><meta name="color-scheme" content="dark">
+<style>{DIGEST_CSS}</style></head>
+<body style="margin:0;padding:0;background:#0d0d0d;">
+<table role="presentation" class="outer" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d"><tr><td>
+<div class="wrap">
   <h1>🎖 40K Content Intelligence Digest</h1>
   <p class="subtitle">{TODAY} · Weekly automated report</p>
 
@@ -386,7 +410,7 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
   {_trend_scout_html(trend_scout)}
 
   <h2>🔊 Trending Audio — by Format</h2>
-  {audio_cards if audio_cards else '<p style="color:#666;">No audio items scored today.</p>'}
+  {audio_cards if audio_cards else f'<p style="color:#9a9a9a;">No sounds scored {MIN_RECOMMEND_SCORE}/10 or higher this week.</p>'}
 
   <h2>📡 Community Topics — Content Opportunities</h2>
   {topic_cards if topic_cards else '<p style="color:#666;">No topics identified today.</p>'}
@@ -395,7 +419,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     40K Content Intelligence Digest · {TODAY} ·
     Powered by Claude API · <a href="https://itzzlunchtime.github.io/OCT2026-40k-Digest/">View Dashboard</a>
   </div>
-</div></body></html>"""
+</div>
+</td></tr></table></body></html>"""
 
     lead = f" — {trend_scout['top'][0]} leads" if trend_scout and trend_scout.get("top") else ""
     subject = f"🎖 40K Digest · Week of {TODAY_SHORT}{lead}"

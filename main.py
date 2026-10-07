@@ -77,9 +77,10 @@ def main() -> None:
     trend_scout = build_trend_scout(scored_audio)
 
     # ── 6. Fire individual alerts for high-potency audio ─────────
-    from src.config import ALERT_THRESHOLD
+    from src.config import ALERT_THRESHOLD, MIN_RECOMMEND_SCORE
     # Capped so a strong day can't flood the inbox — the rest are in the digest
-    alerts = [a for a in scored_audio if a.get("potency_score", 0) >= ALERT_THRESHOLD][:3]
+    alert_bar = max(ALERT_THRESHOLD, MIN_RECOMMEND_SCORE)
+    alerts = [a for a in scored_audio if a.get("potency_score", 0) >= alert_bar][:3]
     if alerts:
         print(f"  ⚡ Sending {len(alerts)} individual alert(s)…")
         for item in alerts:

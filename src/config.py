@@ -26,6 +26,9 @@ DIGEST_RECIPIENT: str = os.getenv("DIGEST_RECIPIENT", GMAIL_ADDRESS)
 # ── Scoring ───────────────────────────────────────────────────────
 ALERT_THRESHOLD: int = int(os.getenv("ALERT_THRESHOLD") or "8")
 
+# Audio below this potency score is never recommended (email, alerts, Trend Scout examples)
+MIN_RECOMMEND_SCORE: int = 6
+
 # Hard cap on audio items sent to the scorer per run (keeps cost + output bounded)
 MAX_AUDIO_ITEMS: int = 60
 # Items per Claude call — small enough that the JSON reply never hits max_tokens
@@ -53,14 +56,32 @@ SUBREDDITS = [
 ]
 
 # ── YouTube search terms ──────────────────────────────────────────
+# Core niche — searched for both Shorts and 4–20 min videos
 YOUTUBE_QUERIES = [
-    "Warhammer 40K 2026",
-    "miniature painting 2026",
-    "Kill Team 2026",
-    "Warhammer lore 2026",
-    "tabletop RPG 2026",
-    "Age of Sigmar 2026",
+    "Warhammer 40K",
+    "Warhammer 40k lore",
+    "Kill Team",
+    "Horus Heresy",
+    "Age of Sigmar",
+    "miniature painting",
+    "miniature painting techniques",
+    "warhammer hobby",
 ]
+
+# Broader nerd / internet culture that crosses into the niche
+YOUTUBE_CROSSOVER_QUERIES = [
+    "Space Marine 2",
+    "tabletop RPG",
+    "dungeons and dragons",
+    "green screen tutorial 40k",
+    "warhammer meme",
+    "nerd culture",
+    "cosplay build",
+    "3d printed miniatures",
+]
+
+YOUTUBE_WINDOW_DAYS: int = 14     # weekly run → look back two weeks
+YOUTUBE_MAX_PER_GROUP: int = 30   # fastest-moving videos kept per query group
 
 # ── Aggregator URLs ───────────────────────────────────────────────
 AGGREGATOR_URLS = [
@@ -74,7 +95,6 @@ AGGREGATOR_URLS = [
 # ── Community site URLs ───────────────────────────────────────────
 COMMUNITY_URLS = [
     "https://www.warhammer-community.com/",
-    "https://www.dakkadakka.com/",
 ]
 
 # ── TikTok Creative Center ────────────────────────────────────────

@@ -17,11 +17,11 @@ import json
 from datetime import date, timedelta
 from pathlib import Path
 
-from src.config import FORMAT_TYPES, CLAUDE_MODEL
+from src.config import FORMAT_TYPES, CLAUDE_MODEL, MIN_RECOMMEND_SCORE
 
 DATA_DIR = Path("docs/data")
 
-STRONG_SCORE = 6        # potency at or above this counts as a "strong" sound
+STRONG_SCORE = MIN_RECOMMEND_SCORE   # potency at or above this counts as a "strong" sound
 RISING_DELTA = 5.0      # share change (percentage points) that counts as rising/falling
 EXAMPLES_PER_FORMAT = 2
 
@@ -53,8 +53,9 @@ def _format_stats(audio: list[dict]) -> dict[str, dict]:
                     "tiktok_link": a.get("tiktok_link", ""),
                     "cinematic_angle": a.get("cinematic_angle", ""),
                 }
-                for a in best[:EXAMPLES_PER_FORMAT]
-            ],
+                for a in best
+                if (a.get("potency_score") or 0) >= MIN_RECOMMEND_SCORE
+            ][:EXAMPLES_PER_FORMAT],
         }
     return stats
 
