@@ -1,5 +1,5 @@
 """
-main.py — orchestrates the full daily digest pipeline.
+main.py — orchestrates the full weekly digest pipeline.
 
 Run locally:   python main.py
 Run in CI:     triggered by GitHub Actions on schedule
@@ -80,7 +80,7 @@ def main() -> None:
         for item in alerts:
             send_alert(item)
 
-    # ── 7. Send daily digest email ───────────────────────────────
+    # ── 7. Send weekly digest email ───────────────────────────────
     print("Sending digest email…")
     send_digest(scored_audio, scored_topics)
 

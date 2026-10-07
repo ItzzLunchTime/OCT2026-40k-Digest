@@ -123,7 +123,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <header>
   <div>
     <h1>🎖 40K Content Intelligence</h1>
-    <div class="sub">Daily trending audio &amp; topic digest</div>
+    <div class="sub">Weekly trending audio &amp; topic digest</div>
   </div>
 </header>
 
@@ -173,7 +173,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   <div id="topicsPanel" style="display:none;"></div>
 </div>
 
-<footer>40K Content Intelligence · Automated daily digest via GitHub Actions</footer>
+<footer>40K Content Intelligence · Automated weekly digest via GitHub Actions</footer>
 
 <script>
 let allDates = [];

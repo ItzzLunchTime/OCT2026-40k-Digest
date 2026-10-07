@@ -1,9 +1,9 @@
 """
-Formats and sends the daily digest email and individual alert emails
+Formats and sends the weekly digest email and individual alert emails
 via Gmail SMTP using an App Password.
 
 Two email types:
-  - digest: full daily report (audio + topics)
+  - digest: full weekly report (audio + topics)
   - alert: fired immediately when a potency score >= ALERT_THRESHOLD
 """
 
@@ -282,7 +282,7 @@ def _topic_card(topic: dict) -> str:
 
 def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
     """
-    Build and send the full daily digest email.
+    Build and send the full weekly digest email.
     scored_audio: sorted by potency_score descending (from claude_scorer)
     scored_topics: list of topic dicts (from claude_scorer)
     """
@@ -324,7 +324,7 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
 <html><head><meta charset="utf-8"><style>{DIGEST_CSS}</style></head>
 <body><div class="wrap">
   <h1>🎖 40K Content Intelligence Digest</h1>
-  <p class="subtitle">{TODAY} · Daily automated report</p>
+  <p class="subtitle">{TODAY} · Weekly automated report</p>
 
   {summary_html}
 
