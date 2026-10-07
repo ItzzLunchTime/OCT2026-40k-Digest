@@ -94,6 +94,8 @@ AGGREGATOR_URLS = [
     "https://buffer.com/resources/trending-audio-instagram/",
 ]
 
+AGG_MAX_PER_SITE: int = 20      # newest linked sounds kept per trend blog
+
 # ── Community site URLs ───────────────────────────────────────────
 COMMUNITY_URLS = [
     "https://www.warhammer-community.com/",

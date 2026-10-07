@@ -17,7 +17,7 @@ a useful cross-source trend signal for the scorer.
 import re
 import requests
 from bs4 import BeautifulSoup, Tag
-from src.config import AGGREGATOR_URLS, MAX_AUDIO_ITEMS
+from src.config import AGGREGATOR_URLS, MAX_AUDIO_ITEMS, AGG_MAX_PER_SITE
 
 HEADERS = {
     "User-Agent": (
@@ -185,7 +185,8 @@ def scrape_aggregators() -> list[dict]:
         soup = _fetch(url)
         if not soup:
             continue
-        items = _extract_audio_links(soup, url)
+        # Blogs list newest picks first and keep older weeks further down the page
+        items = _extract_audio_links(soup, url)[:AGG_MAX_PER_SITE]
         print(f"    [aggregators] {url.split('/')[2]} → {len(items)} linked audio items")
 
         for item in items:
