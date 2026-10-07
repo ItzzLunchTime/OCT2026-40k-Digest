@@ -9,16 +9,34 @@ Returns enriched lists ready for email and dashboard.
 """
 
 import json
+import re
 import anthropic
-from src.config import ANTHROPIC_API_KEY, CLAUDE_MODEL, ALERT_THRESHOLD
+from src.config import (
+    ANTHROPIC_API_KEY, CLAUDE_MODEL, ALERT_THRESHOLD, AUDIO_BATCH_SIZE, FORMAT_TYPES,
+)
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+
+
+def _parse_json_array(raw_text: str) -> list:
+    """Pull the JSON array out of a model reply, tolerating code fences or stray prose."""
+    text = raw_text.strip()
+    fence = re.search(r"```(?:json)?\s*(.*?)```", text, re.S)
+    if fence:
+        text = fence.group(1).strip()
+    start, end = text.find("["), text.rfind("]")
+    if start == -1 or end == -1:
+        raise ValueError("no JSON array in reply")
+    return json.loads(text[start : end + 1])
+
 
 # ─────────────────────────────────────────────────────────────────
 # AUDIO SCORING
 # ─────────────────────────────────────────────────────────────────
 
-AUDIO_SYSTEM_PROMPT = """
+FORMAT_LIST = "\n".join(f"  - {f}" for f in FORMAT_TYPES)
+
+AUDIO_SYSTEM_PROMPT = f"""
 You are a content intelligence system for a Warhammer 40K / hobby / tabletop RPG
 Instagram account run by a filmmaker with a strong cinematic sensibility.
 
@@ -31,77 +49,126 @@ and counterpoint, not just "does this sound cool." The filmmaker background is n
 referenced directly in content; it is simply the lens through which editorial decisions
 are made.
 
+Each input item has an "id", plus scraped fields. Use "context" (the blurb around the
+link on the source site) and "trend_note" to understand HOW the sound is being used.
+"mention_count" is how many independent trend sites listed it — higher means broader
+momentum.
+
+Classify every item into exactly one content format (use the label verbatim):
+{FORMAT_LIST}
+Format guide:
+  - POV + reaction: first-person voiceover or caption reacting to a statement/situation
+  - Hobby + trending audio: craft/painting/build process riding the sound
+  - Green screen template: speaker in front of a reference image or clip
+  - Show/movie clip: audio lifted from a known film/show/game used as backdrop
+  - Audio/voiceline: a standalone sound bite or voiceline that drives the joke/format
+
 For each audio item, return a JSON object with these exact fields:
-{
+{{
+  "id": <the input id, unchanged>,
   "name": "track or audio name",
   "artist": "artist or source",
   "audio_type": "music | dialogue | soundbite | template | meme",
-  "use_count": "as provided or empty string",
   "trend_stage": "Early | Rising | Peak | Fading | Unknown",
+  "format_type": "one of the five format labels above",
+  "niche_relevance": <float 0-1: how applicable to 40K / minis / crafts / nerd culture>,
   "categories": ["list of applicable: Warhammer 40K, Dark Fantasy, Gaming/Hobby, General Trending"],
   "potency_score": <integer 1-10>,
   "sync_note": "brief note on sync potential — beat drops, swells, silence breaks",
   "register_note": "emotional register this creates — dread, awe, tension, intimacy, etc.",
   "counterpoint_potential": true or false,
   "counterpoint_note": "if true: how it creates productive tension against typical 40K visuals",
-  "cinematic_angle": "a specific, filmmaker-informed post idea for this account — never mention filmmaking directly",
-  "ig_link": "as provided or empty string",
-  "tiktok_link": "as provided or empty string",
-  "source_url": "as provided"
-}
+  "cinematic_angle": "a specific, filmmaker-informed post idea for this account — never mention filmmaking directly"
+}}
 
 Scoring guidance:
 - 9-10: Strong early-stage sound with clear cinematic application for 40K content
 - 7-8: Good fit, usable with creative framing
 - 5-6: Possible with significant creative work
 - 1-4: Poor fit for this account
+If an item is clearly not an audio track (a website heading, a product name), give it
+potency_score 1 and niche_relevance 0.
 
 Consider personal taste profile if provided — weight scores toward demonstrated preferences.
-Return ONLY a JSON array of objects. No commentary outside the JSON.
+Return ONLY a JSON array with one object per input item. No commentary outside the JSON.
 """
+
+# Scraped fields we trust over anything the model echoes back
+PASSTHROUGH_FIELDS = [
+    "use_count", "trend_note", "context", "source_url", "sources",
+    "mention_count", "ig_link", "tiktok_link",
+]
+
+
+def _score_batch(batch: list[dict], taste_note: str) -> list[dict]:
+    user_content = (
+        f"Score the following {len(batch)} audio items.\n"
+        f"{taste_note}\n"
+        f"AUDIO ITEMS:\n{json.dumps(batch, indent=2, ensure_ascii=False)}"
+    )
+    response = client.messages.create(
+        model=CLAUDE_MODEL,
+        max_tokens=8000,
+        system=AUDIO_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": user_content}],
+    )
+    if response.stop_reason == "max_tokens":
+        raise ValueError("reply truncated at max_tokens")
+    return _parse_json_array(response.content[0].text)
 
 
 def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
     if not raw_audio:
         return []
 
-    # Build the user message
     taste_note = ""
     if taste_profile:
         taste_note = f"\n\nPERSONAL TASTE PROFILE (use to weight scores):\n{taste_profile}\n"
 
-    user_content = (
-        f"Score the following {len(raw_audio)} audio items.\n"
-        f"{taste_note}\n"
-        f"AUDIO ITEMS:\n{json.dumps(raw_audio, indent=2)}"
+    items = [dict(item, id=i) for i, item in enumerate(raw_audio)]
+    scored: list[dict] = []
+    failed = 0
+
+    for start in range(0, len(items), AUDIO_BATCH_SIZE):
+        batch = items[start : start + AUDIO_BATCH_SIZE]
+        result = None
+        for attempt in (1, 2):
+            try:
+                result = _score_batch(batch, taste_note)
+                break
+            except Exception as e:
+                print(f"    [scorer] Audio batch {start // AUDIO_BATCH_SIZE + 1} "
+                      f"attempt {attempt} failed: {e}")
+        if result is None:
+            failed += len(batch)
+            continue
+
+        by_id = {it["id"]: it for it in batch}
+        for obj in result:
+            src = by_id.get(obj.get("id"))
+            if src is None:
+                continue
+            for f in PASSTHROUGH_FIELDS:
+                if f in src:
+                    obj[f] = src[f]
+            if obj.get("format_type") not in FORMAT_TYPES:
+                obj["format_type"] = "Audio/voiceline"
+            try:
+                obj["niche_relevance"] = max(0.0, min(1.0, float(obj.get("niche_relevance", 0))))
+            except (TypeError, ValueError):
+                obj["niche_relevance"] = 0.0
+            obj.pop("id", None)
+            scored.append(obj)
+
+    if failed:
+        print(f"    [scorer] {failed} audio item(s) could not be scored and were dropped")
+    print(f"    [scorer] Scored {len(scored)}/{len(raw_audio)} audio items")
+
+    scored.sort(
+        key=lambda x: (x.get("potency_score", 0), x.get("niche_relevance", 0)),
+        reverse=True,
     )
-
-    try:
-        response = client.messages.create(
-            model=CLAUDE_MODEL,
-            max_tokens=8000,
-            system=AUDIO_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": user_content}],
-        )
-
-        raw_text = response.content[0].text.strip()
-
-        # Strip markdown code fences if present
-        if raw_text.startswith("```"):
-            raw_text = raw_text.split("```")[1]
-            if raw_text.startswith("json"):
-                raw_text = raw_text[4:]
-        raw_text = raw_text.strip()
-
-        scored = json.loads(raw_text)
-
-        # Sort by potency descending
-        scored.sort(key=lambda x: x.get("potency_score", 0), reverse=True)
-        return scored
-
-    except Exception as e:
-        print(f"    [scorer] Audio scoring error: {e}")
-        return raw_audio   # return unscored as fallback
+    return scored
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -170,14 +237,7 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
             messages=[{"role": "user", "content": user_content}],
         )
 
-        raw_text = response.content[0].text.strip()
-        if raw_text.startswith("```"):
-            raw_text = raw_text.split("```")[1]
-            if raw_text.startswith("json"):
-                raw_text = raw_text[4:]
-        raw_text = raw_text.strip()
-
-        return json.loads(raw_text)
+        return _parse_json_array(response.content[0].text)
 
     except Exception as e:
         print(f"    [scorer] Topic scoring error: {e}")

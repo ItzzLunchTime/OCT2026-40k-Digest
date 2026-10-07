@@ -73,7 +73,8 @@ def main() -> None:
 
     # ── 6. Fire individual alerts for high-potency audio ─────────
     from src.config import ALERT_THRESHOLD
-    alerts = [a for a in scored_audio if a.get("potency_score", 0) >= ALERT_THRESHOLD]
+    # Capped so a strong day can't flood the inbox — the rest are in the digest
+    alerts = [a for a in scored_audio if a.get("potency_score", 0) >= ALERT_THRESHOLD][:3]
     if alerts:
         print(f"  ⚡ Sending {len(alerts)} individual alert(s)…")
         for item in alerts:

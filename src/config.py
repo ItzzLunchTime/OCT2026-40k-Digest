@@ -24,7 +24,21 @@ GMAIL_APP_PASSWORD: str = os.environ["GMAIL_APP_PASSWORD"]
 DIGEST_RECIPIENT: str = os.getenv("DIGEST_RECIPIENT", GMAIL_ADDRESS)
 
 # ── Scoring ───────────────────────────────────────────────────────
-ALERT_THRESHOLD: int = int(os.getenv("ALERT_THRESHOLD", "8"))
+ALERT_THRESHOLD: int = int(os.getenv("ALERT_THRESHOLD") or "8")
+
+# Hard cap on audio items sent to the scorer per run (keeps cost + output bounded)
+MAX_AUDIO_ITEMS: int = 60
+# Items per Claude call — small enough that the JSON reply never hits max_tokens
+AUDIO_BATCH_SIZE: int = 15
+
+# Content-format taxonomy the scorer classifies each audio item into
+FORMAT_TYPES = [
+    "POV + reaction",
+    "Hobby + trending audio",
+    "Green screen template",
+    "Show/movie clip",
+    "Audio/voiceline",
+]
 
 # ── Niche subreddits ──────────────────────────────────────────────
 SUBREDDITS = [

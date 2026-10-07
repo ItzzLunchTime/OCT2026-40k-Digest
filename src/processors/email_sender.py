@@ -18,7 +18,11 @@ from src.config import (
     GMAIL_APP_PASSWORD,
     DIGEST_RECIPIENT,
     ALERT_THRESHOLD,
+    FORMAT_TYPES,
 )
+
+# Max audio cards shown per format section in the digest
+PER_FORMAT_LIMIT = 4
 
 TODAY = date.today().strftime("%B %-d, %Y")   # e.g. "September 30, 2026"
 TODAY_SHORT = date.today().strftime("%Y-%m-%d")
@@ -203,6 +207,9 @@ def _audio_card(audio: dict, rank: int) -> str:
     ig_link = audio.get("ig_link", "")
     tiktok_link = audio.get("tiktok_link", "")
     source_url = audio.get("source_url", "")
+    trend_note = _e(audio.get("trend_note", ""))
+    mentions = audio.get("mention_count", 1) or 1
+    relevance = audio.get("niche_relevance")
 
     links = []
     if ig_link:
@@ -214,6 +221,10 @@ def _audio_card(audio: dict, rank: int) -> str:
     link_html = "  ".join(links)
 
     meta_parts = [p for p in [artist, audio_type, trend_stage, use_count] if p]
+    if mentions > 1:
+        meta_parts.append(f"on {mentions} trend sites")
+    if isinstance(relevance, (int, float)):
+        meta_parts.append(f"niche fit {round(relevance * 100)}%")
     meta = " · ".join(meta_parts)
 
     return f"""<div class="card">
@@ -222,6 +233,7 @@ def _audio_card(audio: dict, rank: int) -> str:
     {_score_badge(score)}
   </div>
   <div class="meta">{meta}</div>
+  {'<div class="field"><span class="label">Trend</span>' + trend_note + '</div>' if trend_note else ''}
   {'<div class="field"><span class="label">Categories</span>' + categories + '</div>' if categories else ''}
   <div class="field"><span class="label">Sync potential</span>{sync_note or '—'}</div>
   <div class="field"><span class="label">Emotional register</span>{register_note or '—'}</div>
@@ -285,10 +297,25 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
   <strong style="color:#c0392b;">{alert_count}</strong> high-potency alerts (≥{ALERT_THRESHOLD})
 </div>"""
 
-    # Audio section — top 15 max to keep email scannable
-    audio_cards = "".join(
-        _audio_card(a, i + 1) for i, a in enumerate(scored_audio[:15])
-    )
+    # Audio section — grouped by content format, best few per format
+    sections = []
+    for fmt in FORMAT_TYPES:
+        group = [a for a in scored_audio if a.get("format_type") == fmt]
+        if not group:
+            continue
+        cards = "".join(_audio_card(a, i + 1) for i, a in enumerate(group[:PER_FORMAT_LIMIT]))
+        more = (f'<p style="font-size:12px;color:#666;">+{len(group) - PER_FORMAT_LIMIT} more '
+                f'on the dashboard</p>' if len(group) > PER_FORMAT_LIMIT else "")
+        sections.append(
+            f'<h3 style="color:#e67e22;font-size:14px;margin:24px 0 10px;">'
+            f'{_e(fmt)} <span style="color:#666;font-weight:400;">({len(group)})</span></h3>'
+            + cards + more
+        )
+    # Anything without a format (e.g. older-style data) goes last
+    unformatted = [a for a in scored_audio if a.get("format_type") not in FORMAT_TYPES]
+    if unformatted:
+        sections.append("".join(_audio_card(a, i + 1) for i, a in enumerate(unformatted[:PER_FORMAT_LIMIT])))
+    audio_cards = "".join(sections)
 
     # Topic section
     topic_cards = "".join(_topic_card(t) for t in scored_topics)
@@ -301,7 +328,7 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
 
   {summary_html}
 
-  <h2>🔊 Trending Audio — Scored &amp; Ranked</h2>
+  <h2>🔊 Trending Audio — by Format</h2>
   {audio_cards if audio_cards else '<p style="color:#666;">No audio items scored today.</p>'}
 
   <h2>📡 Community Topics — Content Opportunities</h2>
@@ -309,7 +336,7 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
 
   <div class="footer">
     40K Content Intelligence Digest · {TODAY} ·
-    Powered by Claude API · <a href="https://github.com">View Dashboard</a>
+    Powered by Claude API · <a href="https://itzzlunchtime.github.io/OCT2026-40k-Digest/">View Dashboard</a>
   </div>
 </div></body></html>"""
 
