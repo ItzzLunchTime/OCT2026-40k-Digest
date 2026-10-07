@@ -75,13 +75,21 @@
 <header>
   <div>
     <h1>🎖 40K Content Intelligence</h1>
-    <div class="sub">Daily trending audio &amp; topic digest</div>
+    <div class="sub">Weekly trending audio &amp; topic digest</div>
   </div>
 </header>
 
 <div class="controls">
   <input type="text" id="search" placeholder="Search audio, topics…" oninput="applyFilters()">
   <select id="dateSelect" onchange="loadDate(this.value)"></select>
+  <select id="formatFilter" onchange="applyFilters()">
+    <option value="">All formats</option>
+    <option value="POV + reaction">POV + reaction</option>
+    <option value="Hobby + trending audio">Hobby + trending audio</option>
+    <option value="Green screen template">Green screen template</option>
+    <option value="Show/movie clip">Show/movie clip</option>
+    <option value="Audio/voiceline">Audio/voiceline</option>
+  </select>
   <select id="typeFilter" onchange="applyFilters()">
     <option value="">All audio types</option>
     <option value="music">Music</option>
@@ -117,7 +125,7 @@
   <div id="topicsPanel" style="display:none;"></div>
 </div>
 
-<footer>40K Content Intelligence · Automated daily digest via GitHub Actions</footer>
+<footer>40K Content Intelligence · Automated weekly digest via GitHub Actions</footer>
 
 <script>
 let allDates = [];
@@ -139,12 +147,18 @@ function audioCard(a, rank) {
     a.source_url ? `<a href="${esc(a.source_url)}" target="_blank">Source ↗</a>` : '',
   ].filter(Boolean).join('');
 
-  const meta = [a.artist, a.audio_type, a.trend_stage, a.use_count].filter(Boolean).join(' · ');
+  const extra = [
+    (a.mention_count||1) > 1 ? `on ${a.mention_count} trend sites` : '',
+    typeof a.niche_relevance === 'number' ? `niche fit ${Math.round(a.niche_relevance*100)}%` : '',
+  ];
+  const meta = [a.artist, a.audio_type, a.trend_stage, a.use_count, ...extra].filter(Boolean).join(' · ');
+  const fmt = a.format_type ? `<span class="cat-tag" style="border-color:#e67e22;color:#e67e22;">${esc(a.format_type)}</span>` : '';
 
   return `<div class="audio-card" data-score="${a.potency_score||0}" data-type="${esc(a.audio_type||'')}" data-stage="${esc(a.trend_stage||'')}">
     <div class="top"><h3>#${rank} ${esc(a.name||'Unknown')}</h3>${scoreBadge(a.potency_score||0)}</div>
     <div class="audio-meta">${esc(meta)}</div>
-    ${cats ? `<div style="margin-bottom:8px;">${cats}</div>` : ''}
+    ${(fmt || cats) ? `<div style="margin-bottom:8px;">${fmt}${cats}</div>` : ''}
+    ${a.trend_note ? `<div class="field"><span class="field-label">Trend</span>${esc(a.trend_note)}</div>` : ''}
     ${a.sync_note ? `<div class="field"><span class="field-label">Sync potential</span>${esc(a.sync_note)}</div>` : ''}
     ${a.register_note ? `<div class="field"><span class="field-label">Emotional register</span>${esc(a.register_note)}</div>` : ''}
     ${a.counterpoint_potential && a.counterpoint_note ? `<div class="field"><span class="field-label">Counterpoint</span>${esc(a.counterpoint_note)}</div>` : ''}
@@ -178,16 +192,18 @@ function topicCard(t) {
 function applyFilters() {
   const q = document.getElementById('search').value.toLowerCase();
   const type = document.getElementById('typeFilter').value.toLowerCase();
+  const fmtSel = document.getElementById('formatFilter').value;
   const stage = document.getElementById('stageFilter').value;
   const minS = parseInt(document.getElementById('minScore').value) || 0;
 
   if (currentTab === 'audio') {
     const filtered = currentData.audio.filter(a => {
+      if (fmtSel && a.format_type !== fmtSel) return false;
       if (type && (a.audio_type||'').toLowerCase() !== type) return false;
       if (stage && a.trend_stage !== stage) return false;
       if ((a.potency_score||0) < minS) return false;
       if (q) {
-        const blob = [a.name, a.artist, a.sync_note, a.register_note, a.cinematic_angle, (a.categories||[]).join(' ')].join(' ').toLowerCase();
+        const blob = [a.name, a.artist, a.format_type, a.trend_note, a.sync_note, a.register_note, a.cinematic_angle, (a.categories||[]).join(' ')].join(' ').toLowerCase();
         if (!blob.includes(q)) return false;
       }
       return true;
@@ -236,7 +252,7 @@ function switchTab(name, el) {
   document.getElementById('audioPanel').style.display = name === 'audio' ? '' : 'none';
   document.getElementById('topicsPanel').style.display = name === 'topics' ? '' : 'none';
   // Reset type/stage/score filters (only relevant to audio)
-  const audioFilters = ['typeFilter','stageFilter','minScore'];
+  const audioFilters = ['formatFilter','typeFilter','stageFilter','minScore'];
   audioFilters.forEach(id => { document.getElementById(id).style.display = name === 'audio' ? '' : 'none'; });
   applyFilters();
 }
