@@ -121,6 +121,7 @@
 <div class="main">
   <div class="stats" id="stats"></div>
   <div class="date-label" id="dateLabel"></div>
+  <div id="scoutPanel"></div>
   <div id="audioPanel"></div>
   <div id="topicsPanel" style="display:none;"></div>
 </div>
@@ -231,7 +232,29 @@ function renderTopics(items) {
   panel.innerHTML = `<div class="topic-list">${items.map(t => topicCard(t)).join('')}</div>`;
 }
 
+function renderScout() {
+  const ts = currentData.trend_scout;
+  const el = document.getElementById('scoutPanel');
+  if (!ts || !(ts.top||[]).length) { el.innerHTML = ''; return; }
+  const by = Object.fromEntries(ts.formats.map(f => [f.format, f]));
+  const tag = f => ({rising:'▲ Rising', new:'★ New', falling:'▼ Falling', steady:'● Steady'})[f.trend] || '';
+  const col = f => ({rising:'#2ecc71', new:'#2ecc71', falling:'#c0392b'})[f.trend] || 'var(--muted)';
+  const card = (name, i) => { const f = by[name]; const d = f.share_delta;
+    return `<div class="audio-card" style="border-left:3px solid #e67e22;">
+      <div class="top"><h3>#${i+1} ${esc(name)}</h3><span style="font-size:11px;font-weight:700;color:${col(f)}">${tag(f)}${d ? ` (${d>0?'+':''}${d} pts)` : ''}</span></div>
+      <div class="audio-meta">${f.count} sounds · ${f.strong} strong · avg ${f.avg_score}/10 · niche fit ${Math.round(f.avg_fit*100)}% · ${f.share}% share</div>
+      ${(f.examples||[]).map(e => `<div class="field">♪ ${esc(e.name)}${e.artist ? ' — '+esc(e.artist) : ''} <span style="color:var(--muted)">· ${e.potency_score}/10</span></div>`).join('')}
+    </div>`; };
+  el.innerHTML = `<div style="margin:0 0 20px;">
+    <div style="font-size:13px;color:#e67e22;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">🧭 Trend Scout — week of ${esc(ts.week_of)}</div>
+    <div class="angle" style="font-style:normal;margin:0 0 12px;">${esc(ts.insight||'')}</div>
+    <div class="audio-grid">${ts.top.map(card).join('')}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:8px;">${ts.compared_to ? 'Compared with ' + esc(ts.compared_to) : 'First week with format data — comparisons start next run'}</div>
+  </div>`;
+}
+
 function renderStats() {
+  renderScout();
   const audio = currentData.audio;
   const topics = currentData.topics;
   const highPotency = audio.filter(a => (a.potency_score||0) >= 8).length;

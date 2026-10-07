@@ -2,49 +2,21 @@
   "date": "2026-10-07",
   "audio": [
     {
-      "name": "Everything Hallelujah",
+      "name": "One Less Lonely Girl",
       "artist": "Justin Bieber",
       "audio_type": "music",
-      "trend_stage": "Rising",
+      "trend_stage": "Peak",
       "format_type": "Hobby + trending audio",
       "niche_relevance": 0.8,
       "categories": [
         "Gaming/Hobby"
       ],
       "potency_score": 8,
-      "sync_note": "Spiritual, uplifting music with likely build and release points. Excellent for side-by-side transitions and process reveals. The 'Hallelujah' hook creates natural cut points.",
-      "register_note": "Transcendent, redemptive, awe-struck — registers as revelation and transformation.",
+      "sync_note": "Uplifting, process-affirming track. Works over unpolished, real-time footage (wet paint, messy desk, in-progress work). Emotional peak on 'do it for them' lyric creates natural punctuation.",
+      "register_note": "Earnest, vulnerable, pro-social — genuine connection over perfectionism.",
       "counterpoint_potential": true,
-      "counterpoint_note": "The spiritual/redemptive register creates perfect counterpoint to grimdark subject matter. Pairing a messy process with a transcendent soundtrack creates ironic elevation — treating craft as sacred work.",
-      "cinematic_angle": "Split screen: chaotic workspace (paints everywhere, models mid-assembly) on left; pristine finished painted miniature on right. The Bieber vocal's 'Hallelujah' moment lands as the final piece clicks into place. Treats the hobby as spiritual transformation, elevating craft to reverent status.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Everything Hallelujah - Justin Bieber Trend Recap: Split screen, two sides of the story. Show the messy, behind-the-scenes process on one side and the polished final result on the other. Think shoot BTS next to the finished edit, or a GRWM outfit layout next to the final OOTD. The glow-up spe",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/",
-        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/1309090040908747/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "One Less Lonely Girl",
-      "artist": "Justin Bieber",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "Hobby + trending audio",
-      "niche_relevance": 0.75,
-      "categories": [
-        "Gaming/Hobby"
-      ],
-      "potency_score": 7,
-      "sync_note": "Justin Bieber's 'One Less Lonely Girl' has a melodic, romantic hook. Suited to split-screen or before/after transitions with clear rhythm for cuts.",
-      "register_note": "Earnest, vulnerable, process-focused — registers as authentic and relatable creative work.",
-      "counterpoint_potential": true,
-      "counterpoint_note": "The trend itself (BTS process > polished result) is EXACTLY aligned with this account's filmmaker sensibility. The audio's earnest tone ironically complements grimdark subject matter — creating intimacy with the messy work of creation.",
-      "cinematic_angle": "Split screen: messy workspace, half-painted models, paint palettes, and reference books on the left; finished painted minis and basing work on the right. The earnest Bieber vocal underscores the emotional labor and craft precision behind the final product. This is process as narrative.",
+      "counterpoint_note": "Strong contrast: intimate, emotional audio over meticulous, detail-oriented craft footage. Humanizes the hobby; asks viewers to value effort over results.",
+      "cinematic_angle": "Behind-the-scenes painting session: real-time brush strokes, wet models, organized chaos of the hobby space, paired with lyrics about doing it for others. Breaks the 'finished product only' expectation and invites audience into actual creative practice.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: One Less Lonely Girl – Justin Bieber Trend Recap: Process is the new portfolio. This one's built on the idea that people connect with you working way more than they connect with the polished final product, so pair your BTS (the messy desk, the editing timeline, the in-progress draft) with \"Do",
@@ -58,22 +30,78 @@
       "tiktok_link": ""
     },
     {
-      "name": "Netflix Documentary",
-      "artist": "natalie_rantingma",
-      "audio_type": "soundbite",
-      "trend_stage": "Rising",
-      "format_type": "Green screen template",
+      "name": "Everything Hallelujah",
+      "artist": "Justin Bieber",
+      "audio_type": "music",
+      "trend_stage": "Peak",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.8,
+      "categories": [
+        "Gaming/Hobby"
+      ],
+      "potency_score": 7,
+      "sync_note": "Euphoric, triumphant; peaks on 'everything hallelujah' — perfect for before/after or process/result reveals. Strong emotional crescendos for split-screen transitions.",
+      "register_note": "Triumph, redemption, elevation — the glow-up narrative.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Straightforward sync with glow-up format. No real tension; leans into expected emotional beat.",
+      "cinematic_angle": "Raw model vs. finished model: left side underprimed/unpainted, right side fully painted and based. Satisfying visual parallel that asks viewers to appreciate transformation of effort over time.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Everything Hallelujah - Justin Bieber Trend Recap: Split screen, two sides of the story. Show the messy, behind-the-scenes process on one side and the polished final result on the other. Think shoot BTS next to the finished edit, or a GRWM outfit layout next to the final OOTD. The glow-up spe",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/",
+        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/1309090040908747/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Someday We Will Dream About Today",
+      "artist": "The Sways",
+      "audio_type": "music",
+      "trend_stage": "Peak",
+      "format_type": "Audio/voiceline",
       "niche_relevance": 0.7,
       "categories": [
         "Gaming/Hobby",
         "Dark Fantasy"
       ],
       "potency_score": 7,
-      "sync_note": "Designed for sketch-to-reality transitions — likely has staccato or build moments as elements 'complete.' Strong sync potential for layered reveals.",
-      "register_note": "Satisfying, methodical, builder's energy — registers as creative construction and problem-solving.",
+      "sync_note": "Wistful, nostalgic, introspective. Soft dynamics with reflective swells. Works for montages and memory/archive content. No sharp peaks; relies on emotional resonance.",
+      "register_note": "Melancholy, longing, reflection — time and impermanence.",
       "counterpoint_potential": true,
-      "counterpoint_note": "Documentary tone pairs exceptionally well with hobby content. Pairing sketch-drawn lore elements or rough model sketches transitioning into finished minis creates a 'behind the scenes of creation' register that feels cinematic and intentional.",
-      "cinematic_angle": "Open with a concept sketch or rough doodle of a character, then transition as it 'builds' into the finished painted miniature. Treats the model like a 'real' thing being drawn into existence — blurs the line between art and craft, design and execution.",
+      "counterpoint_note": "Temporal/memory angle works well against 40K's grimdark cyclical lore. Could frame hobby collections as artifacts of personal history or community memory.",
+      "cinematic_angle": "Collection retrospective: slow pan over years of models, armies, finished pieces with narration of journey. 'Someday we'll remember this hobby obsession as the golden era.' Treats fandom as lived history.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Instagram Audio Link: Use this sound Stage: Peak",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends",
+      "sources": [
+        "https://www.socialpilot.co/blog/instagram-reels-trends",
+        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/1935055823927858/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Netflix Documentary",
+      "artist": "natalie_rantingma",
+      "audio_type": "soundbite",
+      "trend_stage": "Rising",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.7,
+      "categories": [
+        "Gaming/Hobby"
+      ],
+      "potency_score": 6,
+      "sync_note": "Designed for satisfying reveal transitions (sketch-to-real). Strong punctuation points for state changes.",
+      "register_note": "Wonder, craft satisfaction, magic-trick reveals.",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Pairs well with 40K build process — sketch/design concept over audio, then cut to finished assembled/painted model. Works with the 'handmade' ethos.",
+      "cinematic_angle": "Design-to-model pipeline: concept sketch transforms into real miniature, piece by piece. Uses audio's satisfying reveal points to highlight craftsmanship stages.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Netflix Documentary – natalie_rantingma Trend Recap: Part art, part magic trick. Creators sketch directly onto their video, and as each element gets drawn in, it transitions into the real-life version. It builds piece by piece until the full scene comes to life. Satisfying to watch, wildly cr",
@@ -87,22 +115,50 @@
       "tiktok_link": ""
     },
     {
-      "name": "Respect",
-      "artist": "Aretha Franklin",
+      "name": "Colette",
+      "artist": "Piero Piccioni",
       "audio_type": "music",
       "trend_stage": "Rising",
       "format_type": "Hobby + trending audio",
-      "niche_relevance": 0.5,
+      "niche_relevance": 0.6,
       "categories": [
-        "Hobby + trending audio",
-        "Gaming/Hobby"
+        "Gaming/Hobby",
+        "General Trending"
       ],
-      "potency_score": 7,
-      "sync_note": "Soul track with commanding vocal presence and rhythmic punch; the opening 'R-E-S-P-E-C-T' provides natural beat markers for step-by-step build progression, and the swelling arrangement supports cumulative reveals",
-      "register_note": "Authoritative, earned, powerful affirmation",
+      "potency_score": 6,
+      "sync_note": "Cinematic strings; magical summon moment on swell; clean transition point at minute mark",
+      "register_note": "Elegance, sudden manifestation, dramatic reveal",
       "counterpoint_potential": true,
-      "counterpoint_note": "The song's insistence on earned respect maps beautifully to craft: sketching armor/weapons step-by-step as each element 'appears' onto a miniature. The tension between the soul track's warmth and the grimdark subject creates sophisticated counterpoint—respect for the craft itself.",
-      "cinematic_angle": "Time-lapse or step-by-step assembly of a complex model (armor segments, weapons, basing) synced to Aretha's vocal landmarks. Each 'R-E-S-P-E-C-T' syllable or beat drop marks a stage completion, treating the build process as craft worthy of genuine reverence rather than irony.",
+      "counterpoint_note": "Sophisticated European lounge score creates elegant tension against rough hobby materials (paint, tools, models)",
+      "cinematic_angle": "Paint a model or terrain piece, hold it up to the camera, and on the string swell—cut to your hand holding the brush mid-detail work. The audio suggests summoning; the visual grounds it in craft labor. Juxtaposition of elegance and grit works.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Colette – Piero Piccioni Trend Recap: Product first, then poof, creator appears. The transition makes it look like holding up the product literally summoned them into existence, and honestly? We're buying it. Easy to adapt for any brand collab or product you actually love.",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/875716383095111/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Respect",
+      "artist": "Aretha Franklin",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.55,
+      "categories": [
+        "Gaming/Hobby",
+        "General Trending"
+      ],
+      "potency_score": 6,
+      "sync_note": "Iconic horn hit on 'R'; staccato rhythmic demands; built for reveal moments; strong beat structure",
+      "register_note": "Demand, power, earned authority",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Aretha's command and assertion can frame hobby mastery and technical skill; 'earning respect' through craft",
+      "cinematic_angle": "Sketch lines of paint/model assembly directly onto your hands or workspace as each element is built. When the full model/scene is revealed, the Aretha hit lands on the finished product. Audio asserts 'respect the work'—frames hobby as skill, not frivolity.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Respect – Aretha Franklin Trend Recap: Drawing your fit into existence, one line at a time. Creators sketch each piece directly onto themselves, then watch each illustration morph into the real thing until the full look is built. Equal parts art project and outfit reveal, and very satisfying ",
@@ -115,22 +171,106 @@
       "tiktok_link": ""
     },
     {
+      "name": "Mix",
+      "artist": "lisahoogendoorn",
+      "audio_type": "soundbite",
+      "trend_stage": "Rising",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.5,
+      "categories": [
+        "General Trending",
+        "Gaming/Hobby"
+      ],
+      "potency_score": 5,
+      "sync_note": "Fast-cut, montage-friendly audio. Designed for rapid visual stacking. Likely has rhythmic pulses matching flash transitions.",
+      "register_note": "Frenetic, scattered, nostalgic scrapbook energy.",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Could work ironically against a slow, deliberate paint-by-paint detail shot — chaos audio over meditative craft. Or embrace it for 'year in miniatures' recap.",
+      "cinematic_angle": "Annual hobby recap: rapid-fire cuts of finished miniatures, painted armies, tournament wins, all stacked to frenetic audio. Creates snapshot-memoir quality without voiceover.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Mix Trend Recap: Blink and you'll miss it, this trend crams a day, a trip, or a whole season into a flash-cut visual diary. Outfits, meals, interiors, whatever the highlight reel needs. It's the scrapbook, sped up for a scroll-speed attention span.",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/",
+        "https://buffer.com/resources/trending-audio-instagram/"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/27483455734651818/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Autumn Colors",
+      "artist": "LuLuMusic",
+      "audio_type": "music",
+      "trend_stage": "Rising",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.5,
+      "categories": [
+        "Gaming/Hobby"
+      ],
+      "potency_score": 5,
+      "sync_note": "Instrumental, atmospheric, warm. Likely subtle dynamics; works as ambient bed for visual focus. No aggressive sync points.",
+      "register_note": "Contemplative, seasonal, quiet beauty.",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Warm, autumnal audio against grimdark militaristic miniatures creates gentle tonal friction. Could work if leaning into 'hobby as meditative practice' angle.",
+      "cinematic_angle": "Painting session in natural light: autumn studio setup, brush details over muted color palette. Treats hobby as quiet, reflective ritual rather than competitive spectacle.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Instagram Audio Link: Use this sound Stage: Rising",
+      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends",
+      "sources": [
+        "https://www.socialpilot.co/blog/instagram-reels-trends",
+        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/812753228169577/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Shabang",
+      "artist": "Drake",
+      "audio_type": "music",
+      "trend_stage": "Rising",
+      "format_type": "POV + reaction",
+      "niche_relevance": 0.5,
+      "categories": [
+        "Gaming/Hobby",
+        "General Trending"
+      ],
+      "potency_score": 5,
+      "sync_note": "Punchy, staccato-friendly beat; rapid-fire editing cadence; personality-dump format inherent",
+      "register_note": "Self-aware confidence, niche obsession celebration",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Structured chaos format can hold dense hobby/lore information; Drake's detached delivery suits deadpan 40K commentary",
+      "cinematic_angle": "Personality dump of 40K-specific obsessions: screenshots of lore, model WIPs, paint swatches, faction color theory, personal 'unhinged' takes on 40K lore. The audio rewards rapid-fire absurdism, which suits nerd culture.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Shabang – Drake Trend Recap: Consider this your personality dump, but make it a Reel. Creators kick things off with \"tell me more about yourself\" on screen, then let the chaos unfold: photos, screenshots, niche interests, random obsessions, and deeply specific favorites. It's a snapshot of wh",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/993398866388191/",
+      "tiktok_link": ""
+    },
+    {
       "name": "Patient Zero",
       "artist": "Taylor Swift",
       "audio_type": "music",
       "trend_stage": "Rising",
       "format_type": "Audio/voiceline",
-      "niche_relevance": 0.65,
+      "niche_relevance": 0.6,
       "categories": [
-        "General Trending",
-        "Gaming/Hobby"
+        "General Trending"
       ],
-      "potency_score": 6,
-      "sync_note": "Taylor Swift's 'Patient Zero' has a haunting, accusatory quality. Likely features a defined vocal hook and builds tension — good for cut-heavy reveals or reveal sequences.",
-      "register_note": "Ominous, tense, slightly paranoid — registers as someone being blamed or targeted. Dark emotional register.",
+      "potency_score": 4,
+      "sync_note": "Introspective, mid-tempo vocal-driven track. Strong on confessional moments, guilt, culpability. Lacks sharp dynamic peaks for impact editing.",
+      "register_note": "Regret, blame, intimate exposure — darker emotional register than most trending audio.",
       "counterpoint_potential": true,
-      "counterpoint_note": "Could underpin a video essay or lore-focused content. 'Patient Zero' language maps onto Warhammer contamination/corruption themes (Nurgle, chaos corruption, heresy spreads). Subverts the audio's pop-star origin with grimdark narrative.",
-      "cinematic_angle": "Use as voiceover to a model reveal or lore segment — frame the miniature or faction as the 'origin' of something destructive or inevitable. The accusatory tone pairs well with presenting how a particular strategy or unit spreads through a competitive meta.",
+      "counterpoint_note": "Could underpin a 'confession' or character-driven piece about hobby obsession, competitive painting, or lore-deep fandom indulgence. Works if paired with self-aware humor.",
+      "cinematic_angle": "Character study: a 40K fan's confession-style piece ('I started this hobby and couldn't stop') over footage of escalating collection/build time. Intimate, vulnerable tone breaks expected 'flex' format.",
       "use_count": "",
       "trend_note": "",
       "context": "Instagram Audio Link: Use this sound Stage: Rising",
@@ -145,87 +285,31 @@
       "tiktok_link": ""
     },
     {
-      "name": "Someday We Will Dream About Today",
-      "artist": "The Sways",
-      "audio_type": "music",
-      "trend_stage": "Peak",
-      "format_type": "Audio/voiceline",
-      "niche_relevance": 0.6,
-      "categories": [
-        "Dark Fantasy",
-        "General Trending"
-      ],
-      "potency_score": 6,
-      "sync_note": "Nostalgic, reflective tone suggests a slower, more meditative pacing. Title implies temporal/memory themes — good for retrospective or lore-focused content.",
-      "register_note": "Wistful, melancholic, backward-looking — registers as nostalgia and inevitability.",
-      "counterpoint_potential": true,
-      "counterpoint_note": "The bittersweet, time-focused register could frame current hobby work as future memory. Could underpin a retrospective on collection growth or a reflection on how models are 'frozen in time' as records of the creator's past.",
-      "cinematic_angle": "Slow montage of an aged, well-loved collection with visible wear and paint chips. The audio's wistful tone treats each model as a time capsule — a marker of when you built it, how you've evolved as a painter. Less about perfection, more about memory preserved in plastic.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Instagram Audio Link: Use this sound Stage: Peak",
-      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends",
-      "sources": [
-        "https://www.socialpilot.co/blog/instagram-reels-trends",
-        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/1935055823927858/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Shabang",
-      "artist": "Drake",
-      "audio_type": "music",
+      "name": "Melisa I'M Drunk And Outside",
+      "artist": "Afroplugs",
+      "audio_type": "soundbite",
       "trend_stage": "Rising",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.4,
+      "format_type": "Audio/voiceline",
+      "niche_relevance": 0.45,
       "categories": [
+        "General Trending",
         "Gaming/Hobby"
       ],
-      "potency_score": 6,
-      "sync_note": "Rhythmic, bounce-driven hip-hop with punchy delivery; structured for rapid-cut montage with beat-locked transitions",
-      "register_note": "Confident, self-aware, niche-celebrating",
+      "potency_score": 4,
+      "sync_note": "Spoken-word hook with comedic energy; rhythm is dialogue-driven. Natural fit for ranked lists or gear breakdowns with punchy cuts between items.",
+      "register_note": "Irreverent, humorous, chaotic—colloquial chaos.",
       "counterpoint_potential": true,
-      "counterpoint_note": "The 'personality dump' concept works if reframed as a 'hobby deep-dive': show niche 40K obsessions, specific model preferences, tournament results, custom paints—the ironic self-documentation plays well against Drake's knowing tone.",
-      "cinematic_angle": "Personality dump the hobby: rapid cuts of favorite models, unpainted backlog, reference images, army book, favorite paint colors, vs. expectations. Drake's tone supports the self-aware humor of gear obsession.",
+      "counterpoint_note": "The casual breakdown energy could parody obsessive hobby rankings ('Top 10 Paints That Changed My Army,' 'Best Brushes for Crisp Details') or create deadpan humor about lore minutiae, using casual irreverence against 40K's operatic grimdark tone.",
+      "cinematic_angle": "A ranking of hobby essentials, paint schemes, or army builds spoken over the soundbite—treating trivial craft decisions with the exaggerated importance of a chaotic rant, then cutting to serene final model beauty shots for ironic contrast.",
       "use_count": "",
       "trend_note": "",
-      "context": "Audio: Shabang – Drake Trend Recap: Consider this your personality dump, but make it a Reel. Creators kick things off with \"tell me more about yourself\" on screen, then let the chaos unfold: photos, screenshots, niche interests, random obsessions, and deeply specific favorites. It's a snapshot of wh",
+      "context": "Audio: Melisa I'M Drunk And Outside – Afroplugs Trend Recap: A top 10 list, but make it content. Creators are using this viral sound to rank anything and everything, their own products, favorite finds, honest opinions, or go-to recommendations. It's a natural fit for affiliate links and product roun",
       "source_url": "https://later.com/blog/instagram-reels-trends/",
       "sources": [
         "https://later.com/blog/instagram-reels-trends/"
       ],
       "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/993398866388191/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Mix",
-      "artist": "lisahoogendoorn",
-      "audio_type": "soundbite",
-      "trend_stage": "Peak",
-      "format_type": "Hobby + trending audio",
-      "niche_relevance": 0.55,
-      "categories": [
-        "Gaming/Hobby"
-      ],
-      "potency_score": 5,
-      "sync_note": "Fast-cut scrapbook audio, likely rapid-fire with staccato elements or quick rhythm to match blink-and-miss-it pacing. Good for time-lapse or montage sequences.",
-      "register_note": "Energetic, casual, documentary-like — registers as 'day in the life' or process flow.",
-      "counterpoint_potential": true,
-      "counterpoint_note": "Could frame a painting session or hobby workflow as a rapid 'highlight reel,' but the casual, scrapbook tone undercuts grimdark impact. Potential for ironic speedrun aesthetics.",
-      "cinematic_angle": "Quick-cut montage of a full painting or build session compressed into seconds — assembly, priming, basecoat, details, basing — set to a seemingly casual audio. The speed and casual tone contrast with the meticulous craft happening on screen.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Mix Trend Recap: Blink and you'll miss it, this trend crams a day, a trip, or a whole season into a flash-cut visual diary. Outfits, meals, interiors, whatever the highlight reel needs. It's the scrapbook, sped up for a scroll-speed attention span.",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/",
-        "https://buffer.com/resources/trending-audio-instagram/"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/27483455734651818/",
+      "ig_link": "https://www.instagram.com/reels/audio/2415922182221309/",
       "tiktok_link": ""
     },
     {
@@ -233,18 +317,17 @@
       "artist": "Sienna Spiro",
       "audio_type": "music",
       "trend_stage": "Rising",
-      "format_type": "Audio/voiceline",
-      "niche_relevance": 0.5,
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.4,
       "categories": [
-        "Dark Fantasy",
-        "Gaming/Hobby"
+        "General Trending"
       ],
-      "potency_score": 5,
-      "sync_note": "Minimal context. 'Pure' suggests clarity, innocence, or stark simplicity. Could have ethereal or clean sonic quality.",
-      "register_note": "Likely clean, minimal, stark — registers as clarity or purity against contamination/corruption.",
+      "potency_score": 4,
+      "sync_note": "Minimalist, clean production. Likely soft, delicate instrumentation. Works for intimate detail work but lacks dramatic impact.",
+      "register_note": "Purity, simplicity, innocence — almost too clean for grimdark.",
       "counterpoint_potential": true,
-      "counterpoint_note": "The title 'Pure' creates automatic counterpoint to grimdark/corrupted subject matter (Chaos, Necrons, heresy). Pairing pristine audio with corrupted/grimdark visuals creates tonal tension.",
-      "cinematic_angle": "Reveal of a pristine, freshly painted model or army against a 'pure' minimal audio background. The contrast between corruption themes (Warhammer lore) and the audio's pristine register creates philosophical irony.",
+      "counterpoint_note": "Title/tone 'Pure' against grimdark imagery creates ironic tension. Could work if leaning into darkly comic contrast.",
+      "cinematic_angle": "Macro close-up of single miniature detail (face, armor filigree) synced to minimalist audio. Isolates craft precision from context; purity of technical execution over narrative.",
       "use_count": "",
       "trend_note": "",
       "context": "Instagram Audio Link: Use this sound Stage: Rising",
@@ -258,85 +341,31 @@
       "tiktok_link": ""
     },
     {
-      "name": "Colette",
-      "artist": "Piero Piccioni",
+      "name": "The Winner Takes It All",
+      "artist": "ABBA",
       "audio_type": "music",
       "trend_stage": "Rising",
       "format_type": "Green screen template",
-      "niche_relevance": 0.35,
-      "categories": [
-        "Hobby + trending audio"
-      ],
-      "potency_score": 5,
-      "sync_note": "Orchestral piece with a clear, elegant ascension; natural swell moment marking the transition/appearance, making it structurally useful for reveal edits",
-      "register_note": "Sophisticated, cinematic, summoning/arrival",
-      "counterpoint_potential": true,
-      "counterpoint_note": "The 'summoning' conceit maps cleanly to hobby content: holding up a finished model or tool, then cutting to it 'in action' or in the workspace. The elegant register contrasts productively with grimdark subject matter.",
-      "cinematic_angle": "Hold up a freshly primed model or completed base, sync the orchestral swell to a cut of that piece placed in a diorama or on-table display—the audio's elegance plays against the dark, violent purpose of the miniature.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Colette – Piero Piccioni Trend Recap: Product first, then poof, creator appears. The transition makes it look like holding up the product literally summoned them into existence, and honestly? We're buying it. Easy to adapt for any brand collab or product you actually love.",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/875716383095111/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Autumn Colors",
-      "artist": "LuLuMusic",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "Hobby + trending audio",
-      "niche_relevance": 0.45,
-      "categories": [
-        "Gaming/Hobby"
-      ],
-      "potency_score": 4,
-      "sync_note": "Likely warm, organic, seasonal music. Suited to slower montages or color-focused content. Limited dramatic sync potential.",
-      "register_note": "Warm, cozy, introspective — registers as comfortable and reflective.",
-      "counterpoint_potential": true,
-      "counterpoint_note": "Could frame grimdark subject matter (dark faction colors, gothic aesthetics) through a 'cozy autumn' lens, creating tonal irony. Autumn colors palette applied to Necron silver, Nurgle greens, Ork flesh-tones creates weird warmth.",
-      "cinematic_angle": "Palette-focused segment showing how autumn/warm color theory maps onto grimdark faction aesthetics. Use warm lighting and golden hour photography to photograph a dark-themed army, treating the color journey as seasonal and cyclical rather than inherently grim.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Instagram Audio Link: Use this sound Stage: Rising",
-      "source_url": "https://www.socialpilot.co/blog/instagram-reels-trends",
-      "sources": [
-        "https://www.socialpilot.co/blog/instagram-reels-trends",
-        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/812753228169577/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Melisa I'M Drunk And Outside",
-      "artist": "Afroplugs",
-      "audio_type": "soundbite",
-      "trend_stage": "Unknown",
-      "format_type": "Audio/voiceline",
       "niche_relevance": 0.4,
       "categories": [
+        "Gaming/Hobby",
         "General Trending"
       ],
       "potency_score": 4,
-      "sync_note": "Meme-adjacent voiceline; inherent comedic chaos. Could anchor a ranked list format (e.g., 'Worst Paint Mistakes,' 'Factions I Regret Buying'), but the audio's comedic absurdism reads as self-aware mockery rather than character.",
-      "register_note": "Absurdist humor, chaotic energy; clashes with the account's composed, directorial restraint.",
+      "sync_note": "Dramatic, sweeping orchestration; theatrical build; ironic self-aware context fits format",
+      "register_note": "Dramatic irony, self-aware audacity, theatrical confidence",
       "counterpoint_potential": true,
-      "counterpoint_note": "A ranking of lore missteps, ridiculous hobby misconceptions, or 'things I'll never unsee in 40K' could use this sound's inherent irreverence as a pressure valve against grimdark tone—but only if the visual execution remains composed and the list itself is genuinely insightful.",
-      "cinematic_angle": "Viable niche: use the sound to anchor a ranked breakdown of common hobby failures or lore contradictions, where the audio's chaos undercuts the ostensible seriousness of the subject, creating wry counterpoint. Requires strong editorial control to avoid feeling forced.",
+      "counterpoint_note": "ABBA's epic melodrama, when used ironically, can undercut vanity—productive irony against 'look at my hobby' content",
+      "cinematic_angle": "Use ironically: step on-camera in full painting apron/hobby gear to 'creator rates' voiceover. The grandiose audio paired with humble hobby setup creates knowing humor without undercutting the craft itself.",
       "use_count": "",
       "trend_note": "",
-      "context": "Audio: Melisa I'M Drunk And Outside – Afroplugs Trend Recap: A top 10 list, but make it content. Creators are using this viral sound to rank anything and everything, their own products, favorite finds, honest opinions, or go-to recommendations. It's a natural fit for affiliate links and product roun",
+      "context": "Audio: The Winner Takes It All Trend Recap: So you want creator rates? Meet the creator. Brands are flipping the influencer pricing conversation on its head by stepping in front of the camera themselves, owner, employee, whoever's brave enough. It's self-aware, a little unhinged, and exactly the kin",
       "source_url": "https://later.com/blog/instagram-reels-trends/",
       "sources": [
         "https://later.com/blog/instagram-reels-trends/"
       ],
       "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/2415922182221309/",
+      "ig_link": "https://www.instagram.com/reels/audio/27173910075612553/",
       "tiktok_link": ""
     },
     {
@@ -350,11 +379,11 @@
         "General Trending"
       ],
       "potency_score": 3,
-      "sync_note": "Upbeat, rhythmic track suited to progress-bar reveals and sequential reveals. No dramatic sync points.",
-      "register_note": "Playful, light, optimistic — registers as fun and casual, opposite of grimdark tone.",
+      "sync_note": "Upbeat, steady groove; syncs well with rapid cuts and progression beats. Works for build-up/countdown formats.",
+      "register_note": "Cheerful, light, optimistic — fundamentally opposed to grimdark aesthetic.",
       "counterpoint_potential": true,
-      "counterpoint_note": "Could create ironic contrast: painting progression from 0-100% but with upbeat Diana Ross underneath creates unintentional comedy (messy workspace → finished model, light soundtrack vs dark subject).",
-      "cinematic_angle": "Miniature assembly as a progress bar — each sub-assembly stage ticks up while a cheerful soundtrack plays underneath. The tonal mismatch between upbeat audio and grim subject matter creates subtle comedic tension.",
+      "counterpoint_note": "Could create jarring contrast if used ironically (e.g., 0-100% painting progress with cheerful audio over increasingly grim miniature). Risk of tonal clash outweighs benefit.",
+      "cinematic_angle": "Paint progression montage (primer to final detail) synced to a retro-upbeat track — creates unintended comedy through tonal mismatch. Useful only if irony is intentional.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Upside down Trend Recap: GRWM, now buffering. Start at 0% in PJs, a robe, and eye patches, then watch the percentage climb with every cut until the full look drops at 100%. It's a fun twist for beauty, fashion, and lifestyle creators who want a more dynamic routine.",
@@ -373,17 +402,17 @@
       "artist": "Chaka Khan",
       "audio_type": "music",
       "trend_stage": "Unknown",
-      "format_type": "Green screen template",
+      "format_type": "POV + reaction",
       "niche_relevance": 0.35,
       "categories": [
         "General Trending"
       ],
       "potency_score": 3,
-      "sync_note": "Funky, anthemic chorus; rapid-fire snap-cut mechanic. Could theoretically sync with quick model/paint reveals, but the anime-inspired product lineup aesthetic doesn't serve 40K's grimdark register.",
-      "register_note": "Celebratory, inclusive, playful—opposes the dread and awe the account cultivates.",
+      "sync_note": "Funk/soul anthem with strong hook repetition. Anime-inspired pose-snap format is rapid and percussive, but the song's warmth doesn't cut against visuals.",
+      "register_note": "Celebratory, affirming, pop-cultural energy.",
       "counterpoint_potential": true,
-      "counterpoint_note": "Inverting celebration into something ominous could work (e.g., rapid reveal of corrupted/daemon-touched models), but requires heavy irony and risks tonal confusion.",
-      "cinematic_angle": "Possible only if reframed as a grim inventory: a succession of corrupted units, each a loss rather than a flex. Risk of the form overpowering intent.",
+      "counterpoint_note": "Could work if inverted: pose-snap lineup of Primaris Marines or daemon engines striking the same stance with their signature weapons/builds—the empowerment anthem applied to grimdark subject matter creates ironic distance.",
+      "cinematic_angle": "A lineup of finished centerpiece models or army figures holding their painted examples, snapped in succession to the beat—treating a hobby reveal with the gravitas of a power anthem.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: I'm Every Woman – Chaka Khan Trend Recap: Anime energy meets the product reveal. Inspired by Jujutsu Kaisen , a group strikes the same pose while each person holds the thing that is them — a drink, a snack, a hero product — and the video snaps person to person for a rapid-fire lineup. Great f",
@@ -396,61 +425,6 @@
       "tiktok_link": ""
     },
     {
-      "name": "Mambo No. 5",
-      "artist": "Lou Bega",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.3,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 3,
-      "sync_note": "Fast-paced list-driven track with rhythmic punctuation perfect for quick-cut enumeration. Each beat marks a list item naturally.",
-      "register_note": "Playful, tongue-in-cheek, list-based humor",
-      "counterpoint_potential": true,
-      "counterpoint_note": "Could work if inverting the 'spend' concept: instead of 'worth your money,' frame it as 'supplies worth hoarding for the hobby'—unpacking hobby essentials to the bright, ironic beat creates tonal friction.",
-      "cinematic_angle": "List five hobby essentials or hobby 'sins' to the track—use the cheeky, countdown format to showcase tools/paints/materials, letting the contrast between the song's lightness and the serious craft undercut itself with humor.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Mambo No. 5 – Lou Bega Trend Recap: Five things that are worth your $$. This trend is a quick-fire list of what's actually worth the spend, and the range goes from genuinely useful recs to completely unhinged investments. Either way, people are watching to the end.",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/276863736527927/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Original Audio",
-      "artist": "its_drfarah",
-      "audio_type": "template",
-      "trend_stage": "Rising",
-      "format_type": "Green screen template",
-      "niche_relevance": 0.3,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "AI-generated cinematic backdrop audio — likely atmospheric, generic. No distinctive sync points; designed to be neutral backdrop for product insertion.",
-      "register_note": "Sleek, modern, promotional — registers as corporate demo reel energy.",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Too polished and generic for the account's craft-focused sensibility. Designed for product flex, not process or narrative depth.",
-      "cinematic_angle": "Not recommended for this account. The AI-generated 'instant flex' aesthetic contradicts the filmmaker's craft-process philosophy.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Original audio Trend Recap: AI does the heavy lifting on this one, a scroll-stopping generated scene built to show off a product in the most cinematic way possible. Drink, sunglasses, bag, whatever you're selling, drop it into the scene and let the AI do the flexing.",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/",
-        "https://www.socialpilot.co/blog/instagram-reels-trends"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/27554386410835342/",
-      "tiktok_link": ""
-    },
-    {
       "name": "Yummy Little Day",
       "artist": "@emilogue",
       "audio_type": "soundbite",
@@ -460,12 +434,12 @@
       "categories": [
         "General Trending"
       ],
-      "potency_score": 2,
-      "sync_note": "Title suggests light, whimsical energy. Likely suited to lifestyle/cozy content rather than grimdark. No dramatic sync potential.",
-      "register_note": "Playful, casual, lifestyle-coded — registers as comfort and contentment.",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Too precious and light for productive counterpoint against grimdark material.",
-      "cinematic_angle": "Not recommended. The 'yummy little day' aesthetic (cozy, lifestyle-focused) contradicts the account's grimdark sensibility.",
+      "potency_score": 3,
+      "sync_note": "Title suggests light, positive energy. Likely upbeat, domestic-focused audio. Without sample, assume cheerful, consumer-lifestyle vibe.",
+      "register_note": "Contentment, indulgence, everyday joy.",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Saccharine positivity against grimdark subject matter creates ironic contrast. Could work if playing into unexpected softness.",
+      "cinematic_angle": "Hobby routine montage (tea, workspace setup, paint mixing) set to upbeat audio. Humanizes the 'dark hobby' by showing mundane comfort rituals that enable it.",
       "use_count": "",
       "trend_note": "",
       "context": "Reels Audio Link: Yummy Little Day • @emilogue Current Posts: 59K",
@@ -479,9 +453,64 @@
       "tiktok_link": ""
     },
     {
+      "name": "Where Are Ü Now (with Justin Bieber)",
+      "artist": "Skrillex & Diplo",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Audio/voiceline",
+      "niche_relevance": 0.3,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 3,
+      "sync_note": "Dubstep drop potential; sparse vocal; atmospheric intro; no trend context provided limits assessment",
+      "register_note": "Searching, vast electronic emptiness, futurism",
+      "counterpoint_potential": true,
+      "counterpoint_note": "Electronic void could counterpoint dense grimdark visuals; isolation theme suits 40K lore aesthetically",
+      "cinematic_angle": "Experimental: use the vocal absence and electronic decay as underscore for model close-ups or painting process—the emptiness emphasizes solitary craft",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Where Are Ü Now (with Justin Bieber) – Skrillex & Diplo",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/275967263283018/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Summer Love",
+      "artist": "Justin Timberlake",
+      "audio_type": "music",
+      "trend_stage": "Peak",
+      "format_type": "POV + reaction",
+      "niche_relevance": 0.3,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Pop-R&B groove; designed for ego-flex cuts. Lacks tension or dramatic arcs.",
+      "register_note": "Confidence, ambition, refusal — but pitched at personal brand/entrepreneur aesthetic, not craft.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Generic confidence audio doesn't offer tonal counterpoint to 40K's grimness. Would read as tone-deaf flexing.",
+      "cinematic_angle": "Not a fit. The 'boss not bride' energy is too far from the grimdark, process-focused sensibility.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Summer Love – Justin Timberlake Trend Recap: I would love to be a trophy wife, but unfortunately...\" cut to your most iconic, ambitious, take-no-prisoners movie-character energy. It's giving boss, not bride, and it's the perfect flex for entrepreneurs and personal brands who are very much bui",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/",
+        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/1059529844238859/",
+      "tiktok_link": ""
+    },
+    {
       "name": "Windows in Brazil (Sped Up)",
       "artist": "Unknown",
-      "audio_type": "music",
+      "audio_type": "soundbite",
       "trend_stage": "Rising",
       "format_type": "POV + reaction",
       "niche_relevance": 0.3,
@@ -489,11 +518,11 @@
         "General Trending"
       ],
       "potency_score": 2,
-      "sync_note": "Fast-paced, energetic cut suitable for quick transitions and comedic timing, but no natural sync points for hobby or craft content",
-      "register_note": "Chaotic, comedic, distraction-based humor",
+      "sync_note": "Upbeat, distraction-driven pacing; designed for visual comedy rather than cinematic sync",
+      "register_note": "Chaotic humor, light-hearted chaos",
       "counterpoint_potential": false,
-      "counterpoint_note": "The absurdist 'getting robbed' framing has no productive tension against grimdark 40K visuals; tone is too lightweight",
-      "cinematic_angle": "Not applicable. The trend's strength lies in obfuscation and misdirection—the opposite of the deliberate visual clarity this account prioritizes.",
+      "counterpoint_note": "Tone conflicts with grimdark aesthetic; meme energy undercuts cinematic intent",
+      "cinematic_angle": "Not recommended for this account's sensibility",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Windows in Brazil (Sped Up) Trend Recap: Getting robbed, but first: the insta dump. One shot, one creator glued to their phone, one bag getting stolen in the background. The punchline is whatever your audience would absolutely be too distracted to look up for. Easy for any niche.",
@@ -516,11 +545,11 @@
         "General Trending"
       ],
       "potency_score": 2,
-      "sync_note": "Upbeat pop track; carousel reveal mechanic doesn't align with cinematic painting/build process pacing.",
-      "register_note": "Energetic, pop-adjacent; tonally mismatched to grimdark aesthetic.",
+      "sync_note": "Upbeat pop track; carousel reveal mechanic relies on pacing rather than sonic structure. No dramatic peaks or tension points.",
+      "register_note": "Light, energetic, playful—fundamentally misaligned with grimdark aesthetic.",
       "counterpoint_potential": false,
-      "counterpoint_note": "",
-      "cinematic_angle": "Not recommended. The carousel punchline format and Justin Bieber's pop sensibility work against the account's grimdark, immersive visual language.",
+      "counterpoint_note": "Too mainstream-cheerful to create productive tension against 40K visuals; would read as ironic in an unearned way.",
+      "cinematic_angle": "Not suitable for this account's sensibility.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Speed Demon – Justin Bieber Trend Recap: One word, stretched across a whole carousel, and yes, you have to swipe to get the punchline. Each slide pairs a sliver of the word with a relatable thought and an image that keeps you going. The slow reveal is the hook. Audio: Original audio",
@@ -533,21 +562,75 @@
       "tiktok_link": ""
     },
     {
-      "name": "Be Like a Woman",
-      "artist": "Chris Rainbow",
-      "audio_type": "dialogue",
-      "trend_stage": "Rising",
+      "name": "Beat It",
+      "artist": "Michael Jackson",
+      "audio_type": "music",
+      "trend_stage": "Fading",
       "format_type": "Green screen template",
       "niche_relevance": 0.25,
       "categories": [
         "General Trending"
       ],
       "potency_score": 2,
-      "sync_note": "Built for lip-sync and character judgment juxtapositions (Devil Wears Prada reference). Requires dual-character framing and dramatic reaction.",
-      "register_note": "Judgmental, theatrical, fashion-coded — registers as aspirational and exclusionary.",
+      "sync_note": "Sharp, percussive hits; obvious transition points; overused",
+      "register_note": "Aggressive confidence, defiant energy",
       "counterpoint_potential": false,
-      "counterpoint_note": "The devil-wears-prada cinematic universe doesn't map onto Warhammer or hobby craft. Fundamentally a fashion/lifestyle template.",
-      "cinematic_angle": "Not recommended. The format is built for fashion judgment and lifestyle gatekeeping, which contradicts the account's inclusive craft-focused identity.",
+      "counterpoint_note": "Pop-rock bravado doesn't counterpoint grimdark visuals meaningfully",
+      "cinematic_angle": "Avoid—iconic and exhausted in trend cycles",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Michael Jackson - Beat It Trend Recap: Toggle the switch to go from closed to open, empty to full, or PJs to full glam in one quick transition. The possibilities for this trend are limitless!",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/1844093005638456/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Meaningful Love",
+      "artist": "Unknown",
+      "audio_type": "soundbite",
+      "trend_stage": "Rising",
+      "format_type": "POV + reaction",
+      "niche_relevance": 0.25,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Looping reunion clip; sentimental swelling; designed for emotional payoff",
+      "register_note": "Unconditional devotion, intimate acceptance",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Romantic intimacy contradicts grimdark tone; no productive tension",
+      "cinematic_angle": "Not recommended—sentiment undercuts the account's cinematic register",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Meaningful Love Trend Recap: Running into each other's arms, full sprint, no questions asked. This trend pairs a looping clip of two people reuniting with text overlays showing totally opposite life situations, the message being: doesn't matter, I'm here. It's a love letter to unconditional s",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/1353000056123698/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Be Like a Woman",
+      "artist": "Chris Rainbow",
+      "audio_type": "dialogue",
+      "trend_stage": "Peak",
+      "format_type": "Show/movie clip",
+      "niche_relevance": 0.2,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Designed for character-judgement cuts and lip-sync moments. Strong beat on the 'Devil Wears Prada' reference but not flexible beyond that format.",
+      "register_note": "Fashion-world judgment, aspiration, cattiness.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Fashion/lifestyle judgment audio has no productive tension with 40K craft content. Would feel like forced meme application.",
+      "cinematic_angle": "Not recommended. The 'Prada judgment' format doesn't translate to hobby culture without feeling hollow.",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Be Like a Woman – Chris Rainbow Trend Recap: The Devil Wears Prada cinematic universe has entered the chat. Creators are recreating that iconic judgment scene, lip-syncing along to the viral audio while playing up the contrast between two characters and dropping a relatable text overlay. Dram",
@@ -561,239 +644,21 @@
       "tiktok_link": ""
     },
     {
-      "name": "Girls Just Want to Have Fun",
-      "artist": "Cyndi Lauper",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "Green screen template",
-      "niche_relevance": 0.25,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "Upbeat pop with clean beat structure, but sync points are designed for outfit/style transitions, not craft or model builds",
-      "register_note": "Bright, optimistic, fashion-forward",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Tone is antithetical to the account's grimdark aesthetic; no productive tension available",
-      "cinematic_angle": "Not applicable. The leg-swipe transition tech is clever, but the audio's inherent cheerfulness makes it a poor fit for 40K's dread register.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Girls Just Want to Have Fun – Cyndi Lauper Trend Recap: One leg swipe, infinite scene changes. Creators sweep a leg across the frame and cut to the next clip at the exact same point in the motion, so the transition reads buttery smooth. Simple trick, satisfying payoff, great for outfit change",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/323230265024757/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Summer Love",
-      "artist": "Justin Timberlake",
-      "audio_type": "music",
-      "trend_stage": "Peak",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "Upbeat, poppy, built for confidence flex. Not suited to grimdark or tension-driven edits.",
-      "register_note": "Confident, aspirational, romantic in subtext — registers as personal brand / lifestyle energy.",
-      "counterpoint_potential": false,
-      "counterpoint_note": "The 'boss, not bride' energy is fundamentally at odds with Warhammer's grimdark tone and the account's sensibility.",
-      "cinematic_angle": "Not viable. Too light and aspirational for the account's aesthetic.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Summer Love – Justin Timberlake Trend Recap: I would love to be a trophy wife, but unfortunately...\" cut to your most iconic, ambitious, take-no-prisoners movie-character energy. It's giving boss, not bride, and it's the perfect flex for entrepreneurs and personal brands who are very much bui",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/",
-        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/1059529844238859/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Beat It",
-      "artist": "Michael Jackson",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "Green screen template",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "Aggressive, percussive opening with strong transient hits ideal for hard cuts and binary transitions (on/off, before/after)",
-      "register_note": "Defiant, energetic, confrontational",
-      "counterpoint_potential": true,
-      "counterpoint_note": "The song's combative tone could create ironic contrast against a finished painted miniature appearing in full battle regalia—a 'ready' moment after conflict. Limited but usable.",
-      "cinematic_angle": "Showcase a completed model (armor polished, basing finished) as the 'beat' of the track drops—the reveal as a moment of readiness rather than victory.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Michael Jackson - Beat It Trend Recap: Toggle the switch to go from closed to open, empty to full, or PJs to full glam in one quick transition. The possibilities for this trend are limitless!",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/1844093005638456/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Where Are Ü Now (with Justin Bieber)",
-      "artist": "Skrillex & Diplo",
-      "audio_type": "music",
-      "trend_stage": "Unknown",
-      "format_type": "Show/movie clip",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "Electronic/EDM drop track with heavy bass and filter modulation; strong transient moments for cuts, but context of trend use not provided",
-      "register_note": "Moody, atmospheric, searching",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Without trend context, potential is unclear; EDM texture is too modern/electronic for grimdark 40K unless used ironically, which requires specific framing",
-      "cinematic_angle": "Not enough information provided. Trend context missing.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Where Are Ü Now (with Justin Bieber) – Skrillex & Diplo",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/275967263283018/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "The Winner Takes It All",
-      "artist": "ABBA",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 2,
-      "sync_note": "Dramatic, theatrical pop-ballad with clear emotional peaks; built for owner/brand reveal moments with high dramatic stakes",
-      "register_note": "Triumphant but bittersweet, self-aware irony",
-      "counterpoint_potential": false,
-      "counterpoint_note": "The trend is designed for brand/pricing humor, which has no natural 40K application; the ABBA theatricality doesn't pair productively with grimdark",
-      "cinematic_angle": "Not applicable. Trend context (creator rates, brand pricing) doesn't map to hobby/craft content. The audio's ironic grandeur would require significant reframing.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: The Winner Takes It All Trend Recap: So you want creator rates? Meet the creator. Brands are flipping the influencer pricing conversation on its head by stepping in front of the camera themselves, owner, employee, whoever's brave enough. It's self-aware, a little unhinged, and exactly the kin",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/27173910075612553/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "JAMES AND ANTLER",
-      "artist": "james.and.antler",
-      "audio_type": "soundbite",
-      "trend_stage": "Unknown",
-      "format_type": "Audio/voiceline",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "Insufficient context. Cannot assess sync points without understanding the audio content.",
-      "register_note": "Unknown — insufficient data.",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Cannot evaluate without hearing the audio or knowing its content.",
-      "cinematic_angle": "Insufficient information to recommend. Appears to be a creator handle or brand name rather than a substantive audio clip.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: JAMES AND ANTLER",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/",
-        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
-      ],
-      "mention_count": 2,
-      "ig_link": "https://www.instagram.com/reels/audio/26923322580669821/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Milkshake",
-      "artist": "Kelis",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "Built for announcement setup/payoff structure with the horn swell marking the reveal moment",
-      "register_note": "Playful, approachable, designed to build false tension",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Fundamentally incompatible with grimdark register; the 'bait and switch' logic conflicts with the account's commitment to earned emotional beats",
-      "cinematic_angle": "Not applicable. This trend relies on tonal whiplash, which undercuts the cinematic coherence this account demands.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Milkshake – Kelis Trend Recap: Somewhere between a low-flying plane and your biggest announcement, this trend finds the funniest possible detour. Creators build a little tension with an unexpected setup before landing on the real news, an event, a launch, a product drop, whatever you're hypin",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/2195949510518876/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Human Nature",
-      "artist": "Michael Jackson",
-      "audio_type": "music",
-      "trend_stage": "Unknown",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.2,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "Smooth funk-pop; no dramatic peaks or breaks; establishes a lifestyle flex rather than narrative tension.",
-      "register_note": "Confident, casual, celebratory—fundamentally incompatible with grimdark tone.",
-      "counterpoint_potential": false,
-      "counterpoint_note": "",
-      "cinematic_angle": "Not applicable. The 'girl grip' trend is entirely about everyday confidence and ease; using it to frame hobby content would create unproductive tonal whiplash.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Human Nature – Michael Jackson Trend Recap: Why make two trips when you can make zero? The \"girl grip\" is the ancient art of hauling your entire life in one hand — coffee, keys, phone, snacks, the works — balanced with the confidence of someone who has never once dropped anything. A flex for ",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/1066931830157201/",
-      "tiktok_link": ""
-    },
-    {
       "name": "Please Keep Me in Your Thoughts",
-      "artist": "lindseyelliottrealtor",
+      "artist": "lindseyelliottrealtor (Original audio)",
       "audio_type": "dialogue",
       "trend_stage": "Rising",
       "format_type": "POV + reaction",
-      "niche_relevance": 0.15,
+      "niche_relevance": 0.2,
       "categories": [
         "General Trending"
       ],
-      "potency_score": 1,
-      "sync_note": "Real estate/personal crisis audio. No relevance to hobby content. Cannot assess without hearing.",
-      "register_note": "Sincere, vulnerable, appeal-based — registers as personal crisis or solicitation.",
+      "potency_score": 2,
+      "sync_note": "Casual, confessional voiceover. Designed for relatable life updates. No cinematic peaks; conversational pacing.",
+      "register_note": "Everyday anxiety, social courtesy, mild self-deprecation.",
       "counterpoint_potential": false,
-      "counterpoint_note": "The audio's earnest personal plea is fundamentally misaligned with Warhammer hobby content.",
-      "cinematic_angle": "Not recommended. Completely outside the account's aesthetic and purpose.",
+      "counterpoint_note": "Real-estate/personal brand audio doesn't offer tonal counterpoint to grimdark craft content. Feels generic.",
+      "cinematic_angle": "Not recommended. The casual-request tone is too far from the account's cinematic, intentional directorial sensibility.",
       "use_count": "",
       "trend_note": "",
       "context": "Instagram Audio Link: Use this sound Stage: Rising",
@@ -807,102 +672,21 @@
       "tiktok_link": ""
     },
     {
-      "name": "TiK ToK",
-      "artist": "Kesha",
-      "audio_type": "music",
-      "trend_stage": "Unknown",
-      "format_type": "Hobby + trending audio",
-      "niche_relevance": 0.15,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "High-energy party track with no clear sync structure provided in context; more useful as energy layer than compositional driver",
-      "register_note": "Raucous, ironic, self-aware pop",
-      "counterpoint_potential": false,
-      "counterpoint_note": "The ironic-detachment vibe is too at-odds with the earnest craft focus of the account",
-      "cinematic_angle": "Not applicable. Context missing; trend application unclear. Tone suggests satire, which is opposite the filmmaker's commitment to sincere visual storytelling.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: TiK ToK – Kesha PRO TIP: Schedule Instagram Reels in advance with Later's Instagram scheduling tools ! Join over 7M brands, creators , and social media managers when you sign up. Start your free trial today.",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/558681094631125/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "I Feel Love",
-      "artist": "Donna Summer",
-      "audio_type": "music",
-      "trend_stage": "Rising",
-      "format_type": "Green screen template",
-      "niche_relevance": 0.15,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "Disco synth-pop with smooth, gliding orchestration; strong for flowing transitions and builds",
-      "register_note": "Euphoric, escapist, sensual",
-      "counterpoint_potential": false,
-      "counterpoint_note": "Tone is romantic and dreamy—the opposite of grimdark. No productive tension with 40K aesthetics.",
-      "cinematic_angle": "Not applicable. The warmth and lightness of the audio directly opposes the account's register.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: I Feel Love – Donna Summer Trend Recap: One perfectly timed shoe toss and suddenly the whole outfit changes. The transition flips a casual look into a fully styled fit, and it's as satisfying to watch as it sounds. Fashion, beauty, lifestyle, or any brand with a product to show off: this one'",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/400025130573041/",
-      "tiktok_link": ""
-    },
-    {
-      "name": "Meaningful Love",
-      "artist": "Unknown",
-      "audio_type": "soundbite",
-      "trend_stage": "Rising",
-      "format_type": "POV + reaction",
-      "niche_relevance": 0.15,
-      "categories": [
-        "General Trending"
-      ],
-      "potency_score": 1,
-      "sync_note": "Emotional, looping arrangement with intimate vocal delivery; built for emotional payoff, not structural sync",
-      "register_note": "Earnest, unconditional, tender",
-      "counterpoint_potential": false,
-      "counterpoint_note": "The earnest romanticism is incompatible with grimdark; there's no dark irony or tension—just sweetness, which works against the account's register",
-      "cinematic_angle": "Not applicable. While the account values earned emotion, this audio's register is too explicitly romantic and soft for 40K's aesthetic.",
-      "use_count": "",
-      "trend_note": "",
-      "context": "Audio: Meaningful Love Trend Recap: Running into each other's arms, full sprint, no questions asked. This trend pairs a looping clip of two people reuniting with text overlays showing totally opposite life situations, the message being: doesn't matter, I'm here. It's a love letter to unconditional s",
-      "source_url": "https://later.com/blog/instagram-reels-trends/",
-      "sources": [
-        "https://later.com/blog/instagram-reels-trends/"
-      ],
-      "mention_count": 1,
-      "ig_link": "https://www.instagram.com/reels/audio/1353000056123698/",
-      "tiktok_link": ""
-    },
-    {
       "name": "You Make My Dreams Come True",
       "artist": "Hall & Oates",
       "audio_type": "music",
-      "trend_stage": "Rising",
+      "trend_stage": "Fading",
       "format_type": "POV + reaction",
-      "niche_relevance": 0.1,
+      "niche_relevance": 0.2,
       "categories": [
         "General Trending"
       ],
-      "potency_score": 1,
-      "sync_note": "Warm, uplifting 80s soul with a clear crescendo; designed for reveal/comparison edits",
-      "register_note": "Joyful, aspirational, intimate",
+      "potency_score": 2,
+      "sync_note": "Warm horn section; swell on chorus; feels nostalgic and safe",
+      "register_note": "Warmth, contentment, nostalgic joy",
       "counterpoint_potential": false,
-      "counterpoint_note": "Tone is too saccharine and lifestyle-focused for grimdark content; no dark irony or tension available",
-      "cinematic_angle": "Not applicable. This audio is built for food/lifestyle content. Using it for 40K miniatures would require tonal inversion that defeats its purpose.",
+      "counterpoint_note": "Wholesomeness contradicts grimdark tone",
+      "cinematic_angle": "Not recommended—register is fundamentally at odds with account aesthetic",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: You Make My Dreams Come True – Hall & Oates Trend Recap: Wishing you'd ordered what your friend has? No problem, just do a swap! A fresh take on food posts that shows off twice the fare at your fav restaurant, vacation spot, or local hidden gem.",
@@ -915,21 +699,237 @@
       "tiktok_link": ""
     },
     {
+      "name": "Mambo No. 5",
+      "artist": "Lou Bega",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Audio/voiceline",
+      "niche_relevance": 0.2,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Rhythmic list-driven structure; bright Latin percussion; formulaic",
+      "register_note": "Playful recitation, comedic enumeration",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Comedic listing format doesn't pair productively with grimdark imagery",
+      "cinematic_angle": "Consider only for absurdist hobby/product lists, but energy undercuts impact",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Mambo No. 5 – Lou Bega Trend Recap: Five things that are worth your $$. This trend is a quick-fire list of what's actually worth the spend, and the range goes from genuinely useful recs to completely unhinged investments. Either way, people are watching to the end.",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/276863736527927/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Human Nature",
+      "artist": "Michael Jackson",
+      "audio_type": "music",
+      "trend_stage": "Unknown",
+      "format_type": "Hobby + trending audio",
+      "niche_relevance": 0.2,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 2,
+      "sync_note": "Smooth, groove-driven R&B. No dynamic swells or sync points that invite craft process cuts or model reveals.",
+      "register_note": "Confident, intimate, aspirational—tonal opposite of grimdark.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "The trend (\"girl grip\" flex) is motivational and domestic. No ironic or thematic bridge to miniature painting or 40K lore.",
+      "cinematic_angle": "Not applicable to this account's brand.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Human Nature – Michael Jackson Trend Recap: Why make two trips when you can make zero? The \"girl grip\" is the ancient art of hauling your entire life in one hand — coffee, keys, phone, snacks, the works — balanced with the confidence of someone who has never once dropped anything. A flex for ",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/1066931830157201/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Original Audio",
+      "artist": "its_drfarah (Original audio)",
+      "audio_type": "soundbite",
+      "trend_stage": "Rising",
+      "format_type": "Green screen template",
+      "niche_relevance": 0.2,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 1,
+      "sync_note": "AI-generated cinematic backdrop audio — generic, lacks character or memorable sync points.",
+      "register_note": "Artificial, promotional, slick but hollow.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "AI flexing is antithetical to craft-focused, handmade grimdark ethos. No productive tension.",
+      "cinematic_angle": "Not recommended. Conflicts with core account identity (artisanal, intentional direction) and the creator's disdain for AI shortcuts in creative work.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Original audio Trend Recap: AI does the heavy lifting on this one, a scroll-stopping generated scene built to show off a product in the most cinematic way possible. Drink, sunglasses, bag, whatever you're selling, drop it into the scene and let the AI do the flexing.",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/",
+        "https://www.socialpilot.co/blog/instagram-reels-trends"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/27554386410835342/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Milkshake",
+      "artist": "Kelis",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "POV + reaction",
+      "niche_relevance": 0.2,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 1,
+      "sync_note": "Built for tension-release arc; horn hits are obvious and overused",
+      "register_note": "Playful anticipation, comedic letdown",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Fundamentally pop-adjacent; incompatible with grimdark register",
+      "cinematic_angle": "Avoid—iconic pop sound is antithetical to the account's cinematic voice",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Milkshake – Kelis Trend Recap: Somewhere between a low-flying plane and your biggest announcement, this trend finds the funniest possible detour. Creators build a little tension with an unexpected setup before landing on the real news, an event, a launch, a product drop, whatever you're hypin",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/2195949510518876/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "Girls Just Want to Have Fun",
+      "artist": "Cyndi Lauper",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Green screen template",
+      "niche_relevance": 0.15,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 1,
+      "sync_note": "Driving beat anchors transition; worn out by overuse",
+      "register_note": "Bright, celebratory, optimistic",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Tonal opposite of grimdark; no productive tension possible",
+      "cinematic_angle": "Not suitable—too established in mainstream consciousness",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: Girls Just Want to Have Fun – Cyndi Lauper Trend Recap: One leg swipe, infinite scene changes. Creators sweep a leg across the frame and cut to the next clip at the exact same point in the motion, so the transition reads buttery smooth. Simple trick, satisfying payoff, great for outfit change",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/323230265024757/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "I Feel Love",
+      "artist": "Donna Summer",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Green screen template",
+      "niche_relevance": 0.15,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 1,
+      "sync_note": "Euphoric synth swell; predictable beat structure; fashion-first context",
+      "register_note": "Ecstasy, elevation, transcendence",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Euphoria is tonally opposite to grimdark register",
+      "cinematic_angle": "Not suitable—too entrenched in lifestyle/fashion trends",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: I Feel Love – Donna Summer Trend Recap: One perfectly timed shoe toss and suddenly the whole outfit changes. The transition flips a casual look into a fully styled fit, and it's as satisfying to watch as it sounds. Fashion, beauty, lifestyle, or any brand with a product to show off: this one'",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/400025130573041/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "JAMES AND ANTLER",
+      "artist": "james.and.antler",
+      "audio_type": "soundbite",
+      "trend_stage": "Unknown",
+      "format_type": "Audio/voiceline",
+      "niche_relevance": 0.1,
+      "categories": [],
+      "potency_score": 1,
+      "sync_note": "Unknown audio content — insufficient context to assess sync potential.",
+      "register_note": "Cannot determine without audio sample.",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Lack of context makes assessment impossible.",
+      "cinematic_angle": "Requires direct audio listen before evaluation. Cannot recommend without sample.",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: JAMES AND ANTLER",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/",
+        "https://www.scottsocialmarketing.com/blog/trending-reels-audio-this-week-on-instagram"
+      ],
+      "mention_count": 2,
+      "ig_link": "https://www.instagram.com/reels/audio/26923322580669821/",
+      "tiktok_link": ""
+    },
+    {
+      "name": "TiK ToK",
+      "artist": "Kesha",
+      "audio_type": "music",
+      "trend_stage": "Fading",
+      "format_type": "Audio/voiceline",
+      "niche_relevance": 0.1,
+      "categories": [
+        "General Trending"
+      ],
+      "potency_score": 1,
+      "sync_note": "Heavy drop; obvious rhythm; platform-saturated",
+      "register_note": "Ironic detachment, party-ready energy",
+      "counterpoint_potential": false,
+      "counterpoint_note": "Satirical register does not align with this account's earnest grimdark approach",
+      "cinematic_angle": "Incompatible—represents opposite end of the cultural spectrum",
+      "use_count": "",
+      "trend_note": "",
+      "context": "Audio: TiK ToK – Kesha PRO TIP: Schedule Instagram Reels in advance with Later's Instagram scheduling tools ! Join over 7M brands, creators , and social media managers when you sign up. Start your free trial today.",
+      "source_url": "https://later.com/blog/instagram-reels-trends/",
+      "sources": [
+        "https://later.com/blog/instagram-reels-trends/"
+      ],
+      "mention_count": 1,
+      "ig_link": "https://www.instagram.com/reels/audio/558681094631125/",
+      "tiktok_link": ""
+    },
+    {
       "name": "Chiquitita (Mamá Mía, Mis quince)",
       "artist": "ABBA",
       "audio_type": "music",
-      "trend_stage": "Rising",
+      "trend_stage": "Fading",
       "format_type": "Green screen template",
       "niche_relevance": 0.1,
       "categories": [
         "General Trending"
       ],
       "potency_score": 1,
-      "sync_note": "Melodic pop-ballad with sustained notes and smooth dynamics; designed for flutter/flicker transitions that rely on visual effect, not audio sync",
-      "register_note": "Wistful, nostalgic, ethereal",
+      "sync_note": "Soaring melodic swell; ethereal, dream-logic pacing",
+      "register_note": "Wistful nostalgia, summer transcendence",
       "counterpoint_potential": false,
-      "counterpoint_note": "The dreamlike, summer-yearning quality is fundamentally misaligned with grimdark; no dark irony or tension possible",
-      "cinematic_angle": "Not applicable. The audio's ethereal, escapist register is opposite to this account's grounded cinematic approach.",
+      "counterpoint_note": "Ethereal summer vibes directly oppose grimdark register",
+      "cinematic_angle": "Not recommended—tone is fundamentally incompatible",
       "use_count": "",
       "trend_note": "",
       "context": "Audio: Chiquitita (Mamá Mía, Mis quince) Trend Recap: Instant summer daydream vibes? Check. Add an ethereal, otherworldly quality to your pics with this trend by flickering back and forth between two videos. The result? An effect as dreamy and ephemeral as summer itself.",
@@ -944,103 +944,249 @@
   ],
   "topics": [
     {
-      "title": "New Custodes Statlines & Rules for 10th Edition 40K",
+      "title": "Custodes 10th Edition Statline Overhaul & Unit Removals",
       "category": "Tabletop/Gameplay",
-      "what_is_driving_it": "Official preview of updated Custodes rules showing significant stat changes and unit removals, generating high community debate about competitive viability.",
-      "relevance_note": "High-velocity discussion around major faction refresh; players need clear breakdown of what changed and why it matters for army building.",
+      "what_is_driving_it": "Major rules preview showing significant Custodes statline changes and removal of certain units, creating uncertainty and theory-crafting in the community",
+      "relevance_note": "High-velocity discussion around competitive viability shifts; players need clarity on new meta implications",
       "is_content_gap": true,
-      "gap_note": "Tactical analysis of new Custodes datasheets is scattered across channels—opportunity to own a deep-dive breakdown video comparing old vs. new stats with competitive implications.",
+      "gap_note": "Opportunity for cinematic breakdown content: 'Custodes 10th Edition Deep Dive' showing old vs new statlines side-by-side with competitive analysis. Few creators are doing detailed comparative guides yet.",
       "is_question": false,
       "source": "youtube",
       "url": "https://www.youtube.com/watch?v=43wKKqRveew"
     },
     {
-      "title": "Space Marine 2 Patch 15: Major Changes & Balance Updates",
+      "title": "Kill Team Armageddon Release & New Legion of the Damned Faction",
       "category": "Tabletop/Gameplay",
-      "what_is_driving_it": "Latest major patch for Space Marine 2 introduces significant balance and gameplay changes that are being dissected across content creators.",
-      "relevance_note": "Active player base looking for explainer content on patch impact; high engagement on patch-day content.",
+      "what_is_driving_it": "New Kill Team Armageddon release with Legion of the Damned returning as playable faction, driving tournament interest and army-building discussions",
+      "relevance_note": "Multiple content creators covering it; high engagement on first impressions and competitive builds. Kill Team experiencing renaissance.",
       "is_content_gap": true,
-      "gap_note": "Opportunity for cinematic breakdown video explaining each major change and how it shifts meta gameplay—currently fragmented across multiple creators.",
-      "is_question": false,
-      "source": "youtube",
-      "url": "https://www.youtube.com/watch?v=JsN-HBekh7s"
-    },
-    {
-      "title": "Kill Team: Legion of the Damned Return & Armageddon Release",
-      "category": "Lore/Narrative",
-      "what_is_driving_it": "Highly anticipated Legion of the Damned return to Kill Team combined with Armageddon campaign release, driving lore curiosity and tactical interest.",
-      "relevance_note": "New faction/story launch creates immediate demand for 'who are they?' and 'how do they play?' content.",
-      "is_content_gap": true,
-      "gap_note": "Legion lore narrative combined with army painting showcase/battle tactics would own the crossover between hobby and gameplay—current coverage is scattered.",
+      "gap_note": "Content gap: 'Legion of the Damned Kill Team Starter Guide' for new players entering the system. Most coverage focuses on experienced players; beginner guides are sparse.",
       "is_question": false,
       "source": "youtube",
       "url": "https://www.youtube.com/watch?v=9E9DkKxVLEE"
     },
     {
-      "title": "Necromunda vs Kill Team: Skirmish Game Comparison",
-      "category": "Community Questions",
-      "what_is_driving_it": "New players and existing hobbyists asking which skirmish game to invest in; comparison content gaining traction across multiple channels.",
-      "relevance_note": "Recurring question in community: 'Should I play Kill Team or Necromunda?' with no definitive 'cinematic guide' answer.",
-      "is_content_gap": true,
-      "gap_note": "Opportunity to create definitive 'Which Skirmish Game for YOU?' video using side-by-side gameplay, painting time, cost, and narrative depth—currently no clear winner in search results.",
-      "is_question": true,
+      "title": "Space Marine 2 Patch 15: Major Gameplay Changes & Balance Shift",
+      "category": "Tabletop/Gameplay",
+      "what_is_driving_it": "Significant patch update to Space Marine 2 video game with multiple balance changes affecting multiplayer meta",
+      "relevance_note": "First Tour Guardsman covering it; high YouTube search velocity indicates sustained community interest in video game balance updates",
+      "is_content_gap": false,
+      "gap_note": null,
+      "is_question": false,
       "source": "youtube",
-      "url": "https://www.youtube.com/watch?v=r7X-BIoicdY"
+      "url": "https://www.youtube.com/watch?v=JsN-HBekh7s"
     },
     {
-      "title": "Warhammer Tone Pro Paints: 'Eavy Metal Expert Tutorials & Golden Demon Judge Reviews",
+      "title": "Warhammer Tone Pro Paint Range & Golden Demon Showcase",
       "category": "Hobby Craft",
-      "what_is_driving_it": "New Warhammer Tone Pro paint line being championed by official 'Eavy Metal team and Golden Demon-winning painters; multiple expert endorsements driving adoption.",
-      "relevance_note": "New product launch with high-authority backing (official GW painters); community hungry for 'how-to' content on new paint system.",
+      "what_is_driving_it": "Official Games Workshop launch of new Warhammer Tone Pro paint range with interviews from Golden Demon winners and 'Eavy Metal team demonstrating applications",
+      "relevance_note": "Multiple official community posts featuring expert painters and tutorial content; new product launch driving immediate hobby interest",
       "is_content_gap": true,
-      "gap_note": "No comprehensive tutorial video yet breaking down Tone Pro workflow vs. Citadel paints—opportunity to own step-by-step painting guide with these paints on recognizable models.",
-      "is_question": false,
+      "gap_note": "Content gap: 'Warhammer Tone Pro vs Traditional Citadel Paints – Honest Comparison' video testing coverage and finish. While official showcases exist, side-by-side practical comparisons for hobby creators are missing.",
+      "is_question": true,
       "source": "warhammer_community",
       "url": "https://www.warhammer-community.com/en-gb/articles/fjofuezy/eavy-metal-takes-on-green-with-warhammer-tone-pro-paints/"
     },
     {
-      "title": "Horus Heresy Custodes New Units: Assault on Kol Campaign Deep Dive",
+      "title": "Horus Heresy Custodes Expansion: New Units & Designer Notes",
       "category": "Lore/Narrative",
-      "what_is_driving_it": "Official designers' notes released for new Horus Heresy Custodes units tied to Assault on Kol campaign narrative; lore-focused players want story context.",
-      "relevance_note": "Premium lore opportunity paired with competitive rules—combines narrative and tactical interest; new units drive model sales and army-building discussions.",
-      "is_content_gap": false,
-      "gap_note": null,
+      "what_is_driving_it": "New Custodes units released for Horus Heresy with official designer notes explaining the narrative and rules integration for 'Assault on Kol' expansion",
+      "relevance_note": "Official release with designer context; appeals to both lore enthusiasts and competitive players seeking ruleset understanding",
+      "is_content_gap": true,
+      "gap_note": "Content gap: 'Horus Heresy Custodes Lore Breakdown' – cinematic narrative explainer on who these new units are, their role in Assault on Kol storyline, and competitive applications. Few creators do deep lore + rules fusion content.",
       "is_question": false,
       "source": "warhammer_community",
       "url": "https://www.warhammer-community.com/en-gb/articles/arqdk3n9/new-custodes-units-for-horus-heresy-designers-notes-for-the-assault-on-kol/"
     },
     {
-      "title": "Age of Sigmar 4.0 Meta Shift: Is the Current Meta Ending?",
+      "title": "Age of Sigmar 4th Edition Meta Shift & Damage Scaling Issues",
       "category": "Tabletop/Gameplay",
-      "what_is_driving_it": "Recent stats and tournament results suggesting Age of Sigmar 4 competitive meta is entering new phase; players debating army viability and upcoming balance changes.",
-      "relevance_note": "High-stakes meta discussion with tournament implications; players need competitive analysis to decide army pivots.",
+      "what_is_driving_it": "Community discussion flagging potential meta stagnation and damage scaling problems in Age of Sigmar 4th Edition tournament results",
+      "relevance_note": "Recurring question on forums/Discord: 'Is the current meta broken?' High engagement but fragmented answers across platforms",
       "is_content_gap": true,
-      "gap_note": "Tournament data breakdown + prediction video on next meta shifts would fill gap—currently only scattered stat discussions without narrative framing.",
+      "gap_note": "Content gap: 'Age of Sigmar 4th Edition Meta Health Report' – quarterly meta analysis combining tournament results, win-rates by faction, and damage scaling deep-dive. No creator owns this analytical format yet in AoS space.",
       "is_question": true,
       "source": "youtube",
       "url": "https://www.youtube.com/watch?v=8Kb8VT8mZDk"
     },
     {
-      "title": "Golden Demon Mini Painting as a Beginner: Golden Demon Reactions & Tips",
-      "category": "Hobby Craft",
-      "what_is_driving_it": "Beginner painter reacting to Golden Demon level painting, sparking conversation about skill progression and techniques accessible to new hobbyists.",
-      "relevance_note": "Aspirational content combining beginner accessibility with expert-level inspiration; high engagement on 'how do they do that?' discussions.",
+      "title": "Imperial Knights Novel Release & Faction Narrative Expansion",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "New Black Library novel featuring Imperial Knights faction with expanded lore and character development",
+      "relevance_note": "Official narrative content driving faction interest; Imperial Knights players seeking lore context for their army",
       "is_content_gap": true,
-      "gap_note": "Opportunity to create 'Golden Demon Techniques for Beginners' video breaking down advanced techniques into learnable steps—fills gap between 'basic painting' and 'expert showcase' content.",
+      "gap_note": "Content gap: 'Imperial Knights Lore Explainer for Tabletop Players' – connecting Black Library narrative to army-building choices and faction identity. Most lore content is generic; faction-specific tie-ins are rare.",
       "is_question": false,
-      "source": "youtube",
-      "url": "https://www.youtube.com/watch?v=Q6pTZyRrpYw"
+      "source": "warhammer_community",
+      "url": "https://www.warhammer-community.com/en-gb/articles/cz327wys/imperial-knights-star-in-a-new-black-library-novel/"
     },
     {
-      "title": "Warhammer 40K Christmas Battleforce 2026 Predictions & Value Analysis",
-      "category": "Community Questions",
-      "what_is_driving_it": "Community using probability analysis to predict upcoming seasonal bundles; players want to know best value purchases before release.",
-      "relevance_note": "Seasonal buying decision content; players actively planning hobby budgets and seeking guidance on best-value starter sets.",
+      "title": "Incubi Deep Lore Analysis & Xenos Faction Coverage",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "Majorkill lore video on Incubi driving discussion around under-explored xenos factions and their 40K narrative role",
+      "relevance_note": "Niche lore content with high community engagement; reveals appetite for deeper alien faction storytelling",
       "is_content_gap": true,
-      "gap_note": "Predictive value-analysis video using historical patterns + leak analysis could own pre-launch guidance space—currently only one creator doing this.",
+      "gap_note": "Content gap: 'Xenos Factions Deep Lore Series' – cinematic explainers on Incubi, Genestealer Cults, Drukhari subfactions. Currently dominated by Imperial/Chaos coverage; xenos are underserved narratively despite strong player interest.",
+      "is_question": false,
+      "source": "youtube",
+      "url": "https://www.youtube.com/watch?v=Pf7TuDC9Dkc"
+    },
+    {
+      "title": "Warhammer 40K 2026 Roadmap & Year 3 Release Strategy",
+      "category": "Lore/Narrative",
+      "what_is_driving_it": "Community speculation and official hints about 2026 release calendar, Space Marine 3 viability, and multi-year content roadmap",
+      "relevance_note": "High search velocity and multiple creators covering predictive content; sustained interest in long-term faction releases",
+      "is_content_gap": false,
+      "gap_note": null,
       "is_question": true,
       "source": "youtube",
-      "url": "https://www.youtube.com/watch?v=vaQO-BcS0jg"
+      "url": "https://www.youtube.com/watch?v=5Yu0Nvr8EDo"
     }
-  ]
+  ],
+  "trend_scout": {
+    "week_of": "2026-10-07",
+    "compared_to": null,
+    "formats": [
+      {
+        "format": "POV + reaction",
+        "count": 8,
+        "strong": 0,
+        "avg_score": 2.4,
+        "avg_fit": 0.29,
+        "share": 23.5,
+        "examples": [
+          {
+            "name": "Shabang",
+            "artist": "Drake",
+            "potency_score": 5,
+            "ig_link": "https://www.instagram.com/reels/audio/993398866388191/",
+            "tiktok_link": "",
+            "cinematic_angle": "Personality dump of 40K-specific obsessions: screenshots of lore, model WIPs, paint swatches, faction color theory, personal 'unhinged' takes on 40K lore. The audio rewards rapid-fire absurdism, which suits nerd culture."
+          },
+          {
+            "name": "I'm Every Woman",
+            "artist": "Chaka Khan",
+            "potency_score": 3,
+            "ig_link": "https://www.instagram.com/reels/audio/1715351118547270/",
+            "tiktok_link": "",
+            "cinematic_angle": "A lineup of finished centerpiece models or army figures holding their painted examples, snapped in succession to the beat—treating a hobby reveal with the gravitas of a power anthem."
+          }
+        ],
+        "share_delta": null,
+        "trend": "new baseline"
+      },
+      {
+        "format": "Hobby + trending audio",
+        "count": 12,
+        "strong": 5,
+        "avg_score": 4.8,
+        "avg_fit": 0.5,
+        "share": 35.3,
+        "examples": [
+          {
+            "name": "One Less Lonely Girl",
+            "artist": "Justin Bieber",
+            "potency_score": 8,
+            "ig_link": "https://www.instagram.com/reels/audio/2206590442923471/",
+            "tiktok_link": "",
+            "cinematic_angle": "Behind-the-scenes painting session: real-time brush strokes, wet models, organized chaos of the hobby space, paired with lyrics about doing it for others. Breaks the 'finished product only' expectation and invites audience into actual creative practice."
+          },
+          {
+            "name": "Everything Hallelujah",
+            "artist": "Justin Bieber",
+            "potency_score": 7,
+            "ig_link": "https://www.instagram.com/reels/audio/1309090040908747/",
+            "tiktok_link": "",
+            "cinematic_angle": "Raw model vs. finished model: left side underprimed/unpainted, right side fully painted and based. Satisfying visual parallel that asks viewers to appreciate transformation of effort over time."
+          }
+        ],
+        "share_delta": null,
+        "trend": "new baseline"
+      },
+      {
+        "format": "Green screen template",
+        "count": 6,
+        "strong": 0,
+        "avg_score": 1.7,
+        "avg_fit": 0.21,
+        "share": 17.6,
+        "examples": [
+          {
+            "name": "The Winner Takes It All",
+            "artist": "ABBA",
+            "potency_score": 4,
+            "ig_link": "https://www.instagram.com/reels/audio/27173910075612553/",
+            "tiktok_link": "",
+            "cinematic_angle": "Use ironically: step on-camera in full painting apron/hobby gear to 'creator rates' voiceover. The grandiose audio paired with humble hobby setup creates knowing humor without undercutting the craft itself."
+          },
+          {
+            "name": "Beat It",
+            "artist": "Michael Jackson",
+            "potency_score": 2,
+            "ig_link": "https://www.instagram.com/reels/audio/1844093005638456/",
+            "tiktok_link": "",
+            "cinematic_angle": "Avoid—iconic and exhausted in trend cycles"
+          }
+        ],
+        "share_delta": null,
+        "trend": "new baseline"
+      },
+      {
+        "format": "Show/movie clip",
+        "count": 1,
+        "strong": 0,
+        "avg_score": 2.0,
+        "avg_fit": 0.2,
+        "share": 2.9,
+        "examples": [
+          {
+            "name": "Be Like a Woman",
+            "artist": "Chris Rainbow",
+            "potency_score": 2,
+            "ig_link": "https://www.instagram.com/reels/audio/696487887387706/",
+            "tiktok_link": "",
+            "cinematic_angle": "Not recommended. The 'Prada judgment' format doesn't translate to hobby culture without feeling hollow."
+          }
+        ],
+        "share_delta": null,
+        "trend": "new baseline"
+      },
+      {
+        "format": "Audio/voiceline",
+        "count": 7,
+        "strong": 1,
+        "avg_score": 3.1,
+        "avg_fit": 0.35,
+        "share": 20.6,
+        "examples": [
+          {
+            "name": "Someday We Will Dream About Today",
+            "artist": "The Sways",
+            "potency_score": 7,
+            "ig_link": "https://www.instagram.com/reels/audio/1935055823927858/",
+            "tiktok_link": "",
+            "cinematic_angle": "Collection retrospective: slow pan over years of models, armies, finished pieces with narration of journey. 'Someday we'll remember this hobby obsession as the golden era.' Treats fandom as lived history."
+          },
+          {
+            "name": "Patient Zero",
+            "artist": "Taylor Swift",
+            "potency_score": 4,
+            "ig_link": "https://www.instagram.com/reels/audio/1408221234024254/",
+            "tiktok_link": "",
+            "cinematic_angle": "Character study: a 40K fan's confession-style piece ('I started this hobby and couldn't stop') over footage of escalating collection/build time. Intimate, vulnerable tone breaks expected 'flex' format."
+          }
+        ],
+        "share_delta": null,
+        "trend": "new baseline"
+      }
+    ],
+    "top": [
+      "Hobby + trending audio",
+      "Audio/voiceline",
+      "POV + reaction"
+    ],
+    "rising": [],
+    "falling": [],
+    "insight": "Lean into hobby content paired with trending audio this week, as it dominates your engagement with 35% share and 4.8 average score across strong-performing posts."
+  }
 }
