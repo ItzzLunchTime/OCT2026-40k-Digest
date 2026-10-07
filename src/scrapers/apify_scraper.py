@@ -26,6 +26,7 @@ from src.config import (
     APIFY_API_KEY,
     APIFY_MONTHLY_BUDGET_USD,
     APIFY_RUN_BUDGET_USD,
+    TIKTOK_ENABLED,
     TIKTOK_REGION,
     TIKTOK_SONG_LIMIT,
     IG_HASHTAGS,
@@ -37,7 +38,7 @@ IG_ACTOR = "apify/instagram-hashtag-scraper"
 
 # Per-actor spend ceilings (USD). Sum stays under APIFY_RUN_BUDGET_USD.
 TIKTOK_MAX_CHARGE = Decimal("0.15")
-IG_MAX_CHARGE = Decimal("0.60")
+IG_MAX_CHARGE = Decimal("0.65")
 
 MIN_PLAYS_FOR_ENGAGEMENT = 2000
 
@@ -318,4 +319,5 @@ def scrape_apify() -> list[dict]:
         return []
 
     client = ApifyClient(APIFY_API_KEY)
-    return scrape_instagram_niche_audio(client) + scrape_tiktok_trending(client)
+    tiktok = scrape_tiktok_trending(client) if TIKTOK_ENABLED else []
+    return scrape_instagram_niche_audio(client) + tiktok

@@ -111,6 +111,9 @@ COMMUNITY_URLS = [
 APIFY_MONTHLY_BUDGET_USD: float = 4.50
 APIFY_RUN_BUDGET_USD: float = 0.75        # worst case for one run (both actors capped)
 
+# Off: as of Oct 2026 the Creative Center actor returns 0 songs for US/7d but still
+# bills ~$0.05–0.23 per run. Flip to True to retry (e.g. with period "30").
+TIKTOK_ENABLED: bool = False
 TIKTOK_REGION = "US"
 TIKTOK_SONG_LIMIT: int = 60               # ~$0.06/run at $0.001 per song
 
