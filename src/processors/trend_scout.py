@@ -107,8 +107,13 @@ def _insight(top: list[dict], rising: list[str], falling: list[str]) -> str:
             system=(
                 "You write the one-sentence takeaway for a weekly trend report for an "
                 "Instagram creator in Warhammer 40K, miniature painting, hobby crafts and "
-                "nerd culture. Given format stats, write ONE concrete, actionable sentence "
-                "(max 35 words) on which post format to lean into this week and why. "
+                "nerd culture. The stats describe sounds trending across Instagram/TikTok "
+                "this week, grouped by post format and scored for fit with that niche — "
+                "they are NOT the creator's own engagement or performance, so never say "
+                "'your engagement' or 'your posts'. 'share' is the format's percentage of "
+                "this week's trending sounds; avg_score is out of 10. Write ONE concrete, "
+                "actionable sentence (max 35 words) on which format to lean into this week, "
+                "naming a specific example sound and a niche-specific idea. "
                 "No preamble, no quotes, no emoji."
             ),
             messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
@@ -151,7 +156,8 @@ def build_trend_scout(scored_audio: list[dict], today: date | None = None) -> di
         key=lambda f: (f["strong"], f["avg_score"], f["avg_fit"]),
         reverse=True,
     )
-    top = ranked[:3]
+    # Only formats with at least one strong sound make the top list
+    top = [f for f in ranked if f["strong"]][:3] or ranked[:1]
     rising = [f["format"] for f in formats if f["trend"] in ("rising", "new")]
     falling = [f["format"] for f in formats if f["trend"] == "falling"]
 
