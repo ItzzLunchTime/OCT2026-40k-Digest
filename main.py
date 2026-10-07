@@ -22,6 +22,7 @@ from src.processors.claude_scorer import score_audio, score_topics
 from src.processors.personal_taste import get_taste_profile
 from src.processors.email_sender import send_digest, send_alert
 from src.processors.dashboard_updater import update_dashboard
+from src.processors.trend_scout import build_trend_scout
 
 
 def main() -> None:
@@ -71,6 +72,10 @@ def main() -> None:
     print("Scoring topics with Claude…")
     scored_topics = score_topics(raw_topics)
 
+    # ── 5b. Trend Scout: format mix vs last week ─────────────────
+    print("Building Trend Scout…")
+    trend_scout = build_trend_scout(scored_audio)
+
     # ── 6. Fire individual alerts for high-potency audio ─────────
     from src.config import ALERT_THRESHOLD
     # Capped so a strong day can't flood the inbox — the rest are in the digest
@@ -82,11 +87,11 @@ def main() -> None:
 
     # ── 7. Send weekly digest email ───────────────────────────────
     print("Sending digest email…")
-    send_digest(scored_audio, scored_topics)
+    send_digest(scored_audio, scored_topics, trend_scout)
 
     # ── 8. Update dashboard ───────────────────────────────────────
     print("Updating dashboard…")
-    update_dashboard(scored_audio, scored_topics)   # also saves JSON + date index
+    update_dashboard(scored_audio, scored_topics, trend_scout)   # also saves JSON + date index
 
     print(f"\n✅ Digest complete — {today}")
     print(f"   Audio scored: {len(scored_audio)}")

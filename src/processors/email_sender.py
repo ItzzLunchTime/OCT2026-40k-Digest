@@ -280,7 +280,62 @@ def _topic_card(topic: dict) -> str:
     )
 
 
-def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
+TREND_LABELS = {
+    "rising": ("▲ Rising", "#2ecc71"),
+    "new": ("★ New", "#2ecc71"),
+    "falling": ("▼ Falling", "#c0392b"),
+    "steady": ("● Steady", "#888"),
+    "new baseline": ("", "#888"),
+}
+
+
+def _trend_scout_html(ts: dict | None) -> str:
+    if not ts or not ts.get("top"):
+        return ""
+    by_fmt = {f["format"]: f for f in ts["formats"]}
+    baseline = ts.get("compared_to")
+    sub = (f"Compared with the {baseline} digest" if baseline
+           else "First week with format data — comparisons start next Monday")
+
+    cards = []
+    for rank, fmt in enumerate(ts["top"], 1):
+        f = by_fmt[fmt]
+        label, colour = TREND_LABELS.get(f["trend"], ("", "#888"))
+        delta = f.get("share_delta")
+        delta_txt = (f" ({'+' if delta > 0 else ''}{delta} pts)" if isinstance(delta, (int, float)) and delta else "")
+        examples = []
+        for ex in f["examples"]:
+            link = ex.get("ig_link") or ex.get("tiktok_link")
+            title = _e(ex["name"]) + (f" — {_e(ex['artist'])}" if ex.get("artist") else "")
+            title = f'<a href="{_e(link)}">{title}</a>' if link else title
+            angle = (f'<div style="font-size:12px;color:#999;font-style:italic;margin:2px 0 0 0;">'
+                     f'{_e(ex["cinematic_angle"])}</div>' if ex.get("cinematic_angle") else "")
+            examples.append(f'<div style="margin:6px 0;font-size:13px;">♪ {title} '
+                            f'<span style="color:#777;">· {ex.get("potency_score", 0)}/10</span>{angle}</div>')
+        cards.append(f"""<div class="card" style="border-left:3px solid #e67e22;">
+  <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+    <h3>#{rank} {_e(fmt)}</h3>
+    <span style="font-size:12px;font-weight:700;color:{colour};">{label}{delta_txt}</span>
+  </div>
+  <div class="meta">{f['count']} trending sounds · {f['strong']} strong (6+) · avg {f['avg_score']}/10 · niche fit {round(f['avg_fit'] * 100)}% · {f['share']}% of this week's audio</div>
+  {''.join(examples)}
+</div>""")
+
+    others = [f for f in ts["formats"] if f["format"] not in ts["top"]]
+    other_rows = " &nbsp;·&nbsp; ".join(
+        f"{_e(f['format'])}: {f['count']}"
+        + (f" <span style='color:{TREND_LABELS[f['trend']][1]};'>{TREND_LABELS[f['trend']][0]}</span>"
+           if f["trend"] in ("rising", "falling", "new") else "")
+        for f in others
+    )
+    return f"""<h2>🧭 Trend Scout — Week of {_e(ts['week_of'])}</h2>
+  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(sub)}</p>
+  <div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">{_e(ts.get('insight', ''))}</div>
+  {''.join(cards)}
+  {'<p style="font-size:12px;color:#888;">Other formats — ' + other_rows + '</p>' if other_rows else ''}"""
+
+
+def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None) -> bool:
     """
     Build and send the full weekly digest email.
     scored_audio: sorted by potency_score descending (from claude_scorer)
@@ -328,6 +383,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
 
   {summary_html}
 
+  {_trend_scout_html(trend_scout)}
+
   <h2>🔊 Trending Audio — by Format</h2>
   {audio_cards if audio_cards else '<p style="color:#666;">No audio items scored today.</p>'}
 
@@ -340,5 +397,6 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict]) -> bool:
   </div>
 </div></body></html>"""
 
-    subject = f"🎖 40K Digest {TODAY_SHORT} — {audio_count} audio, {topic_count} topics"
+    lead = f" — {trend_scout['top'][0]} leads" if trend_scout and trend_scout.get("top") else ""
+    subject = f"🎖 40K Digest · Week of {TODAY_SHORT}{lead}"
     return _send(subject, html)
