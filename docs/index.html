@@ -158,6 +158,7 @@ function audioCard(a, rank) {
 
   return `<div class="audio-card" data-score="${a.potency_score||0}" data-type="${esc(a.audio_type||'')}" data-stage="${esc(a.trend_stage||'')}">
     <div class="top"><h3>#${rank} ${esc(a.name||'Unknown')}</h3>${scoreBadge(a.potency_score||0)}</div>
+    ${a.history_label ? `<div style="font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px;color:${/^(New|Climbing)/.test(a.history_label) ? '#2ecc71' : /^Cooling/.test(a.history_label) ? '#c0392b' : 'var(--muted)'}">${esc(a.history_label)}</div>` : ''}
     <div class="audio-meta">${esc(meta)}</div>
     ${(fmt || cats) ? `<div style="margin-bottom:8px;">${fmt}${cats}</div>` : ''}
     ${a.trend_note ? `<div class="field"><span class="field-label">Trend</span>${esc(a.trend_note)}</div>` : ''}
