@@ -50,10 +50,10 @@ jobs:
           TASTE_PROFILE: ${{ secrets.TASTE_PROFILE }}
           ALERT_THRESHOLD: ${{ secrets.ALERT_THRESHOLD }}
         run: |
-          # Keep a copy of the run log in the repo (docs/data/last_run.log) for debugging
+          # Keep a copy of the run log in the repo (docs/data/last_run.txt) for debugging
           set -o pipefail
           mkdir -p docs/data
-          python -u main.py 2>&1 | tee docs/data/last_run.log
+          python -u main.py 2>&1 | tee docs/data/last_run.txt
 
       # ── 4. Commit updated dashboard back to the repo ─────────────
       - name: Commit dashboard update
