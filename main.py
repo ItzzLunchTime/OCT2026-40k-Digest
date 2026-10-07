@@ -14,7 +14,8 @@ from pathlib import Path
 from src.scrapers.aggregators import scrape_aggregators
 from src.scrapers.reddit_scraper import scrape_reddit
 from src.scrapers.youtube_scraper import scrape_youtube
-from src.scrapers.tiktok_scraper import scrape_tiktok
+from src.scrapers.apify_scraper import scrape_apify
+from src.scrapers.rss_scraper import scrape_rss
 from src.scrapers.community_scraper import scrape_community
 
 # ── Processors ───────────────────────────────────────────────────
@@ -23,6 +24,7 @@ from src.processors.personal_taste import get_taste_profile
 from src.processors.email_sender import send_digest, send_alert
 from src.processors.dashboard_updater import update_dashboard
 from src.processors.trend_scout import build_trend_scout
+from src.processors.audio_merge import merge_audio
 
 
 def main() -> None:
@@ -37,17 +39,15 @@ def main() -> None:
     print("Scraping aggregator sites…")
     aggregator_audio = scrape_aggregators()
 
-    print("Scraping TikTok Creative Center…")
-    tiktok_audio = scrape_tiktok()
+    print("Scraping TikTok + Instagram via Apify…")
+    apify_audio = scrape_apify()
 
-    # Combine and deduplicate audio by name (case-insensitive)
-    seen_audio: set[str] = set()
-    raw_audio: list[dict] = []
-    for item in aggregator_audio + tiktok_audio:
-        key = item.get("name", "").lower().strip()
-        if key and key not in seen_audio:
-            seen_audio.add(key)
-            raw_audio.append(item)
+    # Niche-reel sounds first so their signals win when the same track appears twice
+    raw_audio = merge_audio(
+        [a for a in apify_audio if "instagram_niche_reels" in a.get("sources", [])],
+        aggregator_audio,
+        [a for a in apify_audio if "tiktok_creative_center" in a.get("sources", [])],
+    )
 
     print(f"  → {len(raw_audio)} unique audio items collected")
 
@@ -61,7 +61,10 @@ def main() -> None:
     print("Scraping community sites…")
     community_data = scrape_community()
 
-    raw_topics = reddit_data + youtube_data + community_data
+    print("Reading hobby news RSS feeds…")
+    rss_data = scrape_rss()
+
+    raw_topics = reddit_data + youtube_data + community_data + rss_data
     print(f"  → {len(raw_topics)} raw topic signals collected")
 
     # ── 4. Score audio through Claude ────────────────────────────

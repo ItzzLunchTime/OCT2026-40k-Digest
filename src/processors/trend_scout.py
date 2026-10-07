@@ -104,7 +104,7 @@ def _insight(top: list[dict], rising: list[str], falling: list[str]) -> str:
         payload = {"top_formats": top, "rising": rising, "falling": falling}
         resp = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=200,
+            max_tokens=1500,
             system=(
                 "You write the one-sentence takeaway for a weekly trend report for an "
                 "Instagram creator in Warhammer 40K, miniature painting, hobby crafts and "
@@ -119,7 +119,8 @@ def _insight(top: list[dict], rising: list[str], falling: list[str]) -> str:
             ),
             messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
         )
-        text = resp.content[0].text.strip().strip('"')
+        text = "".join(getattr(b, "text", "") for b in resp.content
+                       if getattr(b, "type", "") == "text").strip().strip('"')
         return text.split("\n")[0] or fallback
     except Exception as e:
         print(f"    [trend_scout] Insight call failed, using template: {e}")

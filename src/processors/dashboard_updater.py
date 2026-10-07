@@ -200,7 +200,7 @@ function audioCard(a, rank) {
   ].filter(Boolean).join('');
 
   const extra = [
-    (a.mention_count||1) > 1 ? `on ${a.mention_count} trend sites` : '',
+    (a.mention_count||1) > 1 ? `${a.mention_count} sources` : '',
     typeof a.niche_relevance === 'number' ? `niche fit ${Math.round(a.niche_relevance*100)}%` : '',
   ];
   const meta = [a.artist, a.audio_type, a.trend_stage, a.use_count, ...extra].filter(Boolean).join(' · ');

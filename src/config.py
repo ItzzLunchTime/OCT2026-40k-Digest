@@ -18,6 +18,8 @@ REDDIT_USER_AGENT: str = os.getenv("REDDIT_USER_AGENT", "40kDigest/1.0")
 
 YOUTUBE_API_KEY: str = os.getenv("YOUTUBE_API_KEY","")
 
+APIFY_API_KEY: str = os.getenv("APIFY_API_KEY", "")
+
 # ── Email ─────────────────────────────────────────────────────────
 GMAIL_ADDRESS: str = os.environ["GMAIL_ADDRESS"]
 GMAIL_APP_PASSWORD: str = os.environ["GMAIL_APP_PASSWORD"]
@@ -30,7 +32,7 @@ ALERT_THRESHOLD: int = int(os.getenv("ALERT_THRESHOLD") or "8")
 MIN_RECOMMEND_SCORE: int = 6
 
 # Hard cap on audio items sent to the scorer per run (keeps cost + output bounded)
-MAX_AUDIO_ITEMS: int = 60
+MAX_AUDIO_ITEMS: int = 80
 # Items per Claude call — small enough that the JSON reply never hits max_tokens
 AUDIO_BATCH_SIZE: int = 15
 
@@ -97,8 +99,32 @@ COMMUNITY_URLS = [
     "https://www.warhammer-community.com/",
 ]
 
-# ── TikTok Creative Center ────────────────────────────────────────
-TIKTOK_TREND_URL = "https://ads.tiktok.com/business/creativecenter/inspiration/popular/music/pc/en"
+# ── Apify (TikTok + Instagram) ────────────────────────────────────
+# Apify Free = $5/month credit. Stay under this, leaving headroom for manual runs.
+APIFY_MONTHLY_BUDGET_USD: float = 4.50
+APIFY_RUN_BUDGET_USD: float = 0.75        # worst case for one run (both actors capped)
+
+TIKTOK_REGION = "US"
+TIKTOK_SONG_LIMIT: int = 60               # ~$0.06/run at $0.001 per song
+
+# Reels under these hashtags show which sounds the niche itself is using
+IG_HASHTAGS = [
+    "warhammer40k",
+    "minipainting",
+    "warhammer",
+    "miniaturepainting",
+    "killteam",
+    "paintingwarhammer",
+]
+IG_REELS_PER_HASHTAG: int = 25            # 150 reels ≈ $0.39/run on the Free plan rate
+
+# ── RSS feeds (community news) ───────────────────────────────────
+RSS_FEEDS = {
+    "spikey_bits": "https://spikeybits.com/feed/",
+    "tabletop_battles": "https://www.tabletopbattles.com/feed",   # goonhammer.com/feed redirects here
+}
+RSS_WINDOW_DAYS: int = 7
+RSS_MAX_PER_FEED: int = 20
 
 # ── Claude model ─────────────────────────────────────────────────
-CLAUDE_MODEL = "claude-haiku-4-5-20251001"
+CLAUDE_MODEL = "claude-haiku-5-5"

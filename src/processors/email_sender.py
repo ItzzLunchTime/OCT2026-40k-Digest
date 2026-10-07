@@ -247,7 +247,7 @@ def _audio_card(audio: dict, rank: int) -> str:
 
     meta_parts = [p for p in [artist, audio_type, trend_stage, use_count] if p]
     if mentions > 1:
-        meta_parts.append(f"on {mentions} trend sites")
+        meta_parts.append(f"{mentions} sources")
     if isinstance(relevance, (int, float)):
         meta_parts.append(f"niche fit {round(relevance * 100)}%")
     meta = " · ".join(meta_parts)

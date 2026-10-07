@@ -18,6 +18,11 @@ from src.config import (
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 
+def _reply_text(response) -> str:
+    """Join the text blocks of a reply (newer models may put a thinking block first)."""
+    return "".join(getattr(b, "text", "") for b in response.content if getattr(b, "type", "") == "text")
+
+
 def _parse_json_array(raw_text: str) -> list:
     """Pull the JSON array out of a model reply, tolerating code fences or stray prose."""
     text = raw_text.strip()
@@ -52,7 +57,10 @@ are made.
 Each input item has an "id", plus scraped fields. Use "context" (the blurb around the
 link on the source site) and "trend_note" to understand HOW the sound is being used.
 "mention_count" is how many independent trend sites listed it — higher means broader
-momentum.
+momentum. Items from "instagram_niche_reels" are sounds already being used in recent
+#warhammer40k / #minipainting reels ("niche_creators" = how many different creators):
+that is direct proof of niche fit, so weight niche_relevance up accordingly.
+"tiktok_rank" is the sound's position on TikTok's platform-wide trending chart.
 
 Classify every item into exactly one content format (use the label verbatim):
 {FORMAT_LIST}
@@ -97,6 +105,7 @@ Return ONLY a JSON array with one object per input item. No commentary outside t
 PASSTHROUGH_FIELDS = [
     "use_count", "trend_note", "context", "source_url", "sources",
     "mention_count", "ig_link", "tiktok_link",
+    "tiktok_rank", "niche_reel_count", "niche_creators", "niche_plays",
 ]
 
 
@@ -108,13 +117,13 @@ def _score_batch(batch: list[dict], taste_note: str) -> list[dict]:
     )
     response = client.messages.create(
         model=CLAUDE_MODEL,
-        max_tokens=8000,
+        max_tokens=16000,
         system=AUDIO_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_content}],
     )
     if response.stop_reason == "max_tokens":
         raise ValueError("reply truncated at max_tokens")
-    return _parse_json_array(response.content[0].text)
+    return _parse_json_array(_reply_text(response))
 
 
 def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
@@ -197,7 +206,7 @@ For each item, return a JSON object:
   "is_content_gap": true or false,
   "gap_note": "if true: why this is undercovered and what kind of content could own this space",
   "is_question": true or false,
-  "source": "reddit | youtube | warhammer_community | other",
+  "source": "reddit | youtube | warhammer_community | spikey_bits | tabletop_battles | other",
   "url": "link if available"
 }
 
@@ -238,12 +247,12 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
     try:
         response = client.messages.create(
             model=CLAUDE_MODEL,
-            max_tokens=4000,
+            max_tokens=8000,
             system=TOPIC_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": user_content}],
         )
 
-        return _parse_json_array(response.content[0].text)
+        return _parse_json_array(_reply_text(response))
 
     except Exception as e:
         print(f"    [scorer] Topic scoring error: {e}")
