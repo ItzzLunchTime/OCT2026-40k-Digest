@@ -61,6 +61,9 @@ momentum. Items from "instagram_niche_reels" are sounds already being used in re
 #warhammer40k / #minipainting reels ("niche_creators" = how many different creators):
 that is direct proof of niche fit, so weight niche_relevance up accordingly.
 "tiktok_rank" is the sound's position on TikTok's platform-wide trending chart.
+"history_label"/"weeks_seen"/"prev_score" say whether the sound is new this week or has
+appeared before (and how it scored then). Favour fresh and climbing sounds; a sound in
+its 4th+ week that is cooling has likely peaked — set trend_stage accordingly.
 
 Classify every item into exactly one content format (use the label verbatim):
 {FORMAT_LIST}
@@ -105,7 +108,8 @@ Return ONLY a JSON array with one object per input item. No commentary outside t
 PASSTHROUGH_FIELDS = [
     "use_count", "trend_note", "context", "source_url", "sources",
     "mention_count", "ig_link", "tiktok_link",
-    "tiktok_rank", "niche_reel_count", "niche_creators", "niche_plays",
+    "tiktok_rank", "niche_reel_count", "niche_creators", "niche_plays", "niche_best_plays_per_day",
+    "sound_id", "history_label", "weeks_seen", "times_recommended", "prev_score",
 ]
 
 

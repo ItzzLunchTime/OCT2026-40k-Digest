@@ -9,10 +9,11 @@ When merged, sources and signals are combined so the scorer sees, e.g.,
 "on 2 trend sites + TikTok #14 + used by 5 niche creators".
 """
 
+import hashlib
 import re
 from src.config import MAX_AUDIO_ITEMS
 
-SIGNAL_FIELDS = ("tiktok_rank", "niche_reel_count", "niche_creators", "niche_plays")
+SIGNAL_FIELDS = ("tiktok_rank", "niche_reel_count", "niche_creators", "niche_plays", "niche_best_plays_per_day")
 
 
 def _name_key(item: dict) -> str:
@@ -26,6 +27,17 @@ def _link_keys(item: dict) -> list[str]:
         if m:
             keys.append(f"{f}:{m.group(1)}")
     return keys
+
+
+def sound_keys(item: dict) -> list[str]:
+    """Every key that identifies this sound: platform audio IDs, plus title unless generic."""
+    nkey = _name_key(item)
+    return _link_keys(item) + ([] if not nkey or nkey.startswith("original") else [f"name:{nkey}"])
+
+
+def make_sound_id(item: dict) -> str:
+    keys = sound_keys(item) or [f"name:{_name_key(item)}"]
+    return hashlib.sha1(keys[0].encode()).hexdigest()[:10]
 
 
 def _priority(item: dict) -> float:
@@ -43,11 +55,9 @@ def merge_audio(*sources: list[dict]) -> list[dict]:
 
     for source in sources:
         for item in source:
-            nkey = _name_key(item)
-            if not nkey:
+            if not _name_key(item):
                 continue
-            generic = nkey.startswith("original")
-            keys = _link_keys(item) + ([] if generic else [f"name:{nkey}"])
+            keys = sound_keys(item)
             existing = next((index[k] for k in keys if k in index), None)
 
             if existing is None:
@@ -74,6 +84,9 @@ def merge_audio(*sources: list[dict]) -> list[dict]:
                         existing[f] = item[f]
             for k in keys:
                 index.setdefault(k, existing)
+
+    for item in merged:
+        item["sound_id"] = make_sound_id(item)
 
     merged.sort(key=_priority, reverse=True)
     if len(merged) > MAX_AUDIO_ITEMS:

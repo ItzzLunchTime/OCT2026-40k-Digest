@@ -31,6 +31,11 @@ ALERT_THRESHOLD: int = int(os.getenv("ALERT_THRESHOLD") or "8")
 # Audio below this potency score is never recommended (email, alerts, Trend Scout examples)
 MIN_RECOMMEND_SCORE: int = 6
 
+# Week-over-week memory (built from saved digests in docs/data/)
+HISTORY_WEEKS: int = 8
+# After this many weekly recommendations a sound is held back from the email unless it's climbing
+MAX_REPEAT_RECOMMENDATIONS: int = 2
+
 # Hard cap on audio items sent to the scorer per run (keeps cost + output bounded)
 MAX_AUDIO_ITEMS: int = 80
 # Items per Claude call — small enough that the JSON reply never hits max_tokens
@@ -118,7 +123,7 @@ IG_HASHTAGS = [
     "killteam",
     "paintingwarhammer",
 ]
-IG_REELS_PER_HASHTAG: int = 25            # 150 reels ≈ $0.39/run on the Free plan rate
+IG_REELS_PER_HASHTAG: int = 35            # 210 reels ≈ $0.55/run on the Free plan rate
 
 # ── RSS feeds (community news) ───────────────────────────────────
 RSS_FEEDS = {

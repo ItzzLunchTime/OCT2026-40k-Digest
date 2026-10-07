@@ -47,8 +47,13 @@ jobs:
           REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           APIFY_API_KEY: ${{ secrets.APIFY_API_KEY }}
+          TASTE_PROFILE: ${{ secrets.TASTE_PROFILE }}
           ALERT_THRESHOLD: ${{ secrets.ALERT_THRESHOLD }}
-        run: python main.py
+        run: |
+          # Keep a copy of the run log in the repo (docs/data/last_run.log) for debugging
+          set -o pipefail
+          mkdir -p docs/data
+          python -u main.py 2>&1 | tee docs/data/last_run.log
 
       # ── 4. Commit updated dashboard back to the repo ─────────────
       - name: Commit dashboard update

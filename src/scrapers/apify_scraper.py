@@ -18,7 +18,7 @@ Free-tier guard rails (Apify Free = $5/month credit, blocked when spent):
 
 import re
 from decimal import Decimal
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 
 import requests
 
@@ -38,6 +38,8 @@ IG_ACTOR = "apify/instagram-hashtag-scraper"
 # Per-actor spend ceilings (USD). Sum stays under APIFY_RUN_BUDGET_USD.
 TIKTOK_MAX_CHARGE = Decimal("0.15")
 IG_MAX_CHARGE = Decimal("0.60")
+
+MIN_PLAYS_FOR_ENGAGEMENT = 2000
 
 RESIDENTIAL_PROXY = {"useApifyProxy": True, "apifyProxyGroups": ["RESIDENTIAL"]}
 
@@ -177,7 +179,37 @@ def scrape_tiktok_trending(client) -> list[dict]:
 # 2. Instagram — sounds used in niche hashtag reels
 # ─────────────────────────────────────────────────────────────────
 
+def _reel_metrics(reel: dict, now: datetime) -> dict:
+    plays = int(_first(reel, "videoPlayCount", "igPlayCount", "videoViewCount", default=0) or 0)
+    likes = max(int(reel.get("likesCount") or 0), 0)          # -1 when likes are hidden
+    comments = max(int(reel.get("commentsCount") or 0), 0)
+    try:
+        posted = datetime.fromisoformat(str(reel.get("timestamp", "")).replace("Z", "+00:00"))
+        age_days = max((now - posted).total_seconds() / 86400, 0.5)
+    except ValueError:
+        age_days = 7.0
+    return {
+        "plays": max(plays, 0),
+        "plays_per_day": max(plays, 0) / age_days,
+        "engagement": (likes + comments) / plays if plays > 0 else 0.0,
+        "age_days": age_days,
+    }
+
+
+def _percentile(values: list[float], pct: float) -> float:
+    if not values:
+        return 0.0
+    vals = sorted(values)
+    return vals[min(len(vals) - 1, int(pct * len(vals)))]
+
+
 def scrape_instagram_niche_audio(client) -> list[dict]:
+    """
+    The actor only returns *recent* reels, so we pull a wide pool and judge
+    success ourselves: a reel is a "hit" if its views-per-day is in the top
+    half of this week's niche pool, or its engagement rate is in the top
+    quarter. Only hit reels count toward a sound's signal.
+    """
     limit = IG_REELS_PER_HASHTAG * len(IG_HASHTAGS)
     try:
         reels = _run_actor(
@@ -195,28 +227,41 @@ def scrape_instagram_niche_audio(client) -> list[dict]:
         print(f"    [apify] Instagram hashtag error: {e}")
         return []
 
+    now = datetime.now(timezone.utc)
+    for r in reels:
+        r["_m"] = _reel_metrics(r, now)
+    ppd_bar = _percentile([r["_m"]["plays_per_day"] for r in reels], 0.5)
+    eng_bar = _percentile([r["_m"]["engagement"] for r in reels if r["_m"]["plays"] > 0], 0.75)
+    # Engagement only counts once a reel has real reach (tiny reels have noisy ratios)
+    hits = [r for r in reels
+            if r["_m"]["plays_per_day"] >= ppd_bar
+            or (r["_m"]["engagement"] >= eng_bar and r["_m"]["plays"] >= MIN_PLAYS_FOR_ENGAGEMENT)]
+
     sounds: dict[str, dict] = {}
-    for reel in reels:
+    for reel in hits:
         mi = reel.get("musicInfo") or {}
         audio_id = str(mi.get("audio_id") or "").strip()
         song = (mi.get("song_name") or "").strip()
         artist = (mi.get("artist_name") or "").strip()
         if not audio_id or not song:
             continue
-        original = bool(mi.get("uses_original_audio"))
-        plays = int(_first(reel, "videoPlayCount", "igPlayCount", "videoViewCount", default=0) or 0)
+        m = reel["_m"]
         owner = reel.get("ownerUsername") or ""
         tags = {t.lower() for t in (reel.get("hashtags") or [])}
 
         s = sounds.setdefault(audio_id, {
-            "name": song, "artist": artist, "original": original,
+            "name": song, "artist": artist, "original": bool(mi.get("uses_original_audio")),
             "reels": 0, "owners": set(), "plays": 0, "tags": set(), "captions": [],
+            "best": None,
         })
         s["reels"] += 1
-        s["plays"] += max(plays, 0)
+        s["plays"] += m["plays"]
         if owner:
             s["owners"].add(owner)
         s["tags"] |= tags & {h.lower() for h in IG_HASHTAGS}
+        if s["best"] is None or m["plays_per_day"] > s["best"]["ppd"]:
+            s["best"] = {"ppd": m["plays_per_day"], "plays": m["plays"], "days": m["age_days"],
+                         "url": reel.get("url", "")}
         cap = re.sub(r"\s+", " ", reel.get("caption") or "")[:120]
         if cap and len(s["captions"]) < 2:
             s["captions"].append(cap)
@@ -228,16 +273,18 @@ def scrape_instagram_niche_audio(client) -> list[dict]:
         if s["original"] and creators < 2:
             continue
         tag_txt = ", ".join(f"#{t}" for t in sorted(s["tags"])[:3]) or "niche hashtags"
+        best = s["best"]
         results.append({
             "name": s["name"],
             "artist": s["artist"],
             "audio_type": "",
-            "use_count": f"{s['reels']} niche reels",
+            "use_count": f"{s['reels']} hit niche reel{'s' if s['reels'] != 1 else ''}",
             "trend_stage": "Unknown",
-            "trend_note": (f"Used by {creators} creator{'s' if creators != 1 else ''} in recent "
-                           f"{tag_txt} reels ({_fmt_count(s['plays'])} plays)"),
+            "trend_note": (f"In {s['reels']} high-performing {tag_txt} reel{'s' if s['reels'] != 1 else ''} "
+                           f"by {creators} creator{'s' if creators != 1 else ''} — best: "
+                           f"{_fmt_count(best['plays'])} plays in {max(1, round(best['days']))} days"),
             "context": " | ".join(s["captions"]),
-            "source_url": f"https://www.instagram.com/explore/tags/{IG_HASHTAGS[0]}/",
+            "source_url": best["url"] or f"https://www.instagram.com/explore/tags/{IG_HASHTAGS[0]}/",
             "sources": ["instagram_niche_reels"],
             "mention_count": 1,
             "ig_link": f"https://www.instagram.com/reels/audio/{audio_id}/",
@@ -245,10 +292,12 @@ def scrape_instagram_niche_audio(client) -> list[dict]:
             "niche_reel_count": s["reels"],
             "niche_creators": creators,
             "niche_plays": s["plays"],
+            "niche_best_plays_per_day": int(best["ppd"]),
         })
 
-    results.sort(key=lambda r: (r["niche_creators"], r["niche_plays"]), reverse=True)
-    print(f"    [apify] Instagram: {len(reels)} niche reels → {len(results)} sounds in use")
+    results.sort(key=lambda r: (r["niche_creators"], r["niche_best_plays_per_day"]), reverse=True)
+    print(f"    [apify] Instagram: {len(reels)} niche reels, {len(hits)} hits "
+          f"(≥{_fmt_count(int(ppd_bar))} views/day or top-quarter engagement) → {len(results)} sounds")
     return results
 
 

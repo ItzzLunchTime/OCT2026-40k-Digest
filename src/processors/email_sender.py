@@ -22,6 +22,9 @@ from src.config import (
     MIN_RECOMMEND_SCORE,
 )
 
+from src.processors.feedback import vote_link
+from src.processors.history import is_stale_repeat
+
 try:
     from premailer import transform as _inline_css
 except ImportError:          # email still sends, just with <style> instead of inline styles
@@ -235,6 +238,7 @@ def _audio_card(audio: dict, rank: int) -> str:
     trend_note = _e(audio.get("trend_note", ""))
     mentions = audio.get("mention_count", 1) or 1
     relevance = audio.get("niche_relevance")
+    history = audio.get("history_label", "")
 
     links = []
     if ig_link:
@@ -251,9 +255,24 @@ def _audio_card(audio: dict, rank: int) -> str:
     if isinstance(relevance, (int, float)):
         meta_parts.append(f"niche fit {round(relevance * 100)}%")
     meta = " · ".join(meta_parts)
+    hist_colour = "#2ecc71" if history.startswith(("New", "Climbing")) else ("#c0392b" if history.startswith("Cooling") else "#9a9a9a")
+    history_html = (f'<span style="font-size:11px;font-weight:700;color:{hist_colour};text-transform:uppercase;'
+                    f'letter-spacing:.5px;">{_e(history)}</span>' if history else "")
+    votes_html = ""
+    if audio.get("sound_id"):
+        votes_html = (
+            '<div style="margin-top:12px;font-size:12px;">'
+            + " &nbsp;·&nbsp; ".join(
+                f'<a href="{_e(vote_link(v, audio))}" style="color:#e8e8e8;text-decoration:none;'
+                f'background:#2a2a2a;border:1px solid #3a3a3a;border-radius:12px;padding:3px 9px;">{label}</a>'
+                for v, label in (("up", "👍 More like this"), ("down", "👎 Not for me"), ("used", "✅ Used it"))
+            )
+            + "</div>"
+        )
 
     return f"""<div class="card">
   {_title_row(f'<h3>#{rank} {name}</h3>', _score_badge(score))}
+  {history_html}
   <div class="meta">{meta}</div>
   {'<div class="field"><span class="label">Trend</span>' + trend_note + '</div>' if trend_note else ''}
   {'<div class="field"><span class="label">Categories</span>' + categories + '</div>' if categories else ''}
@@ -262,6 +281,7 @@ def _audio_card(audio: dict, rank: int) -> str:
   {'<div class="field"><span class="label">Counterpoint</span>' + cp_note + '</div>' if cp_note else ''}
   {'<div class="angle">' + angle + '</div>' if angle else ''}
   {'<div class="field" style="margin-top:12px;font-size:12px;">' + link_html + '</div>' if link_html else ''}
+  {votes_html}
 </div>"""
 
 
@@ -340,7 +360,7 @@ def _trend_scout_html(ts: dict | None) -> str:
   {''.join(examples)}
 </div>""")
 
-    others = [f for f in ts["formats"] if f["format"] not in ts["top"]]
+    others = [f for f in ts["formats"] if f["format"] not in ts["top"] and f["count"]]
     other_rows = " &nbsp;·&nbsp; ".join(
         f"{_e(f['format'])}: {f['count']}"
         + (f" <span style='color:{TREND_LABELS[f['trend']][1]};'>{TREND_LABELS[f['trend']][0]}</span>"
@@ -362,6 +382,9 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     """
     # Only sounds above the bar get recommended; the rest stay in the JSON for stats
     scored_audio = [a for a in scored_audio if (a.get("potency_score") or 0) >= MIN_RECOMMEND_SCORE]
+    # Sounds already recommended in earlier weeks and not climbing: one line, not full cards
+    repeats = [a for a in scored_audio if is_stale_repeat(a)]
+    scored_audio = [a for a in scored_audio if not is_stale_repeat(a)]
     audio_count = len(scored_audio)
     topic_count = len(scored_topics)
     alert_count = sum(1 for a in scored_audio if a.get("potency_score", 0) >= ALERT_THRESHOLD)
@@ -391,6 +414,10 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     unformatted = [a for a in scored_audio if a.get("format_type") not in FORMAT_TYPES]
     if unformatted:
         sections.append("".join(_audio_card(a, i + 1) for i, a in enumerate(unformatted[:PER_FORMAT_LIMIT])))
+    if repeats:
+        names = ", ".join(_e(a.get("name", "")) for a in repeats[:8])
+        sections.append(f'<p style="font-size:12px;color:#9a9a9a;margin-top:16px;">Still trending, already '
+                        f'recommended in earlier weeks: {names}</p>')
     audio_cards = "".join(sections)
 
     # Topic section

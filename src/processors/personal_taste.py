@@ -200,10 +200,17 @@ def load_taste_profile_from_cache(cache_path: str = "instagram_data/taste_profil
 def get_taste_profile() -> str:
     """
     Main entry point. Returns the best available taste profile:
-    1. Generated from Instagram export (most accurate)
-    2. Cached plaintext profile
+    0. TASTE_PROFILE environment variable (GitHub secret — used in CI)
+    1. Cached plaintext profile
+    2. Generated from a local Instagram export
     3. Empty string (scoring proceeds without weighting)
     """
+    # 0. Private GitHub secret (the repo is public, so the profile lives here in CI)
+    secret = os.getenv("TASTE_PROFILE", "").strip()
+    if secret:
+        print(f"    [taste] Using TASTE_PROFILE secret ({len(secret)} chars)")
+        return secret
+
     # Try cached first — it may have been manually curated
     cached = load_taste_profile_from_cache()
     if cached:
