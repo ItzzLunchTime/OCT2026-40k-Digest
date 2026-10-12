@@ -2,9 +2,11 @@ name: Weekly 40K Digest
 
 on:
   schedule:
-    # Run every Monday at 07:00 UTC
-    # = Monday 00:00 PDT (summer) / Sunday 23:00 PST (winter)
-    - cron: "0 7 * * 1"
+    # Every Monday. Off the top of the hour, because GitHub delays (or drops)
+    # scheduled jobs queued at :00 by hours. Primary ≈ 00:37 PDT, backup ≈ 06:37 PDT;
+    # the backup only runs the pipeline if no digest exists for that day yet.
+    - cron: "37 7 * * 1"
+    - cron: "37 13 * * 1"
 
   # Allow manual runs from the GitHub Actions tab
   workflow_dispatch:
@@ -35,8 +37,22 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # ── 3. Run the pipeline ──────────────────────────────────────
+      # ── 3. Skip a backup scheduled run if today's digest already went out ──
+      - name: Check for today's digest
+        id: guard
+        run: |
+          # Check the latest main, not just this run's snapshot (a delayed run may be stale)
+          git fetch -q origin main
+          if [ "${{ github.event_name }}" = "schedule" ] && git cat-file -e "origin/main:docs/data/digest_$(date -u +%F).json" 2>/dev/null; then
+            echo "Digest for $(date -u +%F) already exists — skipping this scheduled run"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # ── 4. Run the pipeline ──────────────────────────────────────
       - name: Run digest pipeline
+        if: steps.guard.outputs.skip != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
@@ -55,8 +71,9 @@ jobs:
           mkdir -p docs/data
           python -u main.py 2>&1 | tee docs/data/last_run.txt
 
-      # ── 4. Commit updated dashboard back to the repo ─────────────
+      # ── 5. Commit updated dashboard back to the repo ─────────────
       - name: Commit dashboard update
+        if: steps.guard.outputs.skip != 'true'
         run: |
           git config user.name  "40K Digest Bot"
           git config user.email "actions@github.com"
