@@ -1,0 +1,58 @@
+
+🎙️  40K Content Intel — 2026-10-12
+──────────────────────────────────────────────────
+Loading personal taste profile…
+    [taste] Using TASTE_PROFILE secret (1531 chars)
+Collecting your votes on past recommendations…
+    [feedback] 0 new vote(s) · totals 👍0 👎0 ✅0
+Scraping aggregator sites…
+    [aggregators] later.com → 20 linked audio items
+    [aggregators] www.socialpilot.co → 11 linked audio items
+    [aggregators] www.heyorca.com → 6 linked audio items
+    [aggregators] www.scottsocialmarketing.com → 20 linked audio items
+    [aggregators] buffer.com → 13 linked audio items
+Scraping TikTok + Instagram via Apify…
+    [apify] Month-to-date usage $1.13 of $4.50 budget
+    [apify] apify/instagram-hashtag-scraper: SUCCEEDED · $0.156
+    [apify] Instagram: 180 niche reels, 114 hits (≥3.0K views/day or top-quarter engagement) → 43 sounds
+  → capping 92 sounds to the 80 strongest signals
+    [history] 2 past week(s) loaded · 45/80 sounds new this week
+  → 80 unique audio items collected
+Scraping Reddit…
+    [reddit] r/Warhammer40k error: received 401 HTTP response
+    [reddit] r/Warhammer error: received 401 HTTP response
+    [reddit] r/minipainting error: received 401 HTTP response
+    [reddit] r/ttrpg error: received 401 HTTP response
+    [reddit] r/ageofsigmar error: received 401 HTTP response
+    [reddit] r/killteam error: received 401 HTTP response
+    [reddit] r/AdeptusMechanicus error: received 401 HTTP response
+    [reddit] r/40kLore error: received 401 HTTP response
+    [reddit] 0 posts collected across 8 subreddits
+Scraping YouTube…
+    [youtube] 278 unique videos found → kept 60 (48 Shorts) by views/day
+Scraping community sites…
+    [community] 20 Warhammer Community items
+Reading hobby news RSS feeds…
+    [rss] spikey_bits → 9 items
+    [rss] tabletop_battles → 0 items
+  → 89 raw topic signals collected
+Scoring audio with Claude…
+    [scorer] Scored 80/80 audio items
+Scoring topics with Claude…
+Building Trend Scout…
+    [trend_scout] Top formats: Hobby + trending audio, Audio/voiceline, POV + reaction · baseline: 2026-10-07
+  ⚡ Sending 3 individual alert(s)…
+    [email] Sent: ⚡ Audio Alert [9/10]: Warhammer 40,000: Space Marine 2 - Main Theme — 2026-10-12
+    [email] Sent: ⚡ Audio Alert [9/10]: Planet on Fire (Warhammer 40k) (feat. Pathios Productions) — 2026-10-12
+    [email] Sent: ⚡ Audio Alert [9/10]: Black Templars (Warhammer 40k) — 2026-10-12
+Sending digest email…
+    [email] Sent: 🎖 40K Digest · Week of 2026-10-12 — Hobby + trending audio leads
+Updating dashboard…
+    [dashboard] Saved digest JSON → docs/data/digest_2026-10-12.json
+    [dashboard] Date index updated: 9 digest(s) available
+    [dashboard] Dashboard written → docs/index.html
+
+✅ Digest complete — 2026-10-12
+   Audio scored: 80
+   Topics scored: 9
+   Alerts sent: 3
