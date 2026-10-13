@@ -58,9 +58,6 @@ jobs:
           GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           DIGEST_RECIPIENT: ${{ secrets.DIGEST_RECIPIENT }}
-          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
-          REDDIT_USER_AGENT: ${{ secrets.REDDIT_USER_AGENT }}
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           APIFY_API_KEY: ${{ secrets.APIFY_API_KEY }}
           TASTE_PROFILE: ${{ secrets.TASTE_PROFILE }}

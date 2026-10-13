@@ -12,7 +12,6 @@ from pathlib import Path
 
 # ── Scrapers ──────────────────────────────────────────────────────
 from src.scrapers.aggregators import scrape_aggregators
-from src.scrapers.reddit_scraper import scrape_reddit
 from src.scrapers.youtube_scraper import scrape_youtube
 from src.scrapers.apify_scraper import scrape_apify
 from src.scrapers.rss_scraper import scrape_rss
@@ -67,9 +66,8 @@ def main() -> None:
     print(f"  → {len(raw_audio)} unique audio items collected")
 
     # ── 3. Scrape community sources for topics ────────────────────
-    print("Scraping Reddit…")
-    reddit_data = scrape_reddit()
-
+    # Reddit skipped: since Nov 2025 new API apps need Reddit's approval
+    # (src/scrapers/reddit_scraper.py is kept for if access is ever granted)
     print("Scraping YouTube…")
     youtube_data = scrape_youtube()
 
@@ -79,7 +77,7 @@ def main() -> None:
     print("Reading hobby news RSS feeds…")
     rss_data = scrape_rss()
 
-    raw_topics = reddit_data + youtube_data + community_data + rss_data
+    raw_topics = youtube_data + community_data + rss_data
     print(f"  → {len(raw_topics)} raw topic signals collected")
 
     # ── 4. Score audio through Claude ────────────────────────────
