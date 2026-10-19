@@ -1,4 +1,55 @@
 {
-  "votes": {},
-  "processed": []
+  "votes": {
+    "2c734c5e95": {
+      "vote": "up",
+      "date": "2026-10-12T08:22:39-07:00",
+      "name": "Gamers Argument and Interaction shorts",
+      "artist": "AMLYLY",
+      "format_type": "Audio/voiceline",
+      "register_note": "Comedic and irreverent, a niche in-joke about the Primarchs' personalities.",
+      "score_given": 7,
+      "ig_link": "https://www.instagram.com/reels/audio/1556293596045389/",
+      "tiktok_link": ""
+    },
+    "4789792a4e": {
+      "vote": "up",
+      "date": "2026-10-12T08:22:42-07:00",
+      "name": "Planet on Fire (Warhammer 40k) (feat. Pathios Productions)",
+      "artist": "Rob Sigurd",
+      "format_type": "Hobby + trending audio",
+      "register_note": "Epic doom and apocalyptic scale, the feeling of a world already burning.",
+      "score_given": 9,
+      "ig_link": "https://www.instagram.com/reels/audio/3216451485238109/",
+      "tiktok_link": ""
+    },
+    "e9544fbda3": {
+      "vote": "up",
+      "date": "2026-10-12T08:22:47-07:00",
+      "name": "Prometheus",
+      "artist": "Karl Casey",
+      "format_type": "POV + reaction",
+      "register_note": "Ominous, foreboding, purposeful menace",
+      "score_given": 7,
+      "ig_link": "https://www.instagram.com/reels/audio/551845287266337/",
+      "tiktok_link": ""
+    },
+    "b44e4a5847": {
+      "vote": "up",
+      "date": "2026-10-12T08:22:49-07:00",
+      "name": "Original sound",
+      "artist": "Unknown (creator original)",
+      "format_type": "Audio/voiceline",
+      "register_note": "Menace, quiet dread, implied violence.",
+      "score_given": 7,
+      "ig_link": "",
+      "tiktok_link": "https://www.tiktok.com/music/original-sound-7685204769933167390"
+    }
+  },
+  "processed": [
+    "<CAOswD29VjY_JBBF+C2Auf7P2Ot2gQ5D_LNLhq3wkMHswggTrjg@mail.gmail.com>",
+    "<CAOswD285m3WP4TPGDBzx=-iJq4NHz0wvCZ2bm+OM6arrjiga8Q@mail.gmail.com>",
+    "<CAOswD28vix0TgEiyz-ASUKCMuYScndqDS1d=PE6nLztUxxEZcQ@mail.gmail.com>",
+    "<CAOswD29dVM1p=wc9rp9QfyPP+H4nvEKdrSYku=paQwtM7WJBPA@mail.gmail.com>",
+    "<CAOswD28QiY5HmXn_bbr5gHGCG+7X-Ci1rF5c8qNQZ0PH2rUh-A@mail.gmail.com>"
+  ]
 }
