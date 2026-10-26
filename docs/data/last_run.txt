@@ -1,10 +1,12 @@
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/google/api_core/_python_version_support.py:254: FutureWarning: You are using a Python version (3.11.17) which Google will stop supporting in new releases of google.api_core once it reaches its end of life (2027-10-24). Please upgrade to the latest Python version, or at least Python 3.12, to continue receiving updates for google.api_core past that date.
+  warnings.warn(message, FutureWarning)
 
-🎙️  40K Content Intel — 2026-10-19
+🎙️  40K Content Intel — 2026-10-26
 ──────────────────────────────────────────────────
 Loading personal taste profile…
     [taste] Using TASTE_PROFILE secret (1531 chars)
 Collecting your votes on past recommendations…
-    [feedback] 5 new vote(s) · totals 👍4 👎0 ✅0
+    [feedback] 0 new vote(s) · totals 👍4 👎0 ✅0
 Scraping aggregator sites…
     [aggregators] later.com → 20 linked audio items
     [aggregators] www.socialpilot.co → 12 linked audio items
@@ -12,14 +14,14 @@ Scraping aggregator sites…
     [aggregators] www.scottsocialmarketing.com → 20 linked audio items
     [aggregators] buffer.com → 13 linked audio items
 Scraping TikTok + Instagram via Apify…
-    [apify] Month-to-date usage $1.60 of $4.50 budget
-    [apify] apify/instagram-hashtag-scraper: SUCCEEDED · $0.078
-    [apify] Instagram: 177 niche reels, 121 hits (≥2.7K views/day or top-quarter engagement) → 43 sounds
-  → capping 88 sounds to the 80 strongest signals
-    [history] 3 past week(s) loaded · 44/80 sounds new this week
+    [apify] Month-to-date usage $2.06 of $4.50 budget
+    [apify] apify/instagram-hashtag-scraper: SUCCEEDED · $0.390
+    [apify] Instagram: 180 niche reels, 121 hits (≥2.5K views/day or top-quarter engagement) → 38 sounds
+  → capping 85 sounds to the 80 strongest signals
+    [history] 4 past week(s) loaded · 33/80 sounds new this week
   → 80 unique audio items collected
 Scraping YouTube…
-    [youtube] 279 unique videos found → kept 60 (46 Shorts) by views/day
+    [youtube] 275 unique videos found → kept 60 (48 Shorts) by views/day
 Scraping community sites…
     [community] 20 Warhammer Community items
 Reading hobby news RSS feeds…
@@ -30,19 +32,19 @@ Scoring audio with Claude…
     [scorer] Scored 80/80 audio items
 Scoring topics with Claude…
 Building Trend Scout…
-    [trend_scout] Top formats: Hobby + trending audio, POV + reaction, Audio/voiceline · baseline: 2026-10-12
+    [trend_scout] Top formats: Hobby + trending audio, POV + reaction, Audio/voiceline · baseline: 2026-10-19
   ⚡ Sending 3 individual alert(s)…
-    [email] Sent: ⚡ Audio Alert [9/10]: His Angels (Epic Space Marines March) — 2026-10-19
-    [email] Sent: ⚡ Audio Alert [9/10]: Planet on Fire (Warhammer 40k) (feat. Pathios Productions) — 2026-10-19
-    [email] Sent: ⚡ Audio Alert [9/10]: Never Forgive — 2026-10-19
+    [email] Sent: ⚡ Audio Alert [9/10]: The Lost Battalion — 2026-10-26
+    [email] Sent: ⚡ Audio Alert [9/10]: dark fantasy II — 2026-10-26
+    [email] Sent: ⚡ Audio Alert [8/10]: Warhammer 40,000: Space Marine 2 — 2026-10-26
 Sending digest email…
-    [email] Sent: 🎖 40K Digest · Week of 2026-10-19 — Hobby + trending audio leads
+    [email] Sent: 🎖 40K Digest · Week of 2026-10-26 — Hobby + trending audio leads
 Updating dashboard…
-    [dashboard] Saved digest JSON → docs/data/digest_2026-10-19.json
-    [dashboard] Date index updated: 10 digest(s) available
+    [dashboard] Saved digest JSON → docs/data/digest_2026-10-26.json
+    [dashboard] Date index updated: 11 digest(s) available
     [dashboard] Dashboard written → docs/index.html
 
-✅ Digest complete — 2026-10-19
+✅ Digest complete — 2026-10-26
    Audio scored: 80
-   Topics scored: 9
+   Topics scored: 8
    Alerts sent: 3
