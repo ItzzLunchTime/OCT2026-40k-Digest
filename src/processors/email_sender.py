@@ -216,6 +216,20 @@ def _engine_tag(engine: str) -> str:
     return f'<span class="engine-tag">⚙ {_e(engine)}</span>' if engine else ""
 
 
+def _fit_html(item: dict) -> str:
+    """Runtime, non-player readability and follow reason, when the scorer gave them."""
+    bits = []
+    if item.get("target_runtime_s"):
+        bits.append(f"~{_e(item['target_runtime_s'])}s")
+    if "non_player_readable" in item:
+        bits.append("reads for non-players" if item["non_player_readable"] else "insider-only")
+    out = f'<div class="meta" style="margin:6px 0 0;">{" · ".join(bits)}</div>' if bits else ""
+    fr = item.get("follow_reason")
+    if fr and str(fr).lower() != "none":
+        out += f'<div class="field"><span class="label">Why they\'d follow</span>{_e(fr)}</div>'
+    return out
+
+
 def _hook_html(hook: str, on_screen: str = "") -> str:
     out = ""
     if hook:
@@ -299,6 +313,7 @@ def _audio_card(audio: dict, rank: int) -> str:
   {'<div class="angle">' + angle + '</div>' if angle else ''}
   {('<div style="margin-top:10px;">' + _engine_tag(audio.get("engine", "")) + '</div>') if audio.get("engine") else ''}
   {_hook_html(audio.get("hook", ""), audio.get("on_screen_text", ""))}
+  {_fit_html(audio)}
   {'<div class="field" style="margin-top:12px;font-size:12px;">' + link_html + '</div>' if link_html else ''}
   {votes_html}
 </div>"""
@@ -425,13 +440,50 @@ def _slate_html(slate: dict | None) -> str:
   {_hook_html(s.get("hook", ""), s.get("on_screen_text", ""))}
   {'<div class="field"><span class="label">Caption carries</span>' + _e(s.get("caption_angle")) + '</div>' if s.get("caption_angle") else ''}
   {'<div class="field"><span class="label">Uses</span>' + _e(s.get("uses")) + '</div>' if s.get("uses") else ''}
+  {'<div class="field"><span class="label">Why it should work</span>' + _e(s.get("why_it_should_work")) + '</div>' if s.get("why_it_should_work") else ''}
   {'<div class="field"><span class="label">Batch tip</span>' + _e(s.get("batch_tip")) + '</div>' if s.get("batch_tip") else ''}
-  {'<div class="meta" style="margin:8px 0 0;">Effort: ' + effort + '</div>' if effort else ''}
+  {'<div class="meta" style="margin:8px 0 0;">' + ' · '.join(x for x in [('Effort: ' + effort) if effort else '', (f'~{_e(s.get("runtime_s"))}s') if s.get("runtime_s") else ''] if x) + '</div>' if (effort or s.get("runtime_s")) else ''}
+</div>""")
+    roll = slate.get("second_roll") or {}
+    if roll.get("post"):
+        cards.append(f"""<div class="card" style="border-left:3px solid #5dade2;">
+  <h3>🎲 Second roll: {_e(roll.get("post"))}</h3>
+  <div class="field">{_e(roll.get("change"))}</div>
 </div>""")
     return f"""<h2>📋 This Week's Slate</h2>
   <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(sub)}</p>
   {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(slate.get("headline")) + '</div>' if slate.get("headline") else ''}
   {''.join(cards)}"""
+
+
+TIER_COLOURS = {"Breakout": "#c0392b", "Above": "#e67e22", "Baseline": "#7f8c8d",
+                "Under": "#34495e", "Too early": "#555"}
+
+
+def _performance_html(perf: dict | None) -> str:
+    if not perf:
+        return ""
+    rows = []
+    for r in perf.get("recent", []):
+        colour = TIER_COLOURS.get(r["tier"], "#555")
+        cap = _e((r.get("caption") or "(no caption)")[:90])
+        rows.append(
+            '<tr>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #222;font-size:13px;">'
+            f'<a href="{_e(r["url"])}">{cap}</a><br><span style="font-size:11px;color:#888;">'
+            f'{_e(r["posted"])} · {r["age_days"]:.0f}d old · {r.get("duration_s") or "?"}s</span></td>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #222;font-size:13px;text-align:right;white-space:nowrap;">'
+            f'{r["views"]:,} views<br><span style="font-size:11px;color:#888;">{r["x_median"]}x median</span></td>'
+            f'<td style="padding:6px 8px;border-bottom:1px solid #222;text-align:right;">'
+            f'<span class="badge" style="background:{colour};color:#fff;">{_e(r["tier"])}</span></td>'
+            '</tr>'
+        )
+    table = ('<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">'
+             + "".join(rows) + "</table>") if rows else '<p style="color:#9a9a9a;font-size:13px;">No posts in the last 2 weeks.</p>'
+    return (f'<h2>📈 How Your Last Posts Did</h2>'
+            f'<p style="font-size:12px;color:#777;margin:-8px 0 14px;">Bar: {perf["median"]:,} views '
+            f'({_e(perf["median_source"])}). Breakout &gt;3x · Above &gt;1.5x · Under &lt;0.5x. '
+            f'Shares, saves and follows are only in Insights.</p>' + table)
 
 
 def _comment_picks_html(picks: list[dict] | None) -> str:
@@ -535,6 +587,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
   <p class="subtitle">{TODAY} · Weekly automated report</p>
 
   {summary_html}
+
+  {_performance_html(plan.get("performance"))}
 
   {_slate_html(plan.get("slate"))}
 

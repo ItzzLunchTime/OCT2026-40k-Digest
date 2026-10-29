@@ -238,6 +238,8 @@ function audioCard(a, rank) {
     ${a.cinematic_angle ? `<div class="angle">${esc(a.cinematic_angle)}</div>` : ''}
     ${a.engine ? `<div style="margin-top:8px;">${engineTag(a.engine)}</div>` : ''}
     ${hookHtml(a.hook, a.on_screen_text)}
+    ${(a.target_runtime_s || 'non_player_readable' in a) ? `<div class="audio-meta" style="margin:6px 0 0;">${[a.target_runtime_s ? '~' + esc(a.target_runtime_s) + 's' : '', 'non_player_readable' in a ? (a.non_player_readable ? 'reads for non-players' : 'insider-only') : ''].filter(Boolean).join(' · ')}</div>` : ''}
+    ${a.follow_reason && String(a.follow_reason).toLowerCase() !== 'none' ? `<div class="field"><span class="field-label">Why they'd follow</span>${esc(a.follow_reason)}</div>` : ''}
     ${links ? `<div class="links">${links}</div>` : ''}
   </div>`;
 }
@@ -275,7 +277,19 @@ function hookHtml(h, txt) {
 function renderPlan() {
   const el = document.getElementById('planPanel');
   const sl = currentData.slate, picks = currentData.comment_picks, drop = currentData.digest_drop;
+  const perf = currentData.performance;
   let html = '';
+  if (perf) {
+    const col = {Breakout:'#c0392b', Above:'#e67e22', Baseline:'#7f8c8d', Under:'#34495e'};
+    html += `<div style="margin:0 0 20px;"><div class="section-title">📈 How your last posts did</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Bar: ${(perf.median||0).toLocaleString()} views (${esc(perf.median_source)}) · Breakout &gt;3x · Above &gt;1.5x · Under &lt;0.5x</div>
+      ${(perf.recent||[]).length ? `<div class="topic-list">${perf.recent.map(r => `<div class="topic-card" style="display:flex;justify-content:space-between;gap:12px;">
+        <div><a href="${esc(r.url)}" target="_blank">${esc((r.caption||'(no caption)').slice(0,90))}</a>
+          <div class="meta" style="margin:4px 0 0;">${esc(r.posted)} · ${Math.round(r.age_days)}d old · ${r.duration_s||'?'}s</div></div>
+        <div style="text-align:right;white-space:nowrap;font-size:13px;">${(r.views||0).toLocaleString()} views<br>
+          <span class="badge" style="background:${col[r.tier]||'#555'};color:#fff;">${esc(r.tier)}</span> <span style="font-size:11px;color:var(--muted);">${r.x_median}x</span></div>
+      </div>`).join('')}</div>` : '<div style="font-size:12px;color:var(--muted);">No posts in the last 2 weeks.</div>'}</div>`;
+  }
   if (sl && (sl.slots||[]).length) {
     const ch = sl.challenge || {};
     const sub = ch.day ? `Day ${ch.day} of 99 · ${ch.days_left} days to Palm Springs · rotation week ${ch.rotation_week}${ch.phase === 'final push' ? ' · FINAL PUSH' : ''}` : '';
@@ -288,9 +302,12 @@ function renderPlan() {
         ${hookHtml(s.hook, s.on_screen_text)}
         ${s.caption_angle ? `<div class="field"><span class="field-label">Caption carries</span>${esc(s.caption_angle)}</div>` : ''}
         ${s.uses ? `<div class="field"><span class="field-label">Uses</span>${esc(s.uses)}</div>` : ''}
+        ${s.why_it_should_work ? `<div class="field"><span class="field-label">Why it should work</span>${esc(s.why_it_should_work)}</div>` : ''}
         ${s.batch_tip ? `<div class="field"><span class="field-label">Batch tip</span>${esc(s.batch_tip)}</div>` : ''}
-        ${s.effort ? `<div class="audio-meta" style="margin-top:6px;">Effort: ${esc(s.effort)}</div>` : ''}
-      </div>`).join('')}</div></div>`;
+        ${(s.effort || s.runtime_s) ? `<div class="audio-meta" style="margin-top:6px;">${[s.effort ? 'Effort: ' + esc(s.effort) : '', s.runtime_s ? '~' + esc(s.runtime_s) + 's' : ''].filter(Boolean).join(' · ')}</div>` : ''}
+      </div>`).join('')}
+      ${sl.second_roll && sl.second_roll.post ? `<div class="audio-card" style="border-left:3px solid var(--blue);"><h3>🎲 Second roll: ${esc(sl.second_roll.post)}</h3><div class="field">${esc(sl.second_roll.change)}</div></div>` : ''}
+      </div></div>`;
   }
   if (Array.isArray(picks)) {
     html += `<div style="margin:0 0 20px;"><div class="section-title">💬 Comment picks</div>` +

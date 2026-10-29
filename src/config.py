@@ -135,7 +135,7 @@ IG_REELS_PER_HASHTAG: int = 35            # 210 reels ≈ $0.55/run on the Free 
 IG_ACCOUNT: str = os.getenv("IG_ACCOUNT", "itzzhobbytime")
 COMMENTS_ENABLED: bool = True
 COMMENT_WINDOW_DAYS: int = 7
-OWN_POSTS_LIMIT: int = 10                 # newest posts checked for comments
+OWN_POSTS_LIMIT: int = 12                 # newest posts checked (comments + performance)
 COMMENTS_PER_POST: int = 30
 COMMENT_PICKS: int = 3                    # max picks per email (fewer on slow weeks)
 
@@ -229,12 +229,30 @@ lore master; frame ideas as him learning, trying, reacting.
 Capacity: 1-3 posts a week around school and multiple jobs, so ideas must be batchable and
 low-friction. Gear: camera, lights, slider.
 
-WHAT PERFORMS: memes vastly outperform everything else. Non-meme posts only win when they
-lead with the payoff (e.g. the LED Grey Knights reels). Every idea must follow these rules:
-  1. Payoff first: reveal, explosion or finished shot in the first 1-2 seconds; the "how" after.
-     Never open on build steps or a progress update.
-  2. One clear reason to share: funny, impressive or useful.
-  3. Joke on screen, story in the caption ("Guard players when they realize they need 60 more
+WHAT PERFORMS ON THIS ACCOUNT (from an Insights audit of every Reel):
+  1. The first 3 seconds decide reach. Payoff (reveal, glow, explosion, finished shot) in
+     second 1-2; the "how" after. Never open on build steps or a progress update.
+  2. Length only hurts when the opener is weak: default 6-30s; up to ~45s only if it opens on
+     a meme/reaction. Long build logs that open on craft fail.
+  3. Meme opener + real craft payoff (reaction split-screen over lit slider b-roll) is the only
+     non-meme format that wins reach, saves AND follows. This is the formula to reach for.
+  4. Pure memes buy reach but almost no follows UNLESS the joke is about his minis, his Guard
+     army or him. A generic meme (e.g. a couple joke) is reach with no reason to follow.
+  5. It must read for a non-player: no rules knowledge needed. Insider-only posts flop.
+  6. "Kaiju" framing works: camera at miniature eye level, a real-world object or person
+     invading the tiny world, no text, hard-cut ending that lands as the punchline, room for
+     comments to write dialogue for the minis.
+  7. Polished, lit, slider-shot craft earns saves; raw phone build logs don't.
+  8. His face converts: to-camera story beats get the best follow rate. Use them for Road to
+     Palm Springs, cut to ~20s with the strongest shot first.
+  9. Original audio has done at least as well as trending. Trending sounds are an optional
+     wrapper, never a requirement.
+ 10. Joke on screen, story in the caption ("Guard players when they realize they need 60 more
      of these", not "Day 34: painted 20 Guardsmen").
-  4. Use trending meme formats as the wrapper for hobby content.
+ 11. Never judge an idea on one post: a repost 48h+ later with a new caption is a cheap second
+     roll; meme posts can go out as Trial Reels so non-followers see them first.
 """
+
+# Median Reel views from the Oct 2026 audit (viral outlier excluded). Used until enough
+# posts are tracked in docs/data/own_posts.json to compute a live median.
+ACCOUNT_BASELINE_MEDIAN: int = 3556

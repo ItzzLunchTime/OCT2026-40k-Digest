@@ -27,6 +27,8 @@ from src.processors.audio_merge import merge_audio
 from src.processors.history import annotate_history, is_stale_repeat
 from src.processors.feedback import collect_feedback, excluded_keys, is_excluded, verdicts_prompt
 from src.processors.engine_planner import pick_comments, digest_drop, build_slate
+from src.processors.performance import build_performance
+from src.processors.account_profile import get_account_profile
 
 
 def main() -> None:
@@ -36,6 +38,7 @@ def main() -> None:
     # ── 1. Load personal taste profile (if available) ────────────
     print("Loading personal taste profile…")
     taste_profile = get_taste_profile()
+    get_account_profile()   # logs whether the audit-based performance profile is loaded
 
     print("Collecting your votes on past recommendations…")
     feedback = collect_feedback()
@@ -45,7 +48,7 @@ def main() -> None:
     aggregator_audio = scrape_aggregators()
 
     print("Scraping TikTok + Instagram (+ your own comments) via Apify…")
-    apify_audio, own_comments = scrape_apify_all()
+    apify_audio, own = scrape_apify_all()
 
     # Niche-reel sounds first so their signals win when the same track appears twice
     raw_audio = merge_audio(
@@ -95,14 +98,18 @@ def main() -> None:
     trend_scout = build_trend_scout(scored_audio)
 
     # ── 5c. Content engines: comment picks, digest drop, weekly slate ──
+    print("Checking how your recent posts did…")
+    performance = build_performance(own["posts"])
+
     print("Picking comments worth a reply video…")
-    comment_picks = pick_comments(own_comments)
+    comment_picks = pick_comments(own["comments"])
 
     print("Planning this week's slate…")
     plan = {
-        "slate": build_slate(scored_audio, scored_topics, comment_picks),
+        "slate": build_slate(scored_audio, scored_topics, comment_picks, performance=performance),
         "comment_picks": comment_picks,
         "digest_drop": digest_drop(scored_topics),
+        "performance": performance,
     }
 
     # ── 6. Fire individual alerts for high-potency audio ─────────

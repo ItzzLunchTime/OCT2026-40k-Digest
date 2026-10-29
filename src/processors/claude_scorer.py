@@ -16,6 +16,8 @@ from src.config import (
     ACCOUNT_CONTEXT, ENGINES, ENGINE_NAMES, RETIRED_ENGINES,
 )
 
+from src.processors.account_profile import profile_block
+
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
 
@@ -116,14 +118,23 @@ For each audio item, return a JSON object with these exact fields:
   "cinematic_angle": "a specific, filmmaker-informed post idea for this account",
   "engine": "the ONE content engine this sound best wraps (name verbatim from the list)",
   "hook": "what the viewer sees in the first 1-2 seconds — the payoff, never build steps",
-  "on_screen_text": "the on-screen joke/caption line (joke on screen, story in the caption)"
+  "on_screen_text": "the on-screen joke/caption line (joke on screen, story in the caption)",
+  "target_runtime_s": <integer: ideal Reel length in seconds for this idea>,
+  "non_player_readable": true or false (would someone who has never played Warhammer get it?),
+  "follow_reason": "why a stranger who sees this would FOLLOW, not just like — or 'none'"
 }}
 
 Scoring guidance:
-- 9-10: Strong early-stage sound with clear cinematic application for 40K content
+- 9-10: Strong early-stage sound with clear cinematic application for 40K content, and an
+  idea that follows the account's proven formulas (meme opener + craft payoff, kaiju framing,
+  payoff in second 1, under ~30s, readable by non-players, joke about HIS minis/army)
 - 7-8: Good fit, usable with creative framing
 - 5-6: Possible with significant creative work
 - 1-4: Poor fit for this account
+Cap at 6 any idea that only works as a generic meme with no link to his minis, army or
+himself (reach without follows), that needs rules knowledge to get, or that only works
+as a long build log. If an ACCOUNT PERFORMANCE PROFILE is provided, judge every idea
+against it.
 If an item is clearly not an audio track (a website heading, a product name), give it
 potency_score 1 and niche_relevance 0.
 
@@ -161,9 +172,9 @@ def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
     if not raw_audio:
         return []
 
-    taste_note = ""
+    taste_note = profile_block()
     if taste_profile:
-        taste_note = f"\n\nPERSONAL TASTE PROFILE (use to weight scores):\n{taste_profile}\n"
+        taste_note += f"\n\nPERSONAL TASTE PROFILE (use to weight scores):\n{taste_profile}\n"
 
     items = [dict(item, id=i) for i, item in enumerate(raw_audio)]
     scored: list[dict] = []
@@ -248,7 +259,8 @@ For each item, return a JSON object:
   "hook": "what the viewer sees in the first 1-2 seconds — the payoff",
   "is_news": true or false (a release, rules change, event or announcement),
   "guard_relevant": true or false (directly affects Astra Militarum players),
-  "beginner_take": "if is_news: his honest new-player reaction or question about it, one sentence"
+  "beginner_take": "if is_news: his honest new-player reaction or question about it, one sentence",
+  "non_player_readable": true or false (would the episode land with someone who doesn't play?)
 }}
 
 YouTube signals include "views_per_day" (momentum — weight this over raw views),
@@ -285,7 +297,8 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
 
     user_content = (
         f"Analyse the following {len(unique)} community signals and return the "
-        f"5-10 most valuable content topics.\n\n"
+        f"5-10 most valuable content topics.\n"
+        f"{profile_block()}\n"
         f"SIGNALS:\n{json.dumps(unique, indent=2)}"
     )
 

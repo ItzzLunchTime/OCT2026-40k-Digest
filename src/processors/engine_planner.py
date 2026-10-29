@@ -25,6 +25,7 @@ from src.config import (
 from src.processors.claude_scorer import (
     client, _reply_text, _parse_json_array, _clean_engine, ENGINE_BRIEF,
 )
+from src.processors.account_profile import profile_block
 
 REPLY_FORMATS = ["tutorial", "answer", "reaction", "skit", "challenge accepted"]
 
@@ -33,7 +34,7 @@ def _ask(system: str, payload, max_tokens: int = 4000) -> str:
     resp = client.messages.create(
         model=CLAUDE_MODEL,
         max_tokens=max_tokens,
-        system=system,
+        system=system + profile_block(),
         messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
     )
     return _reply_text(resp)
@@ -169,7 +170,14 @@ You plan this week's posts for a solo Instagram creator.
 {ACCOUNT_CONTEXT}
 {ENGINE_BRIEF}
 You get: the 99-day challenge status, the engine assigned to each slot by the rotation,
-and this week's scored trending sounds, community topics and viewer comments.
+this week's scored trending sounds, community topics and viewer comments, and how his own
+recent posts did ("performance": views vs his median, tiered Breakout/Above/Baseline/Under).
+
+Learn from performance: if a recent post broke out, build on what it did (a follow-up,
+part 2, same framing); if one flopped, don't repeat its shape. When performance names a
+second_roll candidate, plan a repost or tighter recut of it (new caption, payoff moved to
+second 1); otherwise pick one from the ACCOUNT PERFORMANCE PROFILE's ready ideas or
+underperformers. Prefer the account's proven formulas and ready ideas over generic ones.
 
 Write one concrete post per slot. Slot A = story, Slot B = craft, Slot C = optional flex
 for a good week. Stick to the assigned engine for each slot. Pull real material from the
@@ -189,9 +197,15 @@ Return ONLY a JSON object:
       "caption_angle": "what the caption carries (the story/progress)",
       "uses": "the sound / topic / comment this draws on, or 'original'",
       "effort": "low | medium | high",
-      "batch_tip": "how to shoot it alongside the other slots, or ''"
+      "batch_tip": "how to shoot it alongside the other slots, or ''",
+      "runtime_s": <integer target length>,
+      "why_it_should_work": "the specific past post or proven pattern this builds on"
     }}
-  ]
+  ],
+  "second_roll": {{
+    "post": "the post to repost or recut",
+    "change": "what to change (caption, cut, opener) and when to repost"
+  }}
 }}
 """
 
@@ -205,7 +219,7 @@ def _parse_json_object(text: str) -> dict:
 
 
 def build_slate(scored_audio: list[dict], topics: list[dict], comment_picks: list[dict],
-                today: date | None = None) -> dict:
+                today: date | None = None, performance: dict | None = None) -> dict:
     status = challenge_status(today)
     slots = status["slots"]
     sounds = [
@@ -219,6 +233,7 @@ def build_slate(scored_audio: list[dict], topics: list[dict], comment_picks: lis
         "topics": [{k: t.get(k) for k in ("title", "engine", "episode_idea", "hook", "category")}
                    for t in topics][:10],
         "comments": [{k: c.get(k) for k in ("comment", "idea", "reply_format")} for c in comment_picks],
+        "performance": performance or "no own-post data this week",
     }
     fallback = {
         "headline": f"Day {status['day']} of {CHALLENGE_DAYS}: rotation week {status['rotation_week']}.",

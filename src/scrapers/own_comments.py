@@ -1,6 +1,7 @@
 """
-Comments on your own recent posts — the fuel for the Comment Picks section
-(and the Comment Replies engine).
+Your own recent posts: their comments (fuel for Comment Picks / the Comment Replies
+engine) and their public numbers (views, likes, comments, length) for the weekly
+performance check.
 
 Uses Apify, so no Meta developer app / Graph API token is needed:
   1. apify/instagram-scraper          → your newest posts (with their latest comments)
@@ -65,10 +66,25 @@ def _normalise(c: dict, post: dict) -> dict:
     }
 
 
-def scrape_own_comments(client) -> list[dict]:
-    """Return last week's comments on the account's own posts (newest posts first)."""
+def _post_metrics(p: dict) -> dict:
+    views = int(_first(p, "videoPlayCount", "igPlayCount", "videoViewCount", default=0) or 0)
+    return {
+        "url": p.get("url", ""),
+        "short_code": p.get("shortCode", ""),
+        "timestamp": str(p.get("timestamp", "")),
+        "type": p.get("productType") or p.get("type") or "",
+        "caption": re.sub(r"\s+", " ", p.get("caption") or "")[:220],
+        "views": max(views, 0),
+        "likes": max(int(p.get("likesCount") or 0), 0),
+        "comments": max(int(p.get("commentsCount") or 0), 0),
+        "duration_s": round(float(p.get("videoDuration") or 0), 1),
+    }
+
+
+def scrape_own_account(client) -> dict:
+    """{"posts": [public metrics per recent post], "comments": [last week's comments]}"""
     if not COMMENTS_ENABLED or not IG_ACCOUNT:
-        return []
+        return {"posts": [], "comments": []}
     from src.scrapers.apify_scraper import _run_actor
 
     now = datetime.now(timezone.utc)
@@ -90,7 +106,7 @@ def scrape_own_comments(client) -> list[dict]:
         )
     except Exception as e:
         print(f"    [comments] Post scrape error: {e}")
-        return []
+        return {"posts": [], "comments": []}
     if posts:
         print(f"    [comments] Post fields: {sorted(posts[0].keys())[:25]}")
 
@@ -142,4 +158,8 @@ def scrape_own_comments(client) -> list[dict]:
 
     print(f"    [comments] {len(posts)} posts · {len(comments)} comments → {len(kept)} from the last "
           f"{COMMENT_WINDOW_DAYS} days worth scoring")
-    return kept
+    return {"posts": [_post_metrics(p) for p in posts if p.get("url")], "comments": kept}
+
+
+def scrape_own_comments(client) -> list[dict]:
+    return scrape_own_account(client)["comments"]
