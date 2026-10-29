@@ -103,7 +103,8 @@ def build_performance(posts: list[dict], today: date | None = None) -> dict | No
             "likes": rec["likes"],
             "comments": rec["comments"],
             "x_median": round(ratio, 1),
-            "tier": "Too early" if age < MIN_AGE_DAYS else _tier(ratio),
+            # Views only go up, so a young post already above the bar can be called now
+            "tier": _tier(ratio) if (age >= MIN_AGE_DAYS or ratio > 1.5) else "Too early",
         })
 
     # Second roll: the most-liked-per-view Under post (the idea had fans, the roll was bad)

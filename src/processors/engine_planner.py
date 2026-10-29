@@ -30,14 +30,19 @@ from src.processors.account_profile import profile_block
 REPLY_FORMATS = ["tutorial", "answer", "reaction", "skit", "challenge accepted"]
 
 
-def _ask(system: str, payload, max_tokens: int = 4000) -> str:
+def _ask(system: str, payload, max_tokens: int = 8000) -> str:
     resp = client.messages.create(
         model=CLAUDE_MODEL,
         max_tokens=max_tokens,
         system=system + profile_block(),
-        messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
+        messages=[{"role": "user", "content": json.dumps(payload, ensure_ascii=False, default=str)}],
     )
-    return _reply_text(resp)
+    if getattr(resp, "stop_reason", "") == "max_tokens":
+        raise ValueError("reply truncated at max_tokens")
+    text = _reply_text(resp)
+    if not text.strip():
+        raise ValueError(f"empty reply (stop_reason={getattr(resp, 'stop_reason', '?')})")
+    return text
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -211,10 +216,10 @@ Return ONLY a JSON object:
 
 
 def _parse_json_object(text: str) -> dict:
-    text = text.strip()
-    if "```" in text:
-        text = text.split("```")[1].removeprefix("json").strip()
+    """Outermost {...} in the reply, tolerating code fences or stray prose around it."""
     start, end = text.find("{"), text.rfind("}")
+    if start == -1 or end <= start:
+        raise ValueError(f"no JSON object in reply: {text[:160]!r}")
     return json.loads(text[start : end + 1])
 
 
@@ -242,7 +247,15 @@ def build_slate(scored_audio: list[dict], topics: list[dict], comment_picks: lis
                   for k, v in slots.items()],
     }
     try:
-        plan = _parse_json_object(_ask(SLATE_SYSTEM, payload, max_tokens=3000))
+        plan = None
+        for attempt in (1, 2):
+            try:
+                plan = _parse_json_object(_ask(SLATE_SYSTEM, payload, max_tokens=12000))
+                break
+            except Exception as e:
+                print(f"    [planner] Slate attempt {attempt} failed: {e}")
+        if plan is None:
+            raise ValueError("both attempts failed")
         plan_slots = []
         for s in plan.get("slots", []):
             key = str(s.get("slot", "")).strip().upper()[:1]
