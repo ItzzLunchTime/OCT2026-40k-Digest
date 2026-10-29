@@ -1,27 +1,31 @@
-/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/google/api_core/_python_version_support.py:254: FutureWarning: You are using a Python version (3.11.17) which Google will stop supporting in new releases of google.api_core once it reaches its end of life (2027-10-24). Please upgrade to the latest Python version, or at least Python 3.12, to continue receiving updates for google.api_core past that date.
-  warnings.warn(message, FutureWarning)
 
-🎙️  40K Content Intel — 2026-10-26
+🎙️  40K Content Intel — 2026-10-29
 ──────────────────────────────────────────────────
 Loading personal taste profile…
     [taste] Using TASTE_PROFILE secret (1531 chars)
+    [profile] Using ACCOUNT_PROFILE secret (4733 chars)
 Collecting your votes on past recommendations…
-    [feedback] 0 new vote(s) · totals 👍4 👎0 ✅0
+    [feedback] Couldn't read vote emails: command: FETCH => System Error
 Scraping aggregator sites…
     [aggregators] later.com → 20 linked audio items
     [aggregators] www.socialpilot.co → 12 linked audio items
     [aggregators] www.heyorca.com → 6 linked audio items
     [aggregators] www.scottsocialmarketing.com → 20 linked audio items
     [aggregators] buffer.com → 13 linked audio items
-Scraping TikTok + Instagram via Apify…
-    [apify] Month-to-date usage $2.06 of $4.50 budget
+Scraping TikTok + Instagram (+ your own comments) via Apify…
+    [apify] Month-to-date usage $2.53 of $4.50 budget
     [apify] apify/instagram-hashtag-scraper: SUCCEEDED · $0.390
-    [apify] Instagram: 180 niche reels, 121 hits (≥2.5K views/day or top-quarter engagement) → 38 sounds
-  → capping 85 sounds to the 80 strongest signals
-    [history] 4 past week(s) loaded · 33/80 sounds new this week
+    [apify] Instagram: 180 niche reels, 118 hits (≥2.8K views/day or top-quarter engagement) → 39 sounds
+    [apify] apify/instagram-scraper: SUCCEEDED · $0.000
+    [comments] Post fields: ['alt', 'audioUrl', 'caption', 'childPosts', 'commentsCount', 'dimensionsHeight', 'dimensionsWidth', 'displayUrl', 'firstComment', 'hashtags', 'id', 'images', 'inputUrl', 'isCommentsDisabled', 'isPinned', 'latestComments', 'likesCount', 'mentions', 'musicInfo', 'originalHeight', 'originalWidth', 'ownerFullName', 'ownerId', 'ownerUsername', 'paidPartnership']
+    [apify] apify/instagram-comment-scraper: SUCCEEDED · $0.099
+    [comments] Comment fields: ['commentUrl', 'id', 'likesCount', 'owner', 'ownerProfilePicUrl', 'ownerUsername', 'postUrl', 'replies', 'repliesCount', 'text', 'timestamp']
+    [comments] 12 posts · 146 comments → 39 from the last 7 days worth scoring
+  → capping 86 sounds to the 80 strongest signals
+    [history] 4 past week(s) loaded · 34/80 sounds new this week
   → 80 unique audio items collected
 Scraping YouTube…
-    [youtube] 275 unique videos found → kept 60 (48 Shorts) by views/day
+    [youtube] 278 unique videos found → kept 60 (49 Shorts) by views/day
 Scraping community sites…
     [community] 20 Warhammer Community items
 Reading hobby news RSS feeds…
@@ -32,19 +36,27 @@ Scoring audio with Claude…
     [scorer] Scored 80/80 audio items
 Scoring topics with Claude…
 Building Trend Scout…
-    [trend_scout] Top formats: Hobby + trending audio, POV + reaction, Audio/voiceline · baseline: 2026-10-19
+    [trend_scout] Top formats: Hobby + trending audio, POV + reaction, Show/movie clip · baseline: 2026-10-19
+Checking how your recent posts did…
+    [performance] Median 3556 views (audit baseline (Oct 2026)) · recent: Too early, Too early, Too early, Baseline
+Picking comments worth a reply video…
+    [planner] Comment picks: 3 of 39 comments
+Planning this week's slate…
+    [planner] Slate call failed, using rotation only: Expecting value: line 1 column 1 (char 0)
+    [planner] Slate: day 22/99 (countdown) · A=Road to Palm Springs, B=Store Crawl, C=Memes
   ⚡ Sending 3 individual alert(s)…
-    [email] Sent: ⚡ Audio Alert [9/10]: The Lost Battalion — 2026-10-26
-    [email] Sent: ⚡ Audio Alert [9/10]: dark fantasy II — 2026-10-26
-    [email] Sent: ⚡ Audio Alert [8/10]: Warhammer 40,000: Space Marine 2 — 2026-10-26
+    [email] Sent: ⚡ Audio Alert [9/10]: Warhammer 40,000: Space Marine 2 — 2026-10-29
+    [email] Sent: ⚡ Audio Alert [9/10]: Metal Machine — 2026-10-29
+    [email] Sent: ⚡ Audio Alert [8/10]: The Emperor Protects — 2026-10-29
 Sending digest email…
-    [email] Sent: 🎖 40K Digest · Week of 2026-10-26 — Hobby + trending audio leads
+    [email] Sent: 🎖 40K Digest · Week of 2026-10-29 · Day 22/99 — Hobby + trending audio leads
 Updating dashboard…
-    [dashboard] Saved digest JSON → docs/data/digest_2026-10-26.json
-    [dashboard] Date index updated: 11 digest(s) available
+    [dashboard] Saved digest JSON → docs/data/digest_2026-10-29.json
+    [dashboard] Date index updated: 12 digest(s) available
     [dashboard] Dashboard written → docs/index.html
 
-✅ Digest complete — 2026-10-26
+✅ Digest complete — 2026-10-29
    Audio scored: 80
    Topics scored: 8
+   Comment picks: 3
    Alerts sent: 3
