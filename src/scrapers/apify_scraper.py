@@ -306,18 +306,31 @@ def scrape_instagram_niche_audio(client) -> list[dict]:
 # Entry point
 # ─────────────────────────────────────────────────────────────────
 
-def scrape_apify() -> list[dict]:
+def scrape_apify_all() -> tuple[list[dict], list[dict]]:
+    """
+    One budget check, then every Apify job:
+    returns (audio items, comments on your own recent posts).
+    """
     if not APIFY_API_KEY:
         print("    [apify] No APIFY_API_KEY set — skipping")
-        return []
+        return [], []
     if not _month_usage_ok():
-        return []
+        return [], []
     try:
         from apify_client import ApifyClient
     except ImportError:
         print("    [apify] apify-client not installed — skipping")
-        return []
+        return [], []
+
+    from src.scrapers.own_comments import scrape_own_comments
 
     client = ApifyClient(APIFY_API_KEY)
     tiktok = scrape_tiktok_trending(client) if TIKTOK_ENABLED else []
-    return scrape_instagram_niche_audio(client) + tiktok
+    audio = scrape_instagram_niche_audio(client) + tiktok
+    comments = scrape_own_comments(client)
+    return audio, comments
+
+
+def scrape_apify() -> list[dict]:
+    """Audio only (kept for anything that still calls the old entry point)."""
+    return scrape_apify_all()[0]

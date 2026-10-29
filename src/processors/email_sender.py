@@ -20,6 +20,7 @@ from src.config import (
     ALERT_THRESHOLD,
     FORMAT_TYPES,
     MIN_RECOMMEND_SCORE,
+    CHALLENGE_DAYS,
 )
 
 from src.processors.feedback import vote_link
@@ -205,7 +206,23 @@ DIGEST_CSS = """
   .footer { font-size:11px; color:#777; text-align:center; margin-top:40px; padding-top:16px; border-top:1px solid #222; }
   .summary-bar { background:#111111; border:1px solid #222; border-radius:6px; padding:12px 16px; margin-bottom:28px; font-size:13px; color:#bbbbbb; }
   .summary-bar strong { color:#ffffff; }
+  .engine-tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:700; background:#2a1a0a; color:#e67e22; border:1px solid #5a3510; }
+  .hook { font-size:13px; color:#ffffff; margin:6px 0; }
+  .slot { display:inline-block; width:22px; height:22px; line-height:22px; text-align:center; border-radius:11px; background:#c0392b; color:#fff; font-size:12px; font-weight:700; margin-right:6px; }
 """
+
+
+def _engine_tag(engine: str) -> str:
+    return f'<span class="engine-tag">⚙ {_e(engine)}</span>' if engine else ""
+
+
+def _hook_html(hook: str, on_screen: str = "") -> str:
+    out = ""
+    if hook:
+        out += f'<div class="hook"><span class="label">First 2 seconds</span>{_e(hook)}</div>'
+    if on_screen:
+        out += f'<div class="field"><span class="label">On-screen text</span>“{_e(on_screen)}”</div>'
+    return out
 
 
 def _title_row(title_html: str, right_html: str) -> str:
@@ -280,6 +297,8 @@ def _audio_card(audio: dict, rank: int) -> str:
   <div class="field"><span class="label">Emotional register</span>{register_note or '—'}</div>
   {'<div class="field"><span class="label">Counterpoint</span>' + cp_note + '</div>' if cp_note else ''}
   {'<div class="angle">' + angle + '</div>' if angle else ''}
+  {('<div style="margin-top:10px;">' + _engine_tag(audio.get("engine", "")) + '</div>') if audio.get("engine") else ''}
+  {_hook_html(audio.get("hook", ""), audio.get("on_screen_text", ""))}
   {'<div class="field" style="margin-top:12px;font-size:12px;">' + link_html + '</div>' if link_html else ''}
   {votes_html}
 </div>"""
@@ -306,6 +325,13 @@ def _topic_card(topic: dict) -> str:
     relevance_html = f'<div class="topic-field"><em>Why cover now:</em> {relevance}</div>' if relevance else ""
     gap_html = f'<div class="topic-field" style="color:#2ecc71;"><em>Gap opportunity:</em> {gap_note}</div>' if gap_note else ""
     url_html = f'<div class="topic-field" style="margin-top:8px;font-size:12px;"><a href="{_e(url)}">View source &#8599;</a></div>' if url else ""
+    engine = topic.get("engine", "")
+    idea = _e(topic.get("episode_idea", ""))
+    engine_html = ""
+    if engine or idea:
+        engine_html = (f'<div class="topic-field" style="margin-top:8px;">{_engine_tag(engine)} '
+                       f'<strong style="color:#fff;">{idea}</strong></div>'
+                       + _hook_html(topic.get("hook", "")))
 
     return (
         '<div class="topic-card">'
@@ -317,6 +343,7 @@ def _topic_card(topic: dict) -> str:
         + driving_html
         + relevance_html
         + gap_html
+        + engine_html
         + url_html
         + "</div>"
     )
@@ -374,12 +401,87 @@ def _trend_scout_html(ts: dict | None) -> str:
   {'<p style="font-size:12px;color:#888;">Other formats — ' + other_rows + '</p>' if other_rows else ''}"""
 
 
-def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None) -> bool:
+def _slate_html(slate: dict | None) -> str:
+    if not slate or not slate.get("slots"):
+        return ""
+    ch = slate.get("challenge", {})
+    sub = ""
+    if ch:
+        if ch.get("phase") == "pre-challenge":
+            sub = "Challenge hasn't started yet"
+        elif ch.get("phase") == "post-tournament":
+            sub = "Post-tournament coverage week"
+        else:
+            sub = (f"Day {ch.get('day')} of {CHALLENGE_DAYS} · {ch.get('days_left')} days to Palm Springs · "
+                   f"rotation week {ch.get('rotation_week')}"
+                   + (" · FINAL PUSH" if ch.get("phase") == "final push" else ""))
+    cards = []
+    for s in slate["slots"]:
+        optional = ' <span style="color:#777;font-size:12px;font-weight:400;">(optional)</span>' if s.get("slot") == "C" else ""
+        effort = _e(s.get("effort", ""))
+        cards.append(f"""<div class="card" style="border-left:3px solid #c0392b;">
+  {_title_row(f'<h3><span class="slot">{_e(s.get("slot"))}</span>{_e(s.get("title") or s.get("engine"))}{optional}</h3>',
+              _engine_tag(s.get("engine", "")))}
+  {_hook_html(s.get("hook", ""), s.get("on_screen_text", ""))}
+  {'<div class="field"><span class="label">Caption carries</span>' + _e(s.get("caption_angle")) + '</div>' if s.get("caption_angle") else ''}
+  {'<div class="field"><span class="label">Uses</span>' + _e(s.get("uses")) + '</div>' if s.get("uses") else ''}
+  {'<div class="field"><span class="label">Batch tip</span>' + _e(s.get("batch_tip")) + '</div>' if s.get("batch_tip") else ''}
+  {'<div class="meta" style="margin:8px 0 0;">Effort: ' + effort + '</div>' if effort else ''}
+</div>""")
+    return f"""<h2>📋 This Week's Slate</h2>
+  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(sub)}</p>
+  {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(slate.get("headline")) + '</div>' if slate.get("headline") else ''}
+  {''.join(cards)}"""
+
+
+def _comment_picks_html(picks: list[dict] | None) -> str:
+    if picks is None:
+        return ""
+    if not picks:
+        return ('<h2>💬 Comment Picks</h2><p style="color:#9a9a9a;font-size:13px;">No comments from the last '
+                'week were strong enough for a reply video.</p>')
+    cards = []
+    for p in picks:
+        link = (f'<div class="field" style="font-size:12px;"><a href="{_e(p.get("post_url"))}">Open post ↗</a></div>'
+                if p.get("post_url") else "")
+        cards.append(f"""<div class="card">
+  {_title_row(f'<h3>“{_e(p.get("comment"))}”</h3>', _score_badge(p.get("score", 0)))}
+  <div class="meta">@{_e(p.get("username"))} · {p.get("likes", 0)} likes · reply as: {_e(p.get("reply_format"))}</div>
+  <div class="field"><span class="label">Why it's good</span>{_e(p.get("why"))}</div>
+  <div class="angle">{_e(p.get("idea"))}</div>
+  <div style="margin-top:10px;">{_engine_tag(p.get("engine", ""))}</div>
+  {_hook_html(p.get("hook", ""))}
+  {link}
+</div>""")
+    return "<h2>💬 Comment Picks</h2>" + "".join(cards)
+
+
+def _digest_drop_html(items: list[dict] | None) -> str:
+    if not items:
+        return ""
+    rows = []
+    for d in items:
+        guard = ('<span class="badge" style="background:#3a2a0a;color:#f1c40f;">Affects Guard</span>'
+                 if d.get("guard_relevant") else "")
+        link = f' <a href="{_e(d.get("url"))}" style="font-size:12px;">Source ↗</a>' if d.get("url") else ""
+        rows.append(f"""<div class="topic-card">
+  <div class="topic-title">{_e(d.get("title"))} {guard}</div>
+  <div class="topic-field">{_e(d.get("summary"))}{link}</div>
+  <div class="topic-field" style="color:#e67e22;"><em>New-player take:</em> {_e(d.get("beginner_take"))}</div>
+</div>""")
+    return ('<h2>🗞 Digest Drop — New Player Reads the News</h2>'
+            '<p style="font-size:12px;color:#777;margin:-8px 0 14px;">Developing engine. Rewrite the take in your own words.</p>'
+            + "".join(rows))
+
+
+def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None,
+                plan: dict | None = None) -> bool:
     """
     Build and send the full weekly digest email.
     scored_audio: sorted by potency_score descending (from claude_scorer)
     scored_topics: list of topic dicts (from claude_scorer)
     """
+    plan = plan or {}
     # Only sounds above the bar get recommended; the rest stay in the JSON for stats
     scored_audio = [a for a in scored_audio if (a.get("potency_score") or 0) >= MIN_RECOMMEND_SCORE]
     # Sounds already recommended in earlier weeks and not climbing: one line, not full cards
@@ -434,6 +536,10 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
 
   {summary_html}
 
+  {_slate_html(plan.get("slate"))}
+
+  {_comment_picks_html(plan.get("comment_picks"))}
+
   {_trend_scout_html(trend_scout)}
 
   <h2>🔊 Trending Audio — by Format</h2>
@@ -441,6 +547,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
 
   <h2>📡 Community Topics — Content Opportunities</h2>
   {topic_cards if topic_cards else '<p style="color:#666;">No topics identified today.</p>'}
+
+  {_digest_drop_html(plan.get("digest_drop"))}
 
   <div class="footer">
     40K Content Intelligence Digest · {TODAY} ·
@@ -450,5 +558,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
 </td></tr></table></body></html>"""
 
     lead = f" — {trend_scout['top'][0]} leads" if trend_scout and trend_scout.get("top") else ""
+    ch = (plan.get("slate") or {}).get("challenge") or {}
+    if ch.get("phase") in ("countdown", "final push"):
+        lead = f" · Day {ch['day']}/{CHALLENGE_DAYS}" + lead
     subject = f"🎖 40K Digest · Week of {TODAY_SHORT}{lead}"
     return _send(subject, html)

@@ -19,7 +19,8 @@ INDEX_PATH = DOCS_DIR / "index.html"
 TODAY = date.today().isoformat()   # e.g. "2026-09-30"
 
 
-def save_digest_json(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None) -> Path:
+def save_digest_json(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None,
+                     plan: dict | None = None) -> Path:
     """Write today's digest as a JSON file to docs/data/."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     out = {
@@ -29,6 +30,8 @@ def save_digest_json(scored_audio: list[dict], scored_topics: list[dict], trend_
     }
     if trend_scout:
         out["trend_scout"] = trend_scout
+    if plan:
+        out.update(plan)   # slate, comment_picks, digest_drop
     path = DATA_DIR / f"digest_{TODAY}.json"
     with open(path, "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, indent=2)
@@ -118,6 +121,10 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
   .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 16px; font-size: 13px; }
   .stat .n { font-size: 22px; font-weight: 700; color: #fff; }
   .stat .l { color: var(--muted); font-size: 11px; }
+  .engine-tag { display:inline-block; padding:1px 8px; border-radius:10px; font-size:10px; font-weight:700; background:#2a1a0a; color:var(--accent2); border:1px solid #5a3510; }
+  .hook { font-size:12px; color:#fff; margin:6px 0; }
+  .slot { display:inline-block; width:20px; height:20px; line-height:20px; text-align:center; border-radius:10px; background:var(--accent); color:#fff; font-size:11px; font-weight:700; margin-right:6px; }
+  .section-title { font-size:13px; color:var(--accent2); text-transform:uppercase; letter-spacing:1px; margin:0 0 8px; }
   footer { text-align: center; padding: 24px; font-size: 11px; color: #444; border-top: 1px solid var(--border); margin-top: 40px; }
 </style>
 </head>
@@ -139,6 +146,18 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
     <option value="Green screen template">Green screen template</option>
     <option value="Show/movie clip">Show/movie clip</option>
     <option value="Audio/voiceline">Audio/voiceline</option>
+  </select>
+  <select id="engineFilter" onchange="applyFilters()">
+    <option value="">All engines</option>
+    <option>Road to Palm Springs</option>
+    <option>Hobby FX Lab</option>
+    <option>Cinematic Recreations</option>
+    <option>Store Crawl</option>
+    <option>Comment Replies</option>
+    <option>Hobby on the Clock</option>
+    <option>Memes</option>
+    <option>Lore Through a Lens</option>
+    <option>Digest Drop</option>
   </select>
   <select id="typeFilter" onchange="applyFilters()">
     <option value="">All audio types</option>
@@ -171,6 +190,7 @@ DASHBOARD_HTML = r"""<!DOCTYPE html>
 <div class="main">
   <div class="stats" id="stats"></div>
   <div class="date-label" id="dateLabel"></div>
+  <div id="planPanel"></div>
   <div id="scoutPanel"></div>
   <div id="audioPanel"></div>
   <div id="topicsPanel" style="display:none;"></div>
@@ -216,6 +236,8 @@ function audioCard(a, rank) {
     ${a.register_note ? `<div class="field"><span class="field-label">Emotional register</span>${esc(a.register_note)}</div>` : ''}
     ${a.counterpoint_potential && a.counterpoint_note ? `<div class="field"><span class="field-label">Counterpoint</span>${esc(a.counterpoint_note)}</div>` : ''}
     ${a.cinematic_angle ? `<div class="angle">${esc(a.cinematic_angle)}</div>` : ''}
+    ${a.engine ? `<div style="margin-top:8px;">${engineTag(a.engine)}</div>` : ''}
+    ${hookHtml(a.hook, a.on_screen_text)}
     ${links ? `<div class="links">${links}</div>` : ''}
   </div>`;
 }
@@ -237,8 +259,60 @@ function topicCard(t) {
     ${t.what_is_driving_it ? `<div class="topic-field"><em>What's driving it:</em> ${esc(t.what_is_driving_it)}</div>` : ''}
     ${t.relevance_note ? `<div class="topic-field"><em>Why cover now:</em> ${esc(t.relevance_note)}</div>` : ''}
     ${t.is_content_gap && t.gap_note ? `<div class="topic-field gap-note"><em>Gap opportunity:</em> ${esc(t.gap_note)}</div>` : ''}
+    ${(t.engine || t.episode_idea) ? `<div class="topic-field" style="margin-top:8px;">${engineTag(t.engine)} <strong style="color:#fff;">${esc(t.episode_idea||'')}</strong></div>` : ''}
+    ${hookHtml(t.hook)}
     ${t.url ? `<div style="margin-top:8px;font-size:11px;"><a href="${esc(t.url)}" target="_blank">View source ↗</a></div>` : ''}
   </div>`;
+}
+
+// ── Engines: tags, hooks, weekly plan ────────────────────────────
+function engineTag(e) { return e ? `<span class="engine-tag">⚙ ${esc(e)}</span>` : ''; }
+function hookHtml(h, txt) {
+  return (h ? `<div class="hook"><span class="field-label">First 2 seconds</span>${esc(h)}</div>` : '')
+       + (txt ? `<div class="field"><span class="field-label">On-screen text</span>“${esc(txt)}”</div>` : '');
+}
+
+function renderPlan() {
+  const el = document.getElementById('planPanel');
+  const sl = currentData.slate, picks = currentData.comment_picks, drop = currentData.digest_drop;
+  let html = '';
+  if (sl && (sl.slots||[]).length) {
+    const ch = sl.challenge || {};
+    const sub = ch.day ? `Day ${ch.day} of 99 · ${ch.days_left} days to Palm Springs · rotation week ${ch.rotation_week}${ch.phase === 'final push' ? ' · FINAL PUSH' : ''}` : '';
+    html += `<div style="margin:0 0 20px;"><div class="section-title">📋 This week's slate</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">${esc(sub)}</div>
+      ${sl.headline ? `<div class="angle" style="font-style:normal;margin:0 0 12px;">${esc(sl.headline)}</div>` : ''}
+      <div class="audio-grid">${sl.slots.map(s => `<div class="audio-card" style="border-left:3px solid var(--accent);">
+        <div class="top"><h3><span class="slot">${esc(s.slot)}</span>${esc(s.title || s.engine)}${s.slot === 'C' ? ' <span style="color:var(--muted);font-size:11px;">(optional)</span>' : ''}</h3></div>
+        <div style="margin-bottom:6px;">${engineTag(s.engine)}</div>
+        ${hookHtml(s.hook, s.on_screen_text)}
+        ${s.caption_angle ? `<div class="field"><span class="field-label">Caption carries</span>${esc(s.caption_angle)}</div>` : ''}
+        ${s.uses ? `<div class="field"><span class="field-label">Uses</span>${esc(s.uses)}</div>` : ''}
+        ${s.batch_tip ? `<div class="field"><span class="field-label">Batch tip</span>${esc(s.batch_tip)}</div>` : ''}
+        ${s.effort ? `<div class="audio-meta" style="margin-top:6px;">Effort: ${esc(s.effort)}</div>` : ''}
+      </div>`).join('')}</div></div>`;
+  }
+  if (Array.isArray(picks)) {
+    html += `<div style="margin:0 0 20px;"><div class="section-title">💬 Comment picks</div>` +
+      (picks.length ? `<div class="audio-grid">${picks.map(p => `<div class="audio-card">
+        <div class="top"><h3>“${esc(p.comment)}”</h3>${scoreBadge(p.score||0)}</div>
+        <div class="audio-meta">@${esc(p.username)} · ${p.likes||0} likes · reply as: ${esc(p.reply_format)}</div>
+        <div class="field"><span class="field-label">Why it's good</span>${esc(p.why)}</div>
+        <div class="angle">${esc(p.idea)}</div>
+        <div style="margin-top:8px;">${engineTag(p.engine)}</div>
+        ${hookHtml(p.hook)}
+        ${p.post_url ? `<div class="links"><a href="${esc(p.post_url)}" target="_blank">Open post ↗</a></div>` : ''}
+      </div>`).join('')}</div>` : `<div style="font-size:12px;color:var(--muted);">No comments strong enough for a reply video this week.</div>`) + `</div>`;
+  }
+  if ((drop||[]).length) {
+    html += `<div style="margin:0 0 20px;"><div class="section-title">🗞 Digest Drop — new player reads the news</div>
+      <div class="topic-list">${drop.map(d => `<div class="topic-card">
+        <div class="title">${esc(d.title)} ${d.guard_relevant ? '<span class="badge" style="background:#3a2a0a;color:#f1c40f;">Affects Guard</span>' : ''}</div>
+        <div class="topic-field">${esc(d.summary)} ${d.url ? `<a href="${esc(d.url)}" target="_blank" style="font-size:11px;">Source ↗</a>` : ''}</div>
+        <div class="topic-field" style="color:var(--accent2);"><em>New-player take:</em> ${esc(d.beginner_take)}</div>
+      </div>`).join('')}</div></div>`;
+  }
+  el.innerHTML = html;
 }
 
 // ── Filters ──────────────────────────────────────────────────────
@@ -247,16 +321,18 @@ function applyFilters() {
   const type = document.getElementById('typeFilter').value.toLowerCase();
   const fmtSel = document.getElementById('formatFilter').value;
   const stage = document.getElementById('stageFilter').value;
+  const eng = document.getElementById('engineFilter').value;
   const minS = Math.max(MIN_SCORE, parseInt(document.getElementById('minScore').value) || 0);
 
   if (currentTab === 'audio') {
     const filtered = currentData.audio.filter(a => {
       if (fmtSel && a.format_type !== fmtSel) return false;
+      if (eng && a.engine !== eng) return false;
       if (type && (a.audio_type||'').toLowerCase() !== type) return false;
       if (stage && a.trend_stage !== stage) return false;
       if ((a.potency_score||0) < minS) return false;
       if (q) {
-        const blob = [a.name, a.artist, a.format_type, a.trend_note, a.sync_note, a.register_note, a.cinematic_angle, (a.categories||[]).join(' ')].join(' ').toLowerCase();
+        const blob = [a.name, a.artist, a.format_type, a.trend_note, a.sync_note, a.register_note, a.cinematic_angle, a.engine, a.hook, (a.categories||[]).join(' ')].join(' ').toLowerCase();
         if (!blob.includes(q)) return false;
       }
       return true;
@@ -264,8 +340,9 @@ function applyFilters() {
     renderAudio(filtered);
   } else {
     const filtered = currentData.topics.filter(t => {
+      if (eng && t.engine !== eng) return false;
       if (!q) return true;
-      const blob = [t.title, t.what_is_driving_it, t.relevance_note, t.gap_note, t.category].join(' ').toLowerCase();
+      const blob = [t.title, t.what_is_driving_it, t.relevance_note, t.gap_note, t.category, t.engine, t.episode_idea].join(' ').toLowerCase();
       return blob.includes(q);
     });
     renderTopics(filtered);
@@ -306,6 +383,7 @@ function renderScout() {
 }
 
 function renderStats() {
+  renderPlan();
   renderScout();
   const audio = currentData.audio.filter(a => (a.potency_score||0) >= MIN_SCORE);
   const topics = currentData.topics;
@@ -386,7 +464,8 @@ def _write_date_index(dates: list[str]) -> None:
         json.dump(dates, f)
 
 
-def update_dashboard(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None) -> None:
+def update_dashboard(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None,
+                     plan: dict | None = None) -> None:
     """
     1. Save today's digest JSON.
     2. Regenerate the date index.
@@ -396,7 +475,7 @@ def update_dashboard(scored_audio: list[dict], scored_topics: list[dict], trend_
     DATA_DIR.mkdir(parents=True, exist_ok=True)
 
     # Save digest JSON
-    save_digest_json(scored_audio, scored_topics, trend_scout)
+    save_digest_json(scored_audio, scored_topics, trend_scout, plan)
 
     # Refresh date index
     dates = _collect_digest_dates()
