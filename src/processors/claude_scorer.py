@@ -13,7 +13,10 @@ import re
 import anthropic
 from src.config import (
     ANTHROPIC_API_KEY, CLAUDE_MODEL, ALERT_THRESHOLD, AUDIO_BATCH_SIZE, FORMAT_TYPES,
+    ACCOUNT_CONTEXT, ENGINES, ENGINE_NAMES, RETIRED_ENGINES,
 )
+
+from src.processors.account_profile import profile_block
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
@@ -40,19 +43,42 @@ def _parse_json_array(raw_text: str) -> list:
 # ─────────────────────────────────────────────────────────────────
 
 FORMAT_LIST = "\n".join(f"  - {f}" for f in FORMAT_TYPES)
+ENGINE_LIST = "\n".join(f"  - {name}: {desc}" for name, desc in ENGINES.items())
+RETIRED_LIST = ", ".join(f"{k} ({v})" for k, v in RETIRED_ENGINES.items())
+
+ENGINE_BRIEF = f"""
+CONTENT ENGINES (repeatable series the account runs; use the names verbatim):
+{ENGINE_LIST}
+Never suggest these retired engines: {RETIRED_LIST}.
+"""
+
+
+def _clean_engine(value) -> str:
+    """Map a model-returned engine label onto a known engine name (or "")."""
+    v = str(value or "").strip().lower()
+    for name in ENGINE_NAMES:
+        if v == name.lower():
+            return name
+    for name in ENGINE_NAMES:
+        if name.lower() in v or v and v in name.lower():
+            return name
+    return ""
 
 AUDIO_SYSTEM_PROMPT = f"""
 You are a content intelligence system for a Warhammer 40K / hobby / tabletop RPG
 Instagram account run by a filmmaker with a strong cinematic sensibility.
-
+{ACCOUNT_CONTEXT}
+{ENGINE_BRIEF}
 Your job is to evaluate trending audio (music, dialogue clips, soundbites, meme audio,
 CapCut template sounds) and determine how useful each is for this account.
 
 The account's aesthetic is grimdark, cinematic, and craft-focused. The creator
 approaches edits like a film director — thinking about sync points, emotional register,
-and counterpoint, not just "does this sound cool." The filmmaker background is never
-referenced directly in content; it is simply the lens through which editorial decisions
-are made.
+and counterpoint, not just "does this sound cool."
+
+Because memes are what perform, judge each sound as a WRAPPER: which content engine's
+footage could ride inside it (a Hobby FX Lab reveal, a Road to Palm Springs moment, a
+Cinematic Recreation) so a non-meme idea gets meme-level reach.
 
 Each input item has an "id", plus scraped fields. Use "context" (the blurb around the
 link on the source site) and "trend_note" to understand HOW the sound is being used.
@@ -89,14 +115,26 @@ For each audio item, return a JSON object with these exact fields:
   "register_note": "emotional register this creates — dread, awe, tension, intimacy, etc.",
   "counterpoint_potential": true or false,
   "counterpoint_note": "if true: how it creates productive tension against typical 40K visuals",
-  "cinematic_angle": "a specific, filmmaker-informed post idea for this account — never mention filmmaking directly"
+  "cinematic_angle": "a specific, filmmaker-informed post idea for this account",
+  "engine": "the ONE content engine this sound best wraps (name verbatim from the list)",
+  "hook": "what the viewer sees in the first 1-2 seconds — the payoff, never build steps",
+  "on_screen_text": "the on-screen joke/caption line (joke on screen, story in the caption)",
+  "target_runtime_s": <integer: ideal Reel length in seconds for this idea>,
+  "non_player_readable": true or false (would someone who has never played Warhammer get it?),
+  "follow_reason": "why a stranger who sees this would FOLLOW, not just like — or 'none'"
 }}
 
 Scoring guidance:
-- 9-10: Strong early-stage sound with clear cinematic application for 40K content
+- 9-10: Strong early-stage sound with clear cinematic application for 40K content, and an
+  idea that follows the account's proven formulas (meme opener + craft payoff, kaiju framing,
+  payoff in second 1, under ~30s, readable by non-players, joke about HIS minis/army)
 - 7-8: Good fit, usable with creative framing
 - 5-6: Possible with significant creative work
 - 1-4: Poor fit for this account
+Cap at 6 any idea that only works as a generic meme with no link to his minis, army or
+himself (reach without follows), that needs rules knowledge to get, or that only works
+as a long build log. If an ACCOUNT PERFORMANCE PROFILE is provided, judge every idea
+against it.
 If an item is clearly not an audio track (a website heading, a product name), give it
 potency_score 1 and niche_relevance 0.
 
@@ -134,9 +172,9 @@ def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
     if not raw_audio:
         return []
 
-    taste_note = ""
+    taste_note = profile_block()
     if taste_profile:
-        taste_note = f"\n\nPERSONAL TASTE PROFILE (use to weight scores):\n{taste_profile}\n"
+        taste_note += f"\n\nPERSONAL TASTE PROFILE (use to weight scores):\n{taste_profile}\n"
 
     items = [dict(item, id=i) for i, item in enumerate(raw_audio)]
     scored: list[dict] = []
@@ -164,6 +202,7 @@ def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
             for f in PASSTHROUGH_FIELDS:
                 if f in src:
                     obj[f] = src[f]
+            obj["engine"] = _clean_engine(obj.get("engine")) or "Memes"
             if obj.get("format_type") not in FORMAT_TYPES:
                 obj["format_type"] = "Audio/voiceline"
             try:
@@ -188,11 +227,14 @@ def score_audio(raw_audio: list[dict], taste_profile: str = "") -> list[dict]:
 # TOPIC SCORING
 # ─────────────────────────────────────────────────────────────────
 
-TOPIC_SYSTEM_PROMPT = """
+TOPIC_SYSTEM_PROMPT = f"""
 You are a content intelligence system for a Warhammer 40K / hobby / tabletop RPG
 Instagram account. Your job is to identify the most valuable trending topics from
 raw community signals (Reddit posts, YouTube video titles, forum threads, official
-news) and structure them as actionable content opportunities.
+news) and structure them as actionable content opportunities for the account's
+content engines.
+{ACCOUNT_CONTEXT}
+{ENGINE_BRIEF}
 
 Categories:
 - Lore/Narrative: new releases, faction spotlights, story beats, codex drops
@@ -202,7 +244,7 @@ Categories:
   with lots of discussion but little quality video content)
 
 For each item, return a JSON object:
-{
+{{
   "title": "clear, concise topic headline",
   "category": "Lore/Narrative | Hobby Craft | Tabletop/Gameplay | Community Questions",
   "what_is_driving_it": "one sentence on what's causing the discussion",
@@ -211,8 +253,15 @@ For each item, return a JSON object:
   "gap_note": "if true: why this is undercovered and what kind of content could own this space",
   "is_question": true or false,
   "source": "reddit | youtube | warhammer_community | spikey_bits | tabletop_battles | other",
-  "url": "link if available"
-}
+  "url": "link if available",
+  "engine": "the ONE content engine this topic best feeds (name verbatim from the list)",
+  "episode_idea": "a concrete episode for that engine, written as a working title",
+  "hook": "what the viewer sees in the first 1-2 seconds — the payoff",
+  "is_news": true or false (a release, rules change, event or announcement),
+  "guard_relevant": true or false (directly affects Astra Militarum players),
+  "beginner_take": "if is_news: his honest new-player reaction or question about it, one sentence",
+  "non_player_readable": true or false (would the episode land with someone who doesn't play?)
+}}
 
 YouTube signals include "views_per_day" (momentum — weight this over raw views),
 "length" (short = YouTube Shorts, the closest proxy for Reels/TikTok formats) and
@@ -224,6 +273,10 @@ Select only the 5-10 highest-value topics. Prioritise:
 1. Content gaps (high discussion, low quality video coverage)
 2. Recurring questions (the account can answer cinematically)
 3. High-velocity discussions (lots of engagement right now)
+
+Spread picks across engines where the signals allow; prefer ideas that fit Road to Palm
+Springs, Hobby FX Lab, Cinematic Recreations or Store Crawl. Up to 3 of the news items
+should also be good Digest Drop candidates (is_news true, with a beginner_take).
 
 Return ONLY a JSON array. No commentary outside the JSON.
 """
@@ -244,7 +297,8 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
 
     user_content = (
         f"Analyse the following {len(unique)} community signals and return the "
-        f"5-10 most valuable content topics.\n\n"
+        f"5-10 most valuable content topics.\n"
+        f"{profile_block()}\n"
         f"SIGNALS:\n{json.dumps(unique, indent=2)}"
     )
 
@@ -256,7 +310,12 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
             messages=[{"role": "user", "content": user_content}],
         )
 
-        return _parse_json_array(_reply_text(response))
+        topics = _parse_json_array(_reply_text(response))
+        for t in topics:
+            t["engine"] = _clean_engine(t.get("engine"))
+            t["is_news"] = bool(t.get("is_news"))
+            t["guard_relevant"] = bool(t.get("guard_relevant"))
+        return topics
 
     except Exception as e:
         print(f"    [scorer] Topic scoring error: {e}")

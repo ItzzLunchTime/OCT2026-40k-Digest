@@ -13,7 +13,7 @@ from pathlib import Path
 # ── Scrapers ──────────────────────────────────────────────────────
 from src.scrapers.aggregators import scrape_aggregators
 from src.scrapers.youtube_scraper import scrape_youtube
-from src.scrapers.apify_scraper import scrape_apify
+from src.scrapers.apify_scraper import scrape_apify_all
 from src.scrapers.rss_scraper import scrape_rss
 from src.scrapers.community_scraper import scrape_community
 
@@ -26,6 +26,9 @@ from src.processors.trend_scout import build_trend_scout
 from src.processors.audio_merge import merge_audio
 from src.processors.history import annotate_history, is_stale_repeat
 from src.processors.feedback import collect_feedback, excluded_keys, is_excluded, verdicts_prompt
+from src.processors.engine_planner import pick_comments, digest_drop, build_slate
+from src.processors.performance import build_performance
+from src.processors.account_profile import get_account_profile
 
 
 def main() -> None:
@@ -35,6 +38,7 @@ def main() -> None:
     # ── 1. Load personal taste profile (if available) ────────────
     print("Loading personal taste profile…")
     taste_profile = get_taste_profile()
+    get_account_profile()   # logs whether the audit-based performance profile is loaded
 
     print("Collecting your votes on past recommendations…")
     feedback = collect_feedback()
@@ -43,8 +47,8 @@ def main() -> None:
     print("Scraping aggregator sites…")
     aggregator_audio = scrape_aggregators()
 
-    print("Scraping TikTok + Instagram via Apify…")
-    apify_audio = scrape_apify()
+    print("Scraping TikTok + Instagram (+ your own comments) via Apify…")
+    apify_audio, own = scrape_apify_all()
 
     # Niche-reel sounds first so their signals win when the same track appears twice
     raw_audio = merge_audio(
@@ -93,6 +97,21 @@ def main() -> None:
     print("Building Trend Scout…")
     trend_scout = build_trend_scout(scored_audio)
 
+    # ── 5c. Content engines: comment picks, digest drop, weekly slate ──
+    print("Checking how your recent posts did…")
+    performance = build_performance(own["posts"])
+
+    print("Picking comments worth a reply video…")
+    comment_picks = pick_comments(own["comments"])
+
+    print("Planning this week's slate…")
+    plan = {
+        "slate": build_slate(scored_audio, scored_topics, comment_picks, performance=performance),
+        "comment_picks": comment_picks,
+        "digest_drop": digest_drop(scored_topics),
+        "performance": performance,
+    }
+
     # ── 6. Fire individual alerts for high-potency audio ─────────
     from src.config import ALERT_THRESHOLD, MIN_RECOMMEND_SCORE
     # Capped so a strong day can't flood the inbox — the rest are in the digest
@@ -106,15 +125,16 @@ def main() -> None:
 
     # ── 7. Send weekly digest email ───────────────────────────────
     print("Sending digest email…")
-    send_digest(scored_audio, scored_topics, trend_scout)
+    send_digest(scored_audio, scored_topics, trend_scout, plan)
 
     # ── 8. Update dashboard ───────────────────────────────────────
     print("Updating dashboard…")
-    update_dashboard(scored_audio, scored_topics, trend_scout)   # also saves JSON + date index
+    update_dashboard(scored_audio, scored_topics, trend_scout, plan)   # also saves JSON + date index
 
     print(f"\n✅ Digest complete — {today}")
     print(f"   Audio scored: {len(scored_audio)}")
     print(f"   Topics scored: {len(scored_topics)}")
+    print(f"   Comment picks: {len(comment_picks)}")
     print(f"   Alerts sent: {len(alerts)}")
 
 

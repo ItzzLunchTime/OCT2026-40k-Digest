@@ -61,6 +61,7 @@ jobs:
           YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
           APIFY_API_KEY: ${{ secrets.APIFY_API_KEY }}
           TASTE_PROFILE: ${{ secrets.TASTE_PROFILE }}
+          ACCOUNT_PROFILE: ${{ secrets.ACCOUNT_PROFILE }}
           ALERT_THRESHOLD: ${{ secrets.ALERT_THRESHOLD }}
         run: |
           # Keep a copy of the run log in the repo (docs/data/last_run.txt) for debugging
