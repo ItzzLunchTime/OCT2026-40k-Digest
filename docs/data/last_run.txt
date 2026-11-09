@@ -1,5 +1,5 @@
 
-🎙️  40K Content Intel — 2026-11-02
+🎙️  40K Content Intel — 2026-11-09
 ──────────────────────────────────────────────────
 Loading personal taste profile…
     [taste] Using TASTE_PROFILE secret (1531 chars)
@@ -9,23 +9,23 @@ Collecting your votes on past recommendations…
 Scraping aggregator sites…
     [aggregators] later.com → 20 linked audio items
     [aggregators] www.socialpilot.co → 12 linked audio items
-    [aggregators] www.heyorca.com → 5 linked audio items
+    [aggregators] www.heyorca.com → 6 linked audio items
     [aggregators] www.scottsocialmarketing.com → 20 linked audio items
     [aggregators] buffer.com → 13 linked audio items
 Scraping TikTok + Instagram (+ your own comments) via Apify…
-    [apify] Month-to-date usage $3.13 of $4.50 budget
+    [apify] Month-to-date usage $0.00 of $4.50 budget
     [apify] apify/instagram-hashtag-scraper: SUCCEEDED · $0.390
-    [apify] Instagram: 180 niche reels, 114 hits (≥3.4K views/day or top-quarter engagement) → 31 sounds
-    [apify] apify/instagram-scraper: SUCCEEDED · $0.000
-    [comments] Post fields: ['alt', 'audioUrl', 'caption', 'childPosts', 'commentsCount', 'dimensionsHeight', 'dimensionsWidth', 'displayUrl', 'firstComment', 'hashtags', 'id', 'images', 'inputUrl', 'isCommentsDisabled', 'isPinned', 'latestComments', 'likesCount', 'mentions', 'musicInfo', 'originalHeight', 'originalWidth', 'ownerFullName', 'ownerId', 'ownerUsername', 'paidPartnership']
+    [apify] Instagram: 180 niche reels, 116 hits (≥3.0K views/day or top-quarter engagement) → 50 sounds
+    [apify] apify/instagram-scraper: SUCCEEDED · $0.030
+    [comments] Post fields: ['alt', 'caption', 'childPosts', 'commentsCount', 'dimensionsHeight', 'dimensionsWidth', 'displayUrl', 'firstComment', 'hashtags', 'id', 'images', 'inputUrl', 'isCommentsDisabled', 'isPinned', 'latestComments', 'likesCount', 'mentions', 'originalHeight', 'originalWidth', 'ownerFullName', 'ownerId', 'ownerUsername', 'paidPartnership', 'productType', 'shortCode']
     [apify] apify/instagram-comment-scraper: SUCCEEDED · $0.099
     [comments] Comment fields: ['commentUrl', 'id', 'likesCount', 'owner', 'ownerProfilePicUrl', 'ownerUsername', 'postUrl', 'replies', 'repliesCount', 'text', 'timestamp']
-    [comments] 12 posts · 127 comments → 39 from the last 7 days worth scoring
-  → capping 85 sounds to the 80 strongest signals
-    [history] 5 past week(s) loaded · 31/80 sounds new this week
+    [comments] 12 posts · 94 comments → 30 from the last 7 days worth scoring
+  → capping 99 sounds to the 80 strongest signals
+    [history] 6 past week(s) loaded · 38/80 sounds new this week
   → 80 unique audio items collected
 Scraping YouTube…
-    [youtube] 264 unique videos found → kept 60 (52 Shorts) by views/day
+    [youtube] 276 unique videos found → kept 60 (49 Shorts) by views/day
 Scraping community sites…
     [community] 20 Warhammer Community items
 Reading hobby news RSS feeds…
@@ -36,25 +36,25 @@ Scoring audio with Claude…
     [scorer] Scored 80/80 audio items
 Scoring topics with Claude…
 Building Trend Scout…
-    [trend_scout] Top formats: Hobby + trending audio, Audio/voiceline, Show/movie clip · baseline: 2026-10-26
+    [trend_scout] Top formats: Hobby + trending audio, Show/movie clip, POV + reaction · baseline: 2026-11-02
 Checking how your recent posts did…
-    [performance] Median 3556 views (audit baseline (Oct 2026)) · recent: Too early, Breakout, Above, Breakout, Breakout, Baseline
+    [performance] Median 17206 views (live median of 14 tracked posts) · recent: Too early, Too early, Too early, Under, Under, Under, Under, Breakout, Under, Breakout, Baseline, Breakout, Above
 Picking comments worth a reply video…
-    [planner] Comment picks: 3 of 39 comments
+    [planner] Comment picks: 3 of 30 comments
 Planning this week's slate…
-    [planner] Slate: day 26/99 (countdown) · A=Road to Palm Springs, B=Store Crawl, C=Memes
+    [planner] Slate: day 33/99 (countdown) · A=Road to Palm Springs, B=Hobby FX Lab, C=Memes
   ⚡ Sending 3 individual alert(s)…
-    [email] Sent: ⚡ Audio Alert [8/10]: The Emperor Protects — 2026-11-02
-    [email] Sent: ⚡ Audio Alert [8/10]: Sonne (Slowed + Mastered) — 2026-11-02
-    [email] Sent: ⚡ Audio Alert [8/10]: The Ancient Glory of the Fallen Kingdom — 2026-11-02
+    [email] Sent: ⚡ Audio Alert [9/10]: There Is Only War / Chapel — 2026-11-09
+    [email] Sent: ⚡ Audio Alert [9/10]: Black Templars (Warhammer 40k) — 2026-11-09
+    [email] Sent: ⚡ Audio Alert [9/10]: The Kraken (Pirates of the Caribbean: Dead Man's Chest) — 2026-11-09
 Sending digest email…
-    [email] Sent: 🎖 40K Digest · Week of 2026-11-02 · Day 26/99 — Hobby + trending audio leads
+    [email] Sent: 🎖 40K Digest · Week of 2026-11-09 · Day 33/99 — Hobby + trending audio leads
 Updating dashboard…
-    [dashboard] Saved digest JSON → docs/data/digest_2026-11-02.json
-    [dashboard] Date index updated: 13 digest(s) available
+    [dashboard] Saved digest JSON → docs/data/digest_2026-11-09.json
+    [dashboard] Date index updated: 14 digest(s) available
     [dashboard] Dashboard written → docs/index.html
 
-✅ Digest complete — 2026-11-02
+✅ Digest complete — 2026-11-09
    Audio scored: 80
    Topics scored: 8
    Comment picks: 3
