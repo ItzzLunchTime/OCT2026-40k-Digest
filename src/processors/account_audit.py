@@ -11,6 +11,8 @@ What it measures, all from data the digest already collects:
   - Brand proof  whether product-facing posts tag a brand and use original audio
   - Growth       follower count, weekly change, pace toward the 10k goal
   - Follow-through  what was posted against last week's slate
+  - Post by post    the strongest and weakest posts of the window: what worked, what
+                    didn't, and what to do differently next time
 
 How it works:
   1. Numbers are computed here in Python from docs/data/own_posts.json (the per-post
@@ -18,7 +20,10 @@ How it works:
      count per run). No model is involved in the arithmetic.
   2. One small Claude call labels each recent post (meme / product / story / craft) from
      its caption, tags and length. The label is cached on the post so it is done once.
-  3. One Claude call turns the scorecard into findings, up to four goals for the week and
+  3. One Claude call reads the strongest and weakest posts side by side (numbers, caption,
+     length, label, when it went out, what viewers commented) and says why each one landed
+     where it did. It cannot watch the video, so every reason is marked with how sure it is.
+  4. One Claude call turns the scorecard and those post lessons into findings, up to four goals for the week and
      a short note for the planner and scorers. If that call fails, the findings and goals
      fall back to the scorecard's own rules, so the section never disappears.
 
@@ -29,6 +34,7 @@ Insights, so they are not audited here; post labels come from captions, not the 
 import json
 import statistics
 from datetime import date, datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 from src.config import ACCOUNT_CONTEXT, IG_ACCOUNT
@@ -47,6 +53,8 @@ FOLLOWER_GOAL = 10_000
 LONG_POST_S = 45            # the profile's ceiling for a post that opens on a meme
 PRODUCT_SHARE_TARGET = 0.5  # partnership plan: about half reach, half product-facing
 MAX_AUDIT_GOALS = 4
+BREAKDOWN_EACH = 3          # strongest and weakest posts explained per week
+LOCAL_TZ = ZoneInfo("America/Los_Angeles")
 
 KINDS = ["meme", "product", "story", "craft", "other"]
 STATUS_ORDER = {"fix": 0, "watch": 1, "good": 2, "info": 3}
@@ -356,6 +364,8 @@ You get a JSON object:
   "scorecard"   the audit's measured rows, each with a status already assigned by fixed rules
   "stats"       the numbers behind those rows
   "recent_posts" his posts from the last four weeks (caption, label, views, length, tags)
+  "post_lessons" the post-by-post read of his strongest and weakest posts, and the patterns
+                across them. Build on these: a goal that repeats a lesson should name the post.
   "last_week"   last week's planned slate and goals, and "posted_since" what he posted after it
   "already_planned" this week's partnership-plan milestones and posts (do not repeat these as goals)
 
@@ -455,14 +465,182 @@ def _clean(result: dict, scorecard: list[dict]) -> dict:
 
 
 # ─────────────────────────────────────────────────────────────────
+# Post by post: what worked, what didn't
+# ─────────────────────────────────────────────────────────────────
+
+BREAKDOWN_SYSTEM = f"""
+You explain to one creator why specific posts of his did well or badly, for his weekly email.
+{ACCOUNT_CONTEXT}
+You get "account" (his medians for comparison), "strongest" and "weakest" (posts from the last
+four weeks, each with views, how many times his median that is, length, likes + comments per
+view, the caption, the accounts tagged, a content label, the local day and hour it went out,
+whether the audio was his own, and up to three viewer comments), and "all_recent" (every post in
+the window, for spotting patterns).
+
+You CANNOT see the videos. Work only from what is given:
+  - Compare each post with the others and with the account's proven rules in the brief above
+    (payoff in second 1-2, 6-30s by default, meme opener + craft payoff, joke about his own
+    minis or army, reads for a non-player, face-to-camera for story, joke on screen and story
+    in the caption).
+  - Say what the evidence supports. Length, caption framing, topic, label, timing, tags and
+    viewer comments are evidence. The opening shot, pacing and edit are NOT visible to you:
+    when the likely cause is something you can't see, say "check the opener" (or similar)
+    rather than asserting it.
+  - Never invent numbers, saves, shares or follows. Use only numbers in the input.
+  - A weak post can still have something that worked (a strong comment rate, a good idea badly
+    wrapped); a strong post can still have something to fix. Leave a field as "" rather than
+    padding it.
+  - "next_time" is one concrete change he could make on a similar post, small enough for a
+    student posting 1-3 times a week. For a weak post with a good idea, say how to re-roll it.
+  - "confidence": "high" when the numbers and several posts point the same way, "medium" when
+    it is a reasonable read, "low" when it is mostly a guess from the caption.
+
+Return ONLY a JSON object:
+{{
+  "posts": [
+    {{"index": <input index>,
+      "worked": "what worked, one sentence, or ''",
+      "didnt": "what held it back, one sentence, or ''",
+      "next_time": "what to do differently, one sentence",
+      "confidence": "high | medium | low"}}
+  ],
+  "patterns": ["up to three patterns across the window, each with the numbers behind it"]
+}}
+"""
+
+
+def _when(posted: datetime) -> str:
+    local = posted.astimezone(LOCAL_TZ)
+    return f"{local.strftime('%a')} {local.strftime('%I%p').lstrip('0').lower()}"
+
+
+def _post_card(p: dict, median: float, index: int | None = None) -> dict:
+    views = p.get("views") or 0
+    card = {
+        "url": p.get("url", ""),
+        "caption": p.get("caption", ""),
+        "posted": p["posted"].date().isoformat(),
+        "posted_local": _when(p["posted"]),
+        "label": p.get("kind", ""),
+        "views": views,
+        # Two decimals under 0.1x, so a very weak post doesn't read as "0.0x"
+        "x_median": (round(views / median, 2 if views / median < 0.1 else 1)) if median and views else None,
+        "length_s": p.get("duration_s", 0),
+        "likes": p.get("likes", 0),
+        "comments": p.get("comments", 0),
+        "engagement_per_view": round((p.get("likes", 0) + p.get("comments", 0)) / views, 3) if views else None,
+        "tags": p.get("mentions") or [],
+        "own_audio": p.get("original_audio"),
+    }
+    if index is not None:
+        card["index"] = index
+    return card
+
+
+def _pick_posts(posts: list[dict], median: float) -> tuple[list[dict], list[dict]]:
+    """Strongest and weakest settled videos of the window; a post is never in both lists."""
+    pool = sorted((p for p in posts if SETTLE_DAYS <= p["age_days"] <= WINDOW_DAYS and p.get("views")),
+                  key=lambda p: p["views"], reverse=True)
+    if len(pool) < 2 or not median:
+        return [], []
+    n = min(BREAKDOWN_EACH, len(pool) // 2)
+    strongest = pool[:n]
+    weakest = [p for p in pool[::-1][:n] if p["views"] < median]   # only call a post weak if it is below the bar
+    return strongest, weakest
+
+
+def _rule_notes(card: dict, strong: bool, short_med: float) -> dict:
+    """Fallback read from the numbers alone, used when the model call fails."""
+    length, x = card["length_s"] or 0, card["x_median"] or 0
+    worked = didnt = ""
+    if strong:
+        worked = f"{x}x your median" + (f" at {length:.0f}s" if length else "") \
+                 + (f", as a {card['label']} post" if card["label"] else "") + "."
+        next_time = "Make a follow-up that keeps the same length and framing."
+    else:
+        if length > LONG_POST_S:
+            didnt = f"Ran {length:.0f}s; your posts of 30s or less have a median of {int(short_med):,} views." \
+                    if short_med else f"Ran {length:.0f}s, past the {LONG_POST_S}s ceiling."
+            next_time = "Recut it to 30s or less with the strongest shot first and repost with a new caption."
+        else:
+            didnt = f"{x}x your median; the numbers alone don't show why."
+            next_time = "Check the first two seconds: if the payoff isn't there, recut and repost."
+        if (card["engagement_per_view"] or 0) >= 0.08:
+            worked = f"The people who saw it engaged ({card['engagement_per_view'] * 100:.0f}% likes + comments per view)."
+    return {"worked": worked, "didnt": didnt, "next_time": next_time, "confidence": "low"}
+
+
+def _breakdowns(posts: list[dict], median: float, comments: list[dict] | None, stats: dict) -> dict:
+    strongest, weakest = _pick_posts(posts, median)
+    if not strongest and not weakest:
+        return {"posts": [], "patterns": []}
+    by_post: dict[str, list[dict]] = {}
+    for c in comments or []:
+        by_post.setdefault(c.get("post_url", ""), []).append(c)
+
+    chosen = [(p, True) for p in strongest] + [(p, False) for p in weakest]
+    cards = []
+    for i, (p, strong) in enumerate(chosen):
+        card = _post_card(p, median, i)
+        top = sorted(by_post.get(p.get("url", ""), []), key=lambda c: c.get("likes", 0), reverse=True)[:3]
+        card["viewer_comments"] = [c.get("text", "")[:200] for c in top]
+        card["result"] = "strong" if strong else "weak"
+        cards.append(card)
+
+    payload = {
+        "account": {
+            "median_views": int(median),
+            "median_length_s": stats["length"]["median_length_s"],
+            "median_views_by_length": stats["length"]["median_views_by_length"],
+            "engagement_per_view": stats["engagement"]["engagement_per_view_last_28d"],
+        },
+        "strongest": [c for c in cards if c["result"] == "strong"],
+        "weakest": [c for c in cards if c["result"] == "weak"],
+        "all_recent": [_post_card(p, median) for p in posts if p["age_days"] <= WINDOW_DAYS],
+    }
+    notes, patterns, source = {}, [], "claude"
+    for attempt in (1, 2):
+        try:
+            reply = _parse_json_object(_ask(BREAKDOWN_SYSTEM, payload, max_tokens=5000))
+            for item in reply.get("posts") or []:
+                try:
+                    idx = int(item.get("index"))
+                except (TypeError, ValueError):
+                    continue
+                conf = str(item.get("confidence", "")).strip().lower()
+                if 0 <= idx < len(cards) and str(item.get("next_time", "")).strip():
+                    notes[idx] = {"worked": str(item.get("worked", "")).strip(),
+                                  "didnt": str(item.get("didnt", "")).strip(),
+                                  "next_time": str(item.get("next_time", "")).strip(),
+                                  "confidence": conf if conf in ("high", "medium", "low") else "low"}
+            if not notes:
+                raise ValueError("no usable post notes")
+            patterns = [str(x).strip() for x in (reply.get("patterns") or []) if str(x).strip()][:3]
+            break
+        except Exception as e:
+            print(f"    [audit] Post breakdown attempt {attempt} failed: {e}")
+    if not notes:
+        source = "number rules"
+    short_med = float(stats["length"]["median_views_by_length"].get("up_to_30s") or 0)
+    out = []
+    for card in cards:
+        note = notes.get(card["index"]) or _rule_notes(card, card["result"] == "strong", short_med)
+        out.append({k: card[k] for k in ("url", "caption", "posted", "posted_local", "label", "views", "x_median",
+                                         "length_s", "likes", "comments", "result")} | note)
+    return {"posts": out, "patterns": patterns, "source": source}
+
+
+# ─────────────────────────────────────────────────────────────────
 # Entry points
 # ─────────────────────────────────────────────────────────────────
 
-def build_audit(performance: dict | None, profile: dict | None = None, today: date | None = None) -> dict | None:
+def build_audit(performance: dict | None, profile: dict | None = None, today: date | None = None,
+                comments: list[dict] | None = None) -> dict | None:
     """
     Run after build_performance() (which refreshes own_posts.json).
-    Returns {"headline", "scorecard", "findings", "goals", "guidance", "stats", "window_days"}
-    or None when there is no post history to audit.
+    comments: this week's scraped comments, so the post-by-post read can see what viewers said.
+    Returns {"headline", "scorecard", "findings", "goals", "guidance", "post_breakdown", "stats",
+    "window_days"} or None when there is no post history to audit.
     """
     today = today or date.today()
     now = datetime.now(timezone.utc)
@@ -485,6 +663,8 @@ def build_audit(performance: dict | None, profile: dict | None = None, today: da
     stats = {"cadence": cadence, "reach": reach, "length": length, "engagement": engagement,
              "content_mix": mix, "growth": growth}
 
+    breakdown = _breakdowns(posts, median, comments, stats)
+
     last = _last_digest(today)
     since = last.get("date", "")
     week = plan_week(today)
@@ -500,6 +680,11 @@ def build_audit(performance: dict | None, profile: dict | None = None, today: da
              "still_collecting_views": p["age_days"] < SETTLE_DAYS}
             for p in posts if p["age_days"] <= WINDOW_DAYS
         ],
+        "post_lessons": {
+            "patterns": breakdown["patterns"],
+            "posts": [{k: b[k] for k in ("caption", "result", "x_median", "worked", "didnt", "next_time", "confidence")}
+                      for b in breakdown["posts"]],
+        },
         "last_week": {
             "digest_date": since or None,
             "slate": last.get("slate", []),
@@ -522,11 +707,12 @@ def build_audit(performance: dict | None, profile: dict | None = None, today: da
     if result is None:
         result, source = _fallback(scorecard), "scorecard rules"
 
-    audit = dict(result, scorecard=scorecard, stats=stats, window_days=WINDOW_DAYS,
+    audit = dict(result, scorecard=scorecard, post_breakdown=breakdown, stats=stats, window_days=WINDOW_DAYS,
                  posts_audited=len(payload["recent_posts"]), account=IG_ACCOUNT, source=source)
     marks = ", ".join(f"{r['area']}={r['status']}" for r in scorecard)
     print(f"    [audit] {audit['posts_audited']} posts over {WINDOW_DAYS} days · {labelled} newly labelled · "
-          f"{marks} · {len(audit['goals'])} goal(s) · findings from {source}")
+          f"{marks} · {len(breakdown['posts'])} post(s) broken down · {len(audit['goals'])} goal(s) · "
+          f"findings from {source}")
     return audit
 
 
@@ -539,9 +725,24 @@ def audit_guidance(audit: dict | None) -> str:
     for f in audit.get("findings", []):
         if f["status"] in ("fix", "watch") and f.get("action"):
             lines.append(f"- {f['area']} ({f['status']}): {f['evidence']} → {f['action']}")
+    lessons = _lessons(audit)
+    if lessons:
+        lines.append("Lessons from his own recent posts:")
+        lines.extend(f"- {x}" for x in lessons)
     if audit.get("guidance"):
         lines.append(audit["guidance"])
     return "\n".join(line for line in lines if line)
+
+
+def _lessons(audit: dict) -> list[str]:
+    """Patterns plus the firmer per-post lessons, short enough to drop into another prompt."""
+    bd = audit.get("post_breakdown") or {}
+    out = list(bd.get("patterns") or [])
+    for b in bd.get("posts") or []:
+        if b.get("confidence") in ("high", "medium") and b.get("next_time"):
+            out.append(f"{'Strong' if b['result'] == 'strong' else 'Weak'} post \"{_short(b.get('caption'), 50)}\" "
+                       f"({b.get('x_median')}x median): {b['next_time']}")
+    return out[:6]
 
 
 def audit_brief(audit: dict | None) -> dict | None:
@@ -553,4 +754,5 @@ def audit_brief(audit: dict | None) -> dict | None:
         "needs_attention": [f for f in audit.get("findings", []) if f["status"] in ("fix", "watch")],
         "goals": audit.get("goals", []),
         "guidance": audit.get("guidance", ""),
+        "post_lessons": _lessons(audit),
     }

@@ -302,7 +302,22 @@ function renderPlan() {
         <div class="top"><h3>${esc(f.area)}</h3>${abadge(f.status)}</div>
         <div class="field">${esc(f.evidence)}</div>
         ${f.action ? `<div class="field"><span class="field-label">This week</span>${esc(f.action)}</div>` : ''}
-      </div>`).join('')}</div></div>`;
+      </div>`).join('')}</div>`;
+    const bd = audit.post_breakdown || {};
+    if ((bd.posts||[]).length) {
+      html += `<div class="section-title" style="margin-top:16px;">What worked and what didn't</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Strongest and weakest posts of the window · read from numbers, caption, length, timing and comments (the audit can't watch the video)</div>
+        ${(bd.patterns||[]).length ? `<div class="topic-card" style="margin-bottom:10px;"><span class="field-label">Patterns</span>${bd.patterns.map(x => `<div class="topic-field">• ${esc(x)}</div>`).join('')}</div>` : ''}
+        <div class="audio-grid">${bd.posts.map(b => `<div class="audio-card" style="border-left:3px solid ${b.result === 'strong' ? '#27ae60' : '#c0392b'};">
+          <div class="top"><h3>${b.url ? `<a href="${esc(b.url)}" target="_blank">${esc((b.caption||'(no caption)').slice(0,80))}</a>` : esc((b.caption||'(no caption)').slice(0,80))}</h3></div>
+          <div class="audio-meta">${[(b.views||0).toLocaleString() + ' views', b.x_median != null ? b.x_median + 'x median' : '', b.length_s ? Math.round(b.length_s) + 's' : '', esc(b.label), esc(b.posted_local)].filter(Boolean).join(' · ')}</div>
+          ${b.worked ? `<div class="field"><span class="field-label">What worked</span>${esc(b.worked)}</div>` : ''}
+          ${b.didnt ? `<div class="field"><span class="field-label">What held it back</span>${esc(b.didnt)}</div>` : ''}
+          ${b.next_time ? `<div class="field"><span class="field-label">Do differently</span>${esc(b.next_time)}</div>` : ''}
+          ${b.confidence === 'low' ? `<div class="audio-meta" style="margin-top:6px;">Low confidence: caption and numbers only</div>` : ''}
+        </div>`).join('')}</div>`;
+    }
+    html += `</div>`;
   }
   if (perf) {
     const col = {Breakout:'#c0392b', Above:'#e67e22', Baseline:'#7f8c8d', Under:'#34495e'};

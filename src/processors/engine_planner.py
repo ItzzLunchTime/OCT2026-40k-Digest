@@ -178,7 +178,8 @@ You get: the 99-day challenge status, the engine assigned to each slot by the ro
 this week's scored trending sounds, community topics and viewer comments, and how his own
 recent posts did ("performance": views vs his median, tiered Breakout/Above/Baseline/Under),
 and, when present, "audit": this week's measured audit of the account (what needs attention,
-the goals it set, and its guidance).
+the goals it set, its guidance, and "post_lessons": what his own strongest and weakest recent
+posts taught). Reuse what made the strong posts work and avoid repeating the weak posts' shape.
 
 When "audit" is present the slate must act on it. Each slot should help close a "fix" or "watch"
 finding where its engine allows: for example a product-facing Slot B when the content mix is

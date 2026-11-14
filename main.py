@@ -76,7 +76,7 @@ def main() -> None:
     performance = build_performance(own["posts"])
 
     print("Auditing the account…")
-    audit = build_audit(performance, own.get("profile"))
+    audit = build_audit(performance, own.get("profile"), comments=own.get("comments"))
     audit_note = audit_guidance(audit)
 
     # ── 3. Scrape community sources for topics ────────────────────
