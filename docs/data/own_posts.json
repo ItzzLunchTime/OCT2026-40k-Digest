@@ -66,7 +66,8 @@
     "duration_s": 11.8,
     "views": 48369,
     "likes": 2579,
-    "comments": 59
+    "comments": 59,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/DeIFwjDR6Ir/": {
     "snapshots": [
@@ -166,7 +167,8 @@
     "duration_s": 11.1,
     "views": 10323,
     "likes": 554,
-    "comments": 14
+    "comments": 14,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/DeNKdyky5ff/": {
     "snapshots": [
@@ -247,7 +249,8 @@
     "duration_s": 8.0,
     "views": 116903,
     "likes": 7686,
-    "comments": 61
+    "comments": 61,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/De9mRJOxgKy/": {
     "snapshots": [
@@ -272,7 +275,8 @@
     "duration_s": 39.3,
     "views": 5177,
     "likes": 391,
-    "comments": 21
+    "comments": 21,
+    "kind": "story"
   },
   "https://www.instagram.com/p/DeaG7OByUd6/": {
     "snapshots": [
@@ -312,6 +316,12 @@
         "views": 4383,
         "likes": 148,
         "comments": 1
+      },
+      {
+        "date": "2026-11-14",
+        "views": 4542,
+        "likes": 157,
+        "comments": 1
       }
     ],
     "url": "https://www.instagram.com/p/DfPv1URxisQ/",
@@ -320,9 +330,12 @@
     "type": "clips",
     "caption": "Batch painting is the only way to do it #warhammer40k #warhammer #hobby #40k #painting",
     "duration_s": 5.2,
-    "views": 4383,
-    "likes": 148,
-    "comments": 1
+    "views": 4542,
+    "likes": 157,
+    "comments": 1,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "craft"
   },
   "https://www.instagram.com/p/DfIT_tuh9SD/": {
     "snapshots": [
@@ -347,7 +360,8 @@
     "duration_s": 7.3,
     "views": 245869,
     "likes": 18662,
-    "comments": 229
+    "comments": 229,
+    "kind": "other"
   },
   "https://www.instagram.com/p/DfVCyzOxZGq/": {
     "snapshots": [
@@ -355,6 +369,12 @@
         "date": "2026-11-09",
         "views": 0,
         "likes": 36,
+        "comments": 11
+      },
+      {
+        "date": "2026-11-14",
+        "views": 0,
+        "likes": 37,
         "comments": 11
       }
     ],
@@ -365,8 +385,10 @@
     "caption": "2,500 follows and over half a million views in the last week!!! I really appreciate it, and hope to keep up this momentum leading up to and after Palm Springs in just a few months!! I’m forever grateful yall have been en",
     "duration_s": 0.0,
     "views": 0,
-    "likes": 36,
-    "comments": 11
+    "likes": 37,
+    "comments": 11,
+    "mentions": [],
+    "kind": "other"
   },
   "https://www.instagram.com/p/DfaVPn0GS0k/": {
     "snapshots": [
@@ -374,6 +396,12 @@
         "date": "2026-11-09",
         "views": 0,
         "likes": 49,
+        "comments": 2
+      },
+      {
+        "date": "2026-11-14",
+        "views": 0,
+        "likes": 51,
         "comments": 2
       }
     ],
@@ -384,8 +412,10 @@
     "caption": "Throwback a few years ago on Halloween when my girlfriend and I built a set of Stormtrooper armor! Not quite Warhammer related, but I thought this crowd may think this is pretty fun 😎 This was the first and last time I e",
     "duration_s": 0.0,
     "views": 0,
-    "likes": 49,
-    "comments": 2
+    "likes": 51,
+    "comments": 2,
+    "mentions": [],
+    "kind": "other"
   },
   "https://www.instagram.com/p/DfctEvNx5XY/": {
     "snapshots": [
@@ -393,6 +423,12 @@
         "date": "2026-11-09",
         "views": 3040,
         "likes": 165,
+        "comments": 1
+      },
+      {
+        "date": "2026-11-14",
+        "views": 3224,
+        "likes": 177,
         "comments": 1
       }
     ],
@@ -402,9 +438,12 @@
     "type": "clips",
     "caption": "Magnets are awesome sauce. Lets me swap out loadouts, store my big guys more efficiently, and when needed take them apart to turn them into debris on the battlefield 😎 #warhammer40k #warhammer #hobby #40k #imperialknight",
     "duration_s": 8.6,
-    "views": 3040,
-    "likes": 165,
-    "comments": 1
+    "views": 3224,
+    "likes": 177,
+    "comments": 1,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "craft"
   },
   "https://www.instagram.com/p/DfXnk-ZPe7p/": {
     "snapshots": [
@@ -412,6 +451,12 @@
         "date": "2026-11-09",
         "views": 3083,
         "likes": 174,
+        "comments": 1
+      },
+      {
+        "date": "2026-11-14",
+        "views": 3178,
+        "likes": 176,
         "comments": 1
       }
     ],
@@ -421,9 +466,12 @@
     "type": "clips",
     "caption": "A quick little demo on the LED’s! This may be one of my favorite parts of a build, and i definitely will be cramming electronics wherever I can now 😂 Let me know if you’d like to see a more in-depth explanation, or what ",
     "duration_s": 72.8,
-    "views": 3083,
-    "likes": 174,
-    "comments": 1
+    "views": 3178,
+    "likes": 176,
+    "comments": 1,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "craft"
   },
   "https://www.instagram.com/p/DfU31W2xg0K/": {
     "snapshots": [
@@ -432,6 +480,12 @@
         "views": 3209,
         "likes": 340,
         "comments": 7
+      },
+      {
+        "date": "2026-11-14",
+        "views": 3778,
+        "likes": 396,
+        "comments": 8
       }
     ],
     "url": "https://www.instagram.com/p/DfU31W2xg0K/",
@@ -440,9 +494,12 @@
     "type": "clips",
     "caption": "It’s all fine and dandy until someone enters the room and revolts at the smell of the Tamiya, then I realize I’ve become nose blind to a very pungent chemical #warhammer40k #warhammer #hobby #40k #painting",
     "duration_s": 18.1,
-    "views": 3209,
-    "likes": 340,
-    "comments": 7
+    "views": 3778,
+    "likes": 396,
+    "comments": 8,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/DfZ_rOWRpKq/": {
     "snapshots": [
@@ -450,6 +507,12 @@
         "date": "2026-11-09",
         "views": 841,
         "likes": 55,
+        "comments": 0
+      },
+      {
+        "date": "2026-11-14",
+        "views": 956,
+        "likes": 62,
         "comments": 0
       }
     ],
@@ -459,9 +522,12 @@
     "type": "clips",
     "caption": "Somebody though they could sneak around and not get caught 🙄 #warhammer40k #warhammer #hobby #40k #alphalegion",
     "duration_s": 13.3,
-    "views": 841,
-    "likes": 55,
-    "comments": 0
+    "views": 956,
+    "likes": 62,
+    "comments": 0,
+    "mentions": [],
+    "original_audio": false,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/DfSX55dx6MQ/": {
     "snapshots": [
@@ -469,6 +535,12 @@
         "date": "2026-11-09",
         "views": 101883,
         "likes": 7335,
+        "comments": 82
+      },
+      {
+        "date": "2026-11-14",
+        "views": 105433,
+        "likes": 7620,
         "comments": 82
       }
     ],
@@ -478,9 +550,12 @@
     "type": "clips",
     "caption": "My airbrush frightens me #warhammer40k #warhammer #hobby #40k #relationships",
     "duration_s": 15.2,
-    "views": 101883,
-    "likes": 7335,
-    "comments": 82
+    "views": 105433,
+    "likes": 7620,
+    "comments": 82,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "meme"
   },
   "https://www.instagram.com/p/DfhxcdpxCuM/": {
     "snapshots": [
@@ -489,6 +564,12 @@
         "views": 1503,
         "likes": 90,
         "comments": 4
+      },
+      {
+        "date": "2026-11-14",
+        "views": 17449,
+        "likes": 1062,
+        "comments": 23
       }
     ],
     "url": "https://www.instagram.com/p/DfhxcdpxCuM/",
@@ -497,8 +578,77 @@
     "type": "clips",
     "caption": "Now i actually like this tank! I wish I could just run like 6 Leman Russ tanks, but on the table I think Dorns are just far superior for their points. I don’t think that means they need a nerf, it just means Russ needs a",
     "duration_s": 63.8,
-    "views": 1503,
-    "likes": 90,
-    "comments": 4
+    "views": 17449,
+    "likes": 1062,
+    "comments": 23,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "story"
+  },
+  "https://www.instagram.com/p/DfnojK8vdL1/": {
+    "snapshots": [
+      {
+        "date": "2026-11-14",
+        "views": 979,
+        "likes": 95,
+        "comments": 4
+      }
+    ],
+    "url": "https://www.instagram.com/p/DfnojK8vdL1/",
+    "short_code": "DfnojK8vdL1",
+    "timestamp": "2026-11-11T23:14:40.000Z",
+    "type": "clips",
+    "caption": "Funny noticing all of the parts I left unpainted now that I look at it under a camera 😬😬 #warhammer40k #warhammer #hobby #40k #paintingwarhammer",
+    "duration_s": 26.7,
+    "views": 979,
+    "likes": 95,
+    "comments": 4,
+    "mentions": [],
+    "original_audio": false,
+    "kind": "meme"
+  },
+  "https://www.instagram.com/p/Dfkd6M2RUkf/": {
+    "snapshots": [
+      {
+        "date": "2026-11-14",
+        "views": 4436,
+        "likes": 216,
+        "comments": 6
+      }
+    ],
+    "url": "https://www.instagram.com/p/Dfkd6M2RUkf/",
+    "short_code": "Dfkd6M2RUkf",
+    "timestamp": "2026-11-10T18:02:13.000Z",
+    "type": "clips",
+    "caption": "You know the arms can be hard to put on sometimes 😂 especially the two-handed weapons! What’s the most fiddley kit you’ve put together? #paintingwarhammer #warhammer40k #relationship #hobby #40k",
+    "duration_s": 29.8,
+    "views": 4436,
+    "likes": 216,
+    "comments": 6,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "meme"
+  },
+  "https://www.instagram.com/p/DfpgXGWx-Gv/": {
+    "snapshots": [
+      {
+        "date": "2026-11-14",
+        "views": 2069,
+        "likes": 124,
+        "comments": 2
+      }
+    ],
+    "url": "https://www.instagram.com/p/DfpgXGWx-Gv/",
+    "short_code": "DfpgXGWx-Gv",
+    "timestamp": "2026-11-12T16:41:46.000Z",
+    "type": "clips",
+    "caption": "This Warhound has seen better days… Also I hope they don’t make it $300 but I bet it’ll be worse. #warhammer40k #warhammer #hobby #40k #paintingwarhammer",
+    "duration_s": 21.8,
+    "views": 2069,
+    "likes": 124,
+    "comments": 2,
+    "mentions": [],
+    "original_audio": true,
+    "kind": "meme"
   }
 }
