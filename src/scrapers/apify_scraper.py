@@ -309,9 +309,10 @@ def scrape_instagram_niche_audio(client) -> list[dict]:
 def scrape_apify_all() -> tuple[list[dict], dict]:
     """
     One budget check, then every Apify job:
-    returns (audio items, {"posts": your recent posts, "comments": last week's comments}).
+    returns (audio items, {"posts": your recent posts, "comments": last week's comments,
+    "profile": follower count}).
     """
-    empty = {"posts": [], "comments": []}
+    empty = {"posts": [], "comments": [], "profile": None}
     if not APIFY_API_KEY:
         print("    [apify] No APIFY_API_KEY set — skipping")
         return [], empty

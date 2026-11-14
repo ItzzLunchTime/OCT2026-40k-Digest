@@ -176,7 +176,15 @@ You plan this week's posts for a solo Instagram creator.
 {ENGINE_BRIEF}
 You get: the 99-day challenge status, the engine assigned to each slot by the rotation,
 this week's scored trending sounds, community topics and viewer comments, and how his own
-recent posts did ("performance": views vs his median, tiered Breakout/Above/Baseline/Under).
+recent posts did ("performance": views vs his median, tiered Breakout/Above/Baseline/Under),
+and, when present, "audit": this week's measured audit of the account (what needs attention,
+the goals it set, and its guidance).
+
+When "audit" is present the slate must act on it. Each slot should help close a "fix" or "watch"
+finding where its engine allows: for example a product-facing Slot B when the content mix is
+short of product-facing posts, a shorter runtime when length is flagged, a face-to-camera beat
+when growth is flagged. Say which finding a slot answers in "why_it_should_work". Do not plan
+more posts than his capacity to chase a finding.
 
 Learn from performance: if a recent post broke out, build on what it did (a follow-up,
 part 2, same framing); if one flopped, don't repeat its shape. When performance names a
@@ -224,7 +232,8 @@ def _parse_json_object(text: str) -> dict:
 
 
 def build_slate(scored_audio: list[dict], topics: list[dict], comment_picks: list[dict],
-                today: date | None = None, performance: dict | None = None) -> dict:
+                today: date | None = None, performance: dict | None = None,
+                audit: dict | None = None) -> dict:
     status = challenge_status(today)
     slots = status["slots"]
     sounds = [
@@ -240,6 +249,8 @@ def build_slate(scored_audio: list[dict], topics: list[dict], comment_picks: lis
         "comments": [{k: c.get(k) for k in ("comment", "idea", "reply_format")} for c in comment_picks],
         "performance": performance or "no own-post data this week",
     }
+    if audit:
+        payload["audit"] = audit
     fallback = {
         "headline": f"Day {status['day']} of {CHALLENGE_DAYS}: rotation week {status['rotation_week']}.",
         "slots": [{"slot": k, "engine": v, "title": "", "hook": "", "on_screen_text": "",

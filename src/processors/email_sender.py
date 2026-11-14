@@ -416,6 +416,39 @@ def _trend_scout_html(ts: dict | None) -> str:
   {'<p style="font-size:12px;color:#888;">Other formats — ' + other_rows + '</p>' if other_rows else ''}"""
 
 
+AUDIT_COLOURS = {"fix": "#c0392b", "watch": "#e67e22", "good": "#27ae60", "info": "#7f8c8d"}
+AUDIT_LABELS = {"fix": "Fix", "watch": "Watch", "good": "On target", "info": "No read"}
+
+
+def _audit_html(audit: dict | None) -> str:
+    if not audit or not audit.get("scorecard"):
+        return ""
+
+    def badge(status: str) -> str:
+        return (f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;'
+                f'color:#fff;background:{AUDIT_COLOURS.get(status, "#555")};">{_e(AUDIT_LABELS.get(status, status))}</span>')
+
+    rows = "".join(
+        f'<tr><td style="padding:7px 10px 7px 0;font-size:13px;color:#fff;font-weight:700;vertical-align:top;white-space:nowrap;">{_e(r.get("area"))}</td>'
+        f'<td style="padding:7px 10px 7px 0;font-size:13px;color:#ccc;line-height:1.45;vertical-align:top;">{_e(r.get("value"))}</td>'
+        f'<td style="padding:7px 0;vertical-align:top;text-align:right;white-space:nowrap;">{badge(r.get("status", "info"))}</td></tr>'
+        for r in audit["scorecard"])
+    cards = []
+    for f in audit.get("findings") or []:
+        if f.get("status") not in ("fix", "watch"):
+            continue
+        cards.append(f"""<div class="card" style="border-left:3px solid {AUDIT_COLOURS[f["status"]]};">
+  {_title_row(f'<h3>{_e(f.get("area"))}</h3>', badge(f["status"]))}
+  <div class="field">{_e(f.get("evidence"))}</div>
+  {'<div class="field"><span class="label">This week</span>' + _e(f.get("action")) + '</div>' if f.get("action") else ''}
+</div>""")
+    return f"""<h2>🔎 Account Audit</h2>
+  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(audit.get("posts_audited"))} posts from the last {_e(audit.get("window_days"))} days · public numbers only (saves, shares and follows per post live in Insights)</p>
+  {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(audit.get("headline")) + '</div>' if audit.get("headline") else ''}
+  <div class="card"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table></div>
+  {''.join(cards)}"""
+
+
 def _weekly_goals_html(goals: dict | None) -> str:
     if not goals or not goals.get("groups"):
         return ""
@@ -609,6 +642,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
   {summary_html}
 
   {_weekly_goals_html(plan.get("weekly_goals"))}
+
+  {_audit_html(plan.get("audit"))}
 
   {_performance_html(plan.get("performance"))}
 

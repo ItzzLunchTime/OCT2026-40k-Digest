@@ -279,13 +279,29 @@ function renderPlan() {
   const sl = currentData.slate, picks = currentData.comment_picks, drop = currentData.digest_drop;
   const perf = currentData.performance;
   let html = '';
-  const goals = currentData.weekly_goals;
+  const goals = currentData.weekly_goals, audit = currentData.audit;
   if (goals && (goals.groups||[]).length) {
     html += `<div style="margin:0 0 20px;"><div class="section-title">🎯 This week's goals</div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${esc(goals.sub)}</div>
       <div class="audio-grid">${goals.groups.filter(g => (g.items||[]).length).map(g => `<div class="audio-card" style="border-left:3px solid var(--accent2);">
         <div class="field-label" style="margin-bottom:6px;">${esc(g.title)}</div>
         ${g.items.map(i => `<div class="field" style="padding-left:20px;text-indent:-20px;">☐&nbsp;&nbsp;${esc(i)}</div>`).join('')}
+      </div>`).join('')}</div></div>`;
+  }
+  if (audit && (audit.scorecard||[]).length) {
+    const acol = {fix:'#c0392b', watch:'#e67e22', good:'#27ae60', info:'#7f8c8d'};
+    const alab = {fix:'Fix', watch:'Watch', good:'On target', info:'No read'};
+    const abadge = s => `<span class="badge" style="background:${acol[s]||'#555'};color:#fff;">${esc(alab[s]||s)}</span>`;
+    html += `<div style="margin:0 0 20px;"><div class="section-title">🔎 Account audit</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${esc(audit.posts_audited)} posts from the last ${esc(audit.window_days)} days · public numbers only</div>
+      ${audit.headline ? `<div class="angle" style="font-style:normal;margin:0 0 12px;">${esc(audit.headline)}</div>` : ''}
+      <div class="topic-list">${audit.scorecard.map(r => `<div class="topic-card" style="display:flex;justify-content:space-between;gap:12px;">
+        <div><div class="title">${esc(r.area)}</div><div class="topic-field">${esc(r.value)}</div></div>
+        <div style="white-space:nowrap;">${abadge(r.status)}</div></div>`).join('')}</div>
+      <div class="audio-grid" style="margin-top:12px;">${(audit.findings||[]).filter(f => f.status === 'fix' || f.status === 'watch').map(f => `<div class="audio-card" style="border-left:3px solid ${acol[f.status]};">
+        <div class="top"><h3>${esc(f.area)}</h3>${abadge(f.status)}</div>
+        <div class="field">${esc(f.evidence)}</div>
+        ${f.action ? `<div class="field"><span class="field-label">This week</span>${esc(f.action)}</div>` : ''}
       </div>`).join('')}</div></div>`;
   }
   if (perf) {

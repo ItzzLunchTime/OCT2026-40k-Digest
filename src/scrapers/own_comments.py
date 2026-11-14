@@ -30,6 +30,7 @@ COMMENTS_ACTOR = "apify/instagram-comment-scraper"
 
 POSTS_MAX_CHARGE = Decimal("0.05")
 COMMENTS_MAX_CHARGE = Decimal("0.10")
+PROFILE_MAX_CHARGE = Decimal("0.02")
 MAX_COMMENTS_TOTAL = 150
 
 
@@ -66,9 +67,32 @@ def _normalise(c: dict, post: dict) -> dict:
     }
 
 
+def _mentions(p: dict) -> list[str]:
+    """Other accounts a post tags or @mentions (brands, stores, creators) — never your own handle."""
+    names = set(re.findall(r"@([A-Za-z0-9._]{2,30})", p.get("caption") or ""))
+    names.update(str(m).lstrip("@") for m in (p.get("mentions") or []) if isinstance(m, str))
+    for t in (p.get("taggedUsers") or []):
+        if isinstance(t, dict) and t.get("username"):
+            names.add(str(t["username"]))
+    for t in (p.get("coauthorProducers") or []):
+        if isinstance(t, dict) and t.get("username"):
+            names.add(str(t["username"]))
+    return sorted(n.strip(".").lower() for n in names if n.strip(".").lower() != IG_ACCOUNT.lower())
+
+
+def _original_audio(p: dict):
+    """True / False when the scrape says whose audio the Reel uses, None when it doesn't say."""
+    info = p.get("musicInfo")
+    if isinstance(info, dict) and info.get("uses_original_audio") is not None:
+        return bool(info["uses_original_audio"])
+    return None
+
+
 def _post_metrics(p: dict) -> dict:
     views = int(_first(p, "videoPlayCount", "igPlayCount", "videoViewCount", default=0) or 0)
     return {
+        "mentions": _mentions(p),
+        "original_audio": _original_audio(p),
         "url": p.get("url", ""),
         "short_code": p.get("shortCode", ""),
         "timestamp": str(p.get("timestamp", "")),
@@ -81,10 +105,38 @@ def _post_metrics(p: dict) -> dict:
     }
 
 
+def _scrape_profile(client) -> dict | None:
+    """Follower and post counts for the weekly audit. Any failure just leaves growth unmeasured."""
+    from src.scrapers.apify_scraper import _run_actor
+    try:
+        items = _run_actor(
+            client,
+            POSTS_ACTOR,
+            {"directUrls": [f"https://www.instagram.com/{IG_ACCOUNT}/"], "resultsType": "details", "resultsLimit": 1},
+            max_items=1,
+            max_charge=PROFILE_MAX_CHARGE,
+        )
+    except Exception as e:
+        print(f"    [profile] Follower count scrape error: {e}")
+        return None
+    if not items:
+        print("    [profile] Follower count scrape returned nothing")
+        return None
+    followers = _first(items[0], "followersCount", "followers", default=None)
+    try:
+        followers = int(followers)
+    except (TypeError, ValueError):
+        print(f"    [profile] No follower count in the profile scrape (fields: {sorted(items[0].keys())[:20]})")
+        return None
+    posts = _first(items[0], "postsCount", "posts", default=None)
+    print(f"    [profile] @{IG_ACCOUNT}: {followers:,} followers")
+    return {"followers": followers, "posts": posts if isinstance(posts, int) else None}
+
+
 def scrape_own_account(client) -> dict:
-    """{"posts": [public metrics per recent post], "comments": [last week's comments]}"""
+    """{"posts": [public metrics per recent post], "comments": [last week's comments], "profile": {...} | None}"""
     if not COMMENTS_ENABLED or not IG_ACCOUNT:
-        return {"posts": [], "comments": []}
+        return {"posts": [], "comments": [], "profile": None}
     from src.scrapers.apify_scraper import _run_actor
 
     now = datetime.now(timezone.utc)
@@ -106,7 +158,7 @@ def scrape_own_account(client) -> dict:
         )
     except Exception as e:
         print(f"    [comments] Post scrape error: {e}")
-        return {"posts": [], "comments": []}
+        return {"posts": [], "comments": [], "profile": None}
     if posts:
         print(f"    [comments] Post fields: {sorted(posts[0].keys())[:25]}")
 
@@ -158,7 +210,8 @@ def scrape_own_account(client) -> dict:
 
     print(f"    [comments] {len(posts)} posts · {len(comments)} comments → {len(kept)} from the last "
           f"{COMMENT_WINDOW_DAYS} days worth scoring")
-    return {"posts": [_post_metrics(p) for p in posts if p.get("url")], "comments": kept}
+    return {"posts": [_post_metrics(p) for p in posts if p.get("url")], "comments": kept,
+            "profile": _scrape_profile(client)}
 
 
 def scrape_own_comments(client) -> list[dict]:

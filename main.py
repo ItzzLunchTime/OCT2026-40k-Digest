@@ -30,6 +30,7 @@ from src.processors.engine_planner import pick_comments, digest_drop, build_slat
 from src.processors.performance import build_performance
 from src.processors.account_profile import get_account_profile
 from src.processors.weekly_goals import build_weekly_goals
+from src.processors.account_audit import build_audit, audit_guidance, audit_brief
 
 
 def main() -> None:
@@ -70,6 +71,14 @@ def main() -> None:
 
     print(f"  → {len(raw_audio)} unique audio items collected")
 
+    # ── 2b. Audit your own account first, so everything after can react to it ──
+    print("Checking how your recent posts did…")
+    performance = build_performance(own["posts"])
+
+    print("Auditing the account…")
+    audit = build_audit(performance, own.get("profile"))
+    audit_note = audit_guidance(audit)
+
     # ── 3. Scrape community sources for topics ────────────────────
     # Reddit skipped: since Nov 2025 new API apps need Reddit's approval
     # (src/scrapers/reddit_scraper.py is kept for if access is ever granted)
@@ -87,30 +96,29 @@ def main() -> None:
 
     # ── 4. Score audio through Claude ────────────────────────────
     print("Scoring audio with Claude…")
-    guidance = "\n\n".join(p for p in (taste_profile, verdicts_prompt(feedback)) if p)
+    guidance = "\n\n".join(p for p in (taste_profile, verdicts_prompt(feedback), audit_note) if p)
     scored_audio = score_audio(raw_audio, guidance)
 
     # ── 5. Score topics through Claude ───────────────────────────
     print("Scoring topics with Claude…")
-    scored_topics = score_topics(raw_topics)
+    scored_topics = score_topics(raw_topics, audit_note)
 
     # ── 5b. Trend Scout: format mix vs last week ─────────────────
     print("Building Trend Scout…")
     trend_scout = build_trend_scout(scored_audio)
 
     # ── 5c. Content engines: comment picks, digest drop, weekly slate ──
-    print("Checking how your recent posts did…")
-    performance = build_performance(own["posts"])
-
     print("Picking comments worth a reply video…")
     comment_picks = pick_comments(own["comments"])
 
     print("Planning this week's slate…")
     plan = {
-        "slate": build_slate(scored_audio, scored_topics, comment_picks, performance=performance),
+        "slate": build_slate(scored_audio, scored_topics, comment_picks, performance=performance,
+                             audit=audit_brief(audit)),
         "comment_picks": comment_picks,
         "digest_drop": digest_drop(scored_topics),
         "performance": performance,
+        "audit": audit,
     }
 
     print("Setting this week's goals…")

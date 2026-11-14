@@ -1,8 +1,11 @@
 """
 Weekly goals — the checklist at the top of the Monday digest.
 
-Combines three sources into one list of things to hit this week:
+Combines four sources into one list of things to hit this week:
   - posting goals from this week's slate and comment picks
+  - the goals set by this week's account audit (src/processors/account_audit.py),
+    which also marks the plan's product-facing post as a priority when the audit
+    finds the content mix or brand proof short
   - the dated milestones and content calendar from the 90-Day Brand Partnership
     Plan (vault note "04 Brand Partnership Plan")
   - the standing habits from that plan that apply to every post
@@ -105,8 +108,8 @@ def plan_week(today: date | None = None) -> int:
 
 def build_weekly_goals(plan: dict | None = None, today: date | None = None) -> dict:
     """
-    plan: the digest's plan dict (slate, comment_picks) so posting goals can name
-    this week's slots. Returns {"week_of", "sub", "groups": [{"title", "items"}]}.
+    plan: the digest's plan dict (slate, comment_picks, audit) so posting goals can name
+    this week's slots and the audit's goals are included. Returns {"week_of", "sub", "groups": [{"title", "items"}]}.
     """
     plan = plan or {}
     today = today or date.today()
@@ -128,14 +131,23 @@ def build_weekly_goals(plan: dict | None = None, today: date | None = None) -> d
         posting.append("Post at least twice: one reach post and one product-facing post")
     if entry and entry["reach"]:
         posting.append(f"Reach post this week: {entry['reach']}")
+    audit = plan.get("audit") or {}
+    short_on_proof = any(f.get("status") == "fix" and f.get("area", "").lower().startswith(("content mix", "brand proof"))
+                         for f in audit.get("findings", []))
     if entry and entry["product"]:
-        posting.append(f"Product-facing post this week ({entry['purpose']}): {entry['product']}")
+        lead = "Priority, per the audit — product-facing post" if short_on_proof else "Product-facing post this week"
+        posting.append(f"{lead} ({entry['purpose']}): {entry['product']}")
     picks = plan.get("comment_picks") or []
     if picks:
         posting.append("Make a reply video for the comment pick" if len(picks) == 1
                        else f"Make a reply video for at least one of the {len(picks)} comment picks")
 
     groups = [{"title": "Posting", "items": posting}]
+
+    # ── Goals from this week's audit ─────────────────────────────
+    audit_goals = [g for g in (audit.get("goals") or []) if g]
+    if audit_goals:
+        groups.append({"title": "From this week's audit", "items": audit_goals})
 
     # ── Partnership plan milestones ──────────────────────────────
     if entry:
@@ -148,6 +160,11 @@ def build_weekly_goals(plan: dict | None = None, today: date | None = None) -> d
                        "items": ["Plan the next 90 days from the week-13 review",
                                  "Follow up on any brand conversation still open"]})
 
+    # Last week's milestones can't be checked from public data, so they are carried forward
+    if 2 <= week <= len(PLAN_WEEKS) + 1:
+        groups.append({"title": f"Carry over if not done · plan week {week - 1}",
+                       "items": list(PLAN_WEEKS[week - 2]["milestones"])})
+
     groups.append({"title": "Every post", "items": list(STANDING)})
 
     # ── Sub-line: countdown context ──────────────────────────────
@@ -155,7 +172,8 @@ def build_weekly_goals(plan: dict | None = None, today: date | None = None) -> d
     sub = []
     if ch.get("phase") in ("countdown", "final push"):
         sub.append(f"Day {ch.get('day')} of {CHALLENGE_DAYS} · {ch.get('days_left')} days to Palm Springs")
-    sub.append(f"Milestones and post ideas from the {PLAN_NAME}")
+    sub.append(f"Milestones and post ideas from the {PLAN_NAME}"
+               + (" · adjusted by this week's audit" if audit_goals or short_on_proof else ""))
 
     total = sum(len(g["items"]) for g in groups)
     print(f"    [goals] {total} goals · plan week {week}")
