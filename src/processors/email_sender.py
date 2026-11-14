@@ -1,10 +1,9 @@
 """
-Formats and sends the weekly digest email and individual alert emails
-via Gmail SMTP using an App Password.
+Formats and sends the weekly digest via Gmail SMTP using an App Password.
 
-Two email types:
-  - digest: full weekly report (audio + topics)
-  - alert: fired immediately when a potency score >= ALERT_THRESHOLD
+The digest goes out as four emails (see send_digest): goals and audit, how your posts
+did, the slate and comment picks, then trends and audio. send_alert() builds a
+single-sound email; the pipeline no longer calls it, but it is kept for manual use.
 """
 
 import smtplib
@@ -442,6 +441,17 @@ def _audit_html(audit: dict | None) -> str:
   <div class="field">{_e(f.get("evidence"))}</div>
   {'<div class="field"><span class="label">This week</span>' + _e(f.get("action")) + '</div>' if f.get("action") else ''}
 </div>""")
+    return f"""<h2>🔎 Account Audit</h2>
+  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(audit.get("posts_audited"))} posts from the last {_e(audit.get("window_days"))} days · public numbers only (saves, shares and follows per post live in Insights)</p>
+  {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(audit.get("headline")) + '</div>' if audit.get("headline") else ''}
+  <div class="card"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table></div>
+  {''.join(cards)}"""
+
+
+def _post_breakdown_html(audit: dict | None) -> str:
+    """The audit's read of the strongest and weakest posts: what worked, what didn't, what to change."""
+    if not audit:
+        return ""
     bd = audit.get("post_breakdown") or {}
     post_cards = []
     for b in bd.get("posts") or []:
@@ -465,18 +475,13 @@ def _audit_html(audit: dict | None) -> str:
     breakdown_html = ""
     if post_cards:
         breakdown_html = (
-            '<h3 style="color:#e67e22;font-size:14px;margin:24px 0 4px;">What worked and what didn\'t</h3>'
-            '<p style="font-size:12px;color:#777;margin:0 0 10px;">Your strongest and weakest posts of the window. '
+            '<h2>🔬 What Worked and What Didn\'t</h2>'
+            '<p style="font-size:12px;color:#777;margin:-8px 0 14px;">Your strongest and weakest posts of the window. '
             'The audit can\'t watch the video, so reasons come from the numbers, caption, length, timing and comments.</p>'
             + (f'<div class="card"><span class="label">Patterns</span>{patterns}</div>' if patterns else "")
             + "".join(post_cards))
 
-    return f"""<h2>🔎 Account Audit</h2>
-  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(audit.get("posts_audited"))} posts from the last {_e(audit.get("window_days"))} days · public numbers only (saves, shares and follows per post live in Insights)</p>
-  {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(audit.get("headline")) + '</div>' if audit.get("headline") else ''}
-  <div class="card"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table></div>
-  {''.join(cards)}
-  {breakdown_html}"""
+    return breakdown_html
 
 
 def _weekly_goals_html(goals: dict | None) -> str:
@@ -612,7 +617,9 @@ def _digest_drop_html(items: list[dict] | None) -> str:
 def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout: dict | None = None,
                 plan: dict | None = None) -> bool:
     """
-    Build and send the full weekly digest email.
+    Build the weekly digest and send it as four emails:
+      1. Goals & Audit           2. How Your Posts Did
+      3. Slate & Comment Picks   4. Trends & Audio (plus community topics and the digest drop)
     scored_audio: sorted by potency_score descending (from claude_scorer)
     scored_topics: list of topic dicts (from claude_scorer)
     """
@@ -630,7 +637,7 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     summary_html = f"""<div class="summary-bar">
   <strong>{audio_count}</strong> sounds recommended ({MIN_RECOMMEND_SCORE}+/10) &nbsp;·&nbsp;
   <strong>{topic_count}</strong> topics identified &nbsp;·&nbsp;
-  <strong style="color:#c0392b;">{alert_count}</strong> high-potency alerts (≥{ALERT_THRESHOLD})
+  <strong style="color:#c0392b;">{alert_count}</strong> high-potency sounds ({ALERT_THRESHOLD}+/10)
 </div>"""
 
     # Audio section — grouped by content format, best few per format
@@ -660,47 +667,57 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
     # Topic section
     topic_cards = "".join(_topic_card(t) for t in scored_topics)
 
-    html = f"""<!DOCTYPE html>
+    audio_html = (f'<h2>🔊 Trending Audio — by Format</h2>'
+                  + (audio_cards or f'<p style="color:#9a9a9a;">No sounds scored {MIN_RECOMMEND_SCORE}/10 or higher this week.</p>'))
+    topics_html = ('<h2>📡 Community Topics — Content Opportunities</h2>'
+                   + (topic_cards or '<p style="color:#666;">No topics identified today.</p>'))
+
+    # One digest, four emails. A part with nothing in it is skipped rather than sent empty.
+    parts = [
+        ("Goals & Audit",
+         _weekly_goals_html(plan.get("weekly_goals")) + _audit_html(plan.get("audit"))),
+        ("How Your Posts Did",
+         _performance_html(plan.get("performance")) + _post_breakdown_html(plan.get("audit"))),
+        ("Slate & Comment Picks",
+         _slate_html(plan.get("slate")) + _comment_picks_html(plan.get("comment_picks"))),
+        ("Trends & Audio",
+         summary_html + _trend_scout_html(trend_scout) + audio_html + topics_html
+         + _digest_drop_html(plan.get("digest_drop"))),
+    ]
+    parts = [(name, body) for name, body in parts if body.strip()]
+
+    ch = (plan.get("slate") or {}).get("challenge") or {}
+    day = f" · Day {ch['day']}/{CHALLENGE_DAYS}" if ch.get("phase") in ("countdown", "final push") else ""
+    sent = 0
+    for n, (name, body) in enumerate(parts, 1):
+        html = _digest_page(name, n, len(parts), body)
+        if _send(f"🎖 40K Digest {n}/{len(parts)} · {name} · Week of {TODAY_SHORT}{day}", html):
+            sent += 1
+    print(f"    [email] Digest sent as {sent} of {len(parts)} emails")
+    return sent == len(parts)
+
+
+def _digest_page(name: str, n: int, total: int, body: str) -> str:
+    """Wrap one part of the digest in the shared page shell."""
+    return f"""<!DOCTYPE html>
 <html><head><meta charset="utf-8"><meta name="color-scheme" content="dark">
 <style>{DIGEST_CSS}</style></head>
 <body style="margin:0;padding:0;background:#0d0d0d;">
 <table role="presentation" class="outer" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d0d0d"><tr><td>
 <div class="wrap">
   <h1>🎖 40K Content Intelligence Digest</h1>
-  <p class="subtitle">{TODAY} · Weekly automated report</p>
+  <p class="subtitle">{TODAY} · {_e(name)} · part {n} of {total}</p>
 
-  {summary_html}
-
-  {_weekly_goals_html(plan.get("weekly_goals"))}
-
-  {_audit_html(plan.get("audit"))}
-
-  {_performance_html(plan.get("performance"))}
-
-  {_slate_html(plan.get("slate"))}
-
-  {_comment_picks_html(plan.get("comment_picks"))}
-
-  {_trend_scout_html(trend_scout)}
-
-  <h2>🔊 Trending Audio — by Format</h2>
-  {audio_cards if audio_cards else f'<p style="color:#9a9a9a;">No sounds scored {MIN_RECOMMEND_SCORE}/10 or higher this week.</p>'}
-
-  <h2>📡 Community Topics — Content Opportunities</h2>
-  {topic_cards if topic_cards else '<p style="color:#666;">No topics identified today.</p>'}
-
-  {_digest_drop_html(plan.get("digest_drop"))}
+  {body}
 
   <div class="footer">
-    40K Content Intelligence Digest · {TODAY} ·
+    40K Content Intelligence Digest · {TODAY} · part {n} of {total} ·
     Powered by Claude API · <a href="https://itzzlunchtime.github.io/OCT2026-40k-Digest/">View Dashboard</a>
   </div>
 </div>
 </td></tr></table></body></html>"""
 
-    lead = f" — {trend_scout['top'][0]} leads" if trend_scout and trend_scout.get("top") else ""
-    ch = (plan.get("slate") or {}).get("challenge") or {}
-    if ch.get("phase") in ("countdown", "final push"):
-        lead = f" · Day {ch['day']}/{CHALLENGE_DAYS}" + lead
-    subject = f"🎖 40K Digest · Week of {TODAY_SHORT}{lead}"
-    return _send(subject, html)
+
+# ─────────────────────────────────────────────────────────────────
+# DIGEST EMAIL
+# ─────────────────────────────────────────────────────────────────
