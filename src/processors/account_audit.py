@@ -347,7 +347,9 @@ Return ONLY a JSON array of {{"index": <input index>, "kind": "<label>"}}, one p
 
 PLAN_TARGETS = f"""
 TARGETS THE AUDIT JUDGES AGAINST:
-  - Capacity: {POSTS_PER_WEEK[0]}-{POSTS_PER_WEEK[1]} posts a week, no more.
+  - Capacity: he can reliably make {POSTS_PER_WEEK[0]}-{POSTS_PER_WEEK[1]} posts a week. That is a floor to protect, not a cap:
+    posting more than that is fine and is never a problem to fix. Never tell him to post less.
+    It only limits what you may ASK of him: no goal may require more than {POSTS_PER_WEEK[1]} new posts in the week.
   - Growth goal: {FOLLOWER_GOAL:,} followers.
   - 90-Day Brand Partnership Plan: about half of posts for reach (memes), about half product-facing
     (brand proof and pitch assets). Product-facing posts name the product, tag the brand, and use
@@ -372,7 +374,9 @@ You get a JSON object:
 Rules:
   - Use ONLY numbers that appear in the input. Never estimate saves, shares, follows per post or
     anything else that is not given. If something isn't measured, leave it out.
-  - Keep each scorecard row's status unless the stats clearly contradict it.
+  - Keep each scorecard row's status unless the stats clearly contradict it. A row marked "good"
+    stays good. A row marked "info" means there isn't enough data yet: leave it out of the
+    findings, and never turn it into a task for him (the digest records the numbers itself).
   - Follow-through: compare "posted_since" with last week's slate. Say plainly which planned
     posts appear to have gone out and which did not. If you can't tell from captions, say so.
   - Goals must be things he can finish this week inside his capacity, each tied to a finding,
