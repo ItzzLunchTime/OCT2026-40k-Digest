@@ -416,6 +416,89 @@ def _trend_scout_html(ts: dict | None) -> str:
   {'<p style="font-size:12px;color:#888;">Other formats — ' + other_rows + '</p>' if other_rows else ''}"""
 
 
+AUDIT_COLOURS = {"fix": "#c0392b", "watch": "#e67e22", "good": "#27ae60", "info": "#7f8c8d"}
+AUDIT_LABELS = {"fix": "Fix", "watch": "Watch", "good": "On target", "info": "No read"}
+
+
+def _audit_html(audit: dict | None) -> str:
+    if not audit or not audit.get("scorecard"):
+        return ""
+
+    def badge(status: str) -> str:
+        return (f'<span style="display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;font-weight:700;'
+                f'color:#fff;background:{AUDIT_COLOURS.get(status, "#555")};">{_e(AUDIT_LABELS.get(status, status))}</span>')
+
+    rows = "".join(
+        f'<tr><td style="padding:7px 10px 7px 0;font-size:13px;color:#fff;font-weight:700;vertical-align:top;white-space:nowrap;">{_e(r.get("area"))}</td>'
+        f'<td style="padding:7px 10px 7px 0;font-size:13px;color:#ccc;line-height:1.45;vertical-align:top;">{_e(r.get("value"))}</td>'
+        f'<td style="padding:7px 0;vertical-align:top;text-align:right;white-space:nowrap;">{badge(r.get("status", "info"))}</td></tr>'
+        for r in audit["scorecard"])
+    cards = []
+    for f in audit.get("findings") or []:
+        if f.get("status") not in ("fix", "watch"):
+            continue
+        cards.append(f"""<div class="card" style="border-left:3px solid {AUDIT_COLOURS[f["status"]]};">
+  {_title_row(f'<h3>{_e(f.get("area"))}</h3>', badge(f["status"]))}
+  <div class="field">{_e(f.get("evidence"))}</div>
+  {'<div class="field"><span class="label">This week</span>' + _e(f.get("action")) + '</div>' if f.get("action") else ''}
+</div>""")
+    bd = audit.get("post_breakdown") or {}
+    post_cards = []
+    for b in bd.get("posts") or []:
+        strong = b.get("result") == "strong"
+        colour = "#27ae60" if strong else "#c0392b"
+        caption = _e((b.get("caption") or "(no caption)")[:90])
+        title = f'<a href="{_e(b.get("url"))}" style="color:#fff;text-decoration:none;">{caption}</a>' if b.get("url") else caption
+        meta = " · ".join(x for x in [
+            f'{int(b.get("views") or 0):,} views', f'{b.get("x_median")}x median' if b.get("x_median") is not None else "",
+            f'{b.get("length_s"):.0f}s' if b.get("length_s") else "", _e(b.get("label")), _e(b.get("posted_local")),
+        ] if x)
+        post_cards.append(f"""<div class="card" style="border-left:3px solid {colour};">
+  <h3 style="font-size:14px;">{title}</h3>
+  <div class="meta" style="margin:2px 0 8px;">{meta}</div>
+  {'<div class="field"><span class="label">What worked</span>' + _e(b.get("worked")) + '</div>' if b.get("worked") else ''}
+  {'<div class="field"><span class="label">What held it back</span>' + _e(b.get("didnt")) + '</div>' if b.get("didnt") else ''}
+  {'<div class="field"><span class="label">Do differently</span>' + _e(b.get("next_time")) + '</div>' if b.get("next_time") else ''}
+  {'<div class="meta" style="margin:6px 0 0;">Low confidence: read from the caption and numbers only</div>' if b.get("confidence") == "low" else ''}
+</div>""")
+    patterns = "".join(f'<div class="field">• {_e(x)}</div>' for x in (bd.get("patterns") or []))
+    breakdown_html = ""
+    if post_cards:
+        breakdown_html = (
+            '<h3 style="color:#e67e22;font-size:14px;margin:24px 0 4px;">What worked and what didn\'t</h3>'
+            '<p style="font-size:12px;color:#777;margin:0 0 10px;">Your strongest and weakest posts of the window. '
+            'The audit can\'t watch the video, so reasons come from the numbers, caption, length, timing and comments.</p>'
+            + (f'<div class="card"><span class="label">Patterns</span>{patterns}</div>' if patterns else "")
+            + "".join(post_cards))
+
+    return f"""<h2>🔎 Account Audit</h2>
+  <p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(audit.get("posts_audited"))} posts from the last {_e(audit.get("window_days"))} days · public numbers only (saves, shares and follows per post live in Insights)</p>
+  {'<div class="angle" style="font-style:normal;color:#ddd;font-size:14px;margin:0 0 16px;">' + _e(audit.get("headline")) + '</div>' if audit.get("headline") else ''}
+  <div class="card"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">{rows}</table></div>
+  {''.join(cards)}
+  {breakdown_html}"""
+
+
+def _weekly_goals_html(goals: dict | None) -> str:
+    if not goals or not goals.get("groups"):
+        return ""
+    blocks = []
+    for g in goals["groups"]:
+        if not g.get("items"):
+            continue
+        rows = "".join(
+            f'<div style="font-size:14px;color:#ddd;line-height:1.45;margin:0 0 7px;padding-left:24px;text-indent:-24px;">'
+            f'<span style="color:#e67e22;">&#9744;</span>&nbsp;&nbsp;{_e(item)}</div>'
+            for item in g["items"])
+        blocks.append(f'<div class="card" style="border-left:3px solid #e67e22;">'
+                      f'<div class="label" style="margin-bottom:8px;">{_e(g.get("title"))}</div>{rows}</div>')
+    if not blocks:
+        return ""
+    return (f'<h2>🎯 This Week\'s Goals</h2>'
+            f'<p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(goals.get("sub"))}</p>'
+            + "".join(blocks))
+
+
 def _slate_html(slate: dict | None) -> str:
     if not slate or not slate.get("slots"):
         return ""
@@ -587,6 +670,10 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
   <p class="subtitle">{TODAY} · Weekly automated report</p>
 
   {summary_html}
+
+  {_weekly_goals_html(plan.get("weekly_goals"))}
+
+  {_audit_html(plan.get("audit"))}
 
   {_performance_html(plan.get("performance"))}
 

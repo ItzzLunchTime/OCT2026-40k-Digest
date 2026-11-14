@@ -74,6 +74,10 @@ def build_performance(posts: list[dict], today: date | None = None) -> dict | No
         rec = history.setdefault(p["url"], {"snapshots": []})
         rec.update({k: p[k] for k in ("url", "short_code", "timestamp", "type", "caption", "duration_s")})
         rec.update(views=p["views"], likes=p["likes"], comments=p["comments"])
+        # Used by the weekly audit (brand tags, whose audio the Reel uses)
+        rec["mentions"] = p.get("mentions") or []
+        if p.get("original_audio") is not None:
+            rec["original_audio"] = p["original_audio"]
         snaps = [s for s in rec["snapshots"] if s.get("date") != today.isoformat()]
         snaps.append({"date": today.isoformat(), "views": p["views"], "likes": p["likes"], "comments": p["comments"]})
         rec["snapshots"] = snaps[-12:]

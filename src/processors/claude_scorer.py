@@ -282,7 +282,7 @@ Return ONLY a JSON array. No commentary outside the JSON.
 """
 
 
-def score_topics(raw_topics: list[dict]) -> list[dict]:
+def score_topics(raw_topics: list[dict], guidance: str = "") -> list[dict]:
     if not raw_topics:
         return []
 
@@ -299,7 +299,8 @@ def score_topics(raw_topics: list[dict]) -> list[dict]:
         f"Analyse the following {len(unique)} community signals and return the "
         f"5-10 most valuable content topics.\n"
         f"{profile_block()}\n"
-        f"SIGNALS:\n{json.dumps(unique, indent=2)}"
+        + (f"{guidance}\n\n" if guidance else "")
+        + f"SIGNALS:\n{json.dumps(unique, indent=2)}"
     )
 
     try:
