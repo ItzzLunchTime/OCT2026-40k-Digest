@@ -416,6 +416,26 @@ def _trend_scout_html(ts: dict | None) -> str:
   {'<p style="font-size:12px;color:#888;">Other formats — ' + other_rows + '</p>' if other_rows else ''}"""
 
 
+def _weekly_goals_html(goals: dict | None) -> str:
+    if not goals or not goals.get("groups"):
+        return ""
+    blocks = []
+    for g in goals["groups"]:
+        if not g.get("items"):
+            continue
+        rows = "".join(
+            f'<div style="font-size:14px;color:#ddd;line-height:1.45;margin:0 0 7px;padding-left:24px;text-indent:-24px;">'
+            f'<span style="color:#e67e22;">&#9744;</span>&nbsp;&nbsp;{_e(item)}</div>'
+            for item in g["items"])
+        blocks.append(f'<div class="card" style="border-left:3px solid #e67e22;">'
+                      f'<div class="label" style="margin-bottom:8px;">{_e(g.get("title"))}</div>{rows}</div>')
+    if not blocks:
+        return ""
+    return (f'<h2>🎯 This Week\'s Goals</h2>'
+            f'<p style="font-size:12px;color:#777;margin:-8px 0 14px;">{_e(goals.get("sub"))}</p>'
+            + "".join(blocks))
+
+
 def _slate_html(slate: dict | None) -> str:
     if not slate or not slate.get("slots"):
         return ""
@@ -587,6 +607,8 @@ def send_digest(scored_audio: list[dict], scored_topics: list[dict], trend_scout
   <p class="subtitle">{TODAY} · Weekly automated report</p>
 
   {summary_html}
+
+  {_weekly_goals_html(plan.get("weekly_goals"))}
 
   {_performance_html(plan.get("performance"))}
 

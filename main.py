@@ -29,6 +29,7 @@ from src.processors.feedback import collect_feedback, excluded_keys, is_excluded
 from src.processors.engine_planner import pick_comments, digest_drop, build_slate
 from src.processors.performance import build_performance
 from src.processors.account_profile import get_account_profile
+from src.processors.weekly_goals import build_weekly_goals
 
 
 def main() -> None:
@@ -111,6 +112,9 @@ def main() -> None:
         "digest_drop": digest_drop(scored_topics),
         "performance": performance,
     }
+
+    print("Setting this week's goals…")
+    plan["weekly_goals"] = build_weekly_goals(plan)
 
     # ── 6. Fire individual alerts for high-potency audio ─────────
     from src.config import ALERT_THRESHOLD, MIN_RECOMMEND_SCORE

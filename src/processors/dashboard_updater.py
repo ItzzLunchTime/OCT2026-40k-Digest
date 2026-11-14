@@ -279,6 +279,15 @@ function renderPlan() {
   const sl = currentData.slate, picks = currentData.comment_picks, drop = currentData.digest_drop;
   const perf = currentData.performance;
   let html = '';
+  const goals = currentData.weekly_goals;
+  if (goals && (goals.groups||[]).length) {
+    html += `<div style="margin:0 0 20px;"><div class="section-title">🎯 This week's goals</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">${esc(goals.sub)}</div>
+      <div class="audio-grid">${goals.groups.filter(g => (g.items||[]).length).map(g => `<div class="audio-card" style="border-left:3px solid var(--accent2);">
+        <div class="field-label" style="margin-bottom:6px;">${esc(g.title)}</div>
+        ${g.items.map(i => `<div class="field" style="padding-left:20px;text-indent:-20px;">☐&nbsp;&nbsp;${esc(i)}</div>`).join('')}
+      </div>`).join('')}</div></div>`;
+  }
   if (perf) {
     const col = {Breakout:'#c0392b', Above:'#e67e22', Baseline:'#7f8c8d', Under:'#34495e'};
     html += `<div style="margin:0 0 20px;"><div class="section-title">📈 How your last posts did</div>
