@@ -20,11 +20,11 @@ from src.scrapers.community_scraper import scrape_community
 # ── Processors ───────────────────────────────────────────────────
 from src.processors.claude_scorer import score_audio, score_topics
 from src.processors.personal_taste import get_taste_profile
-from src.processors.email_sender import send_digest, send_alert
+from src.processors.email_sender import send_digest
 from src.processors.dashboard_updater import update_dashboard
 from src.processors.trend_scout import build_trend_scout
 from src.processors.audio_merge import merge_audio
-from src.processors.history import annotate_history, is_stale_repeat
+from src.processors.history import annotate_history
 from src.processors.feedback import collect_feedback, excluded_keys, is_excluded, verdicts_prompt
 from src.processors.engine_planner import pick_comments, digest_drop, build_slate
 from src.processors.performance import build_performance
@@ -124,19 +124,8 @@ def main() -> None:
     print("Setting this week's goals…")
     plan["weekly_goals"] = build_weekly_goals(plan)
 
-    # ── 6. Fire individual alerts for high-potency audio ─────────
-    from src.config import ALERT_THRESHOLD, MIN_RECOMMEND_SCORE
-    # Capped so a strong day can't flood the inbox — the rest are in the digest
-    alert_bar = max(ALERT_THRESHOLD, MIN_RECOMMEND_SCORE)
-    alerts = [a for a in scored_audio
-              if a.get("potency_score", 0) >= alert_bar and not is_stale_repeat(a)][:3]
-    if alerts:
-        print(f"  ⚡ Sending {len(alerts)} individual alert(s)…")
-        for item in alerts:
-            send_alert(item)
-
     # ── 7. Send weekly digest email ───────────────────────────────
-    print("Sending digest email…")
+    print("Sending the digest (four emails)…")
     send_digest(scored_audio, scored_topics, trend_scout, plan)
 
     # ── 8. Update dashboard ───────────────────────────────────────
@@ -147,7 +136,6 @@ def main() -> None:
     print(f"   Audio scored: {len(scored_audio)}")
     print(f"   Topics scored: {len(scored_topics)}")
     print(f"   Comment picks: {len(comment_picks)}")
-    print(f"   Alerts sent: {len(alerts)}")
 
 
 if __name__ == "__main__":
